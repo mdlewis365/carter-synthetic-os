@@ -1,0 +1,86 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+.tox/
+.nox/
+.pytest_cache/
+.pytest-tmp/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Runtime state and private data
+data/
+job_store/
+logs/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+chroma/
+chromadb/
+recordings/
+audio/
+camera/
+captures/
+uploads/
+generated_reports/
+private_reports/
+crash_dumps/
+*.dmp
+
+# Local model artifacts
+/models/
+/model_weights/
+*.bin
+*.gguf
+*.ggml
+*.safetensors
+*.onnx
+*.pt
+*.pth
+
+# Test and analysis artifacts
+.hypothesis/
+.cache/
+test-results/
+bandit-report.json
+pip-audit-report.json
+detect-secrets-report.json
+*.prof
+
+# Local evidence regeneration scratch
+examples/evidence/.tmp/
