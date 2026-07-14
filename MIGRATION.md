@@ -39,4 +39,3 @@ Archival/redirection is a later human action. This local release-preparation wor
 ## No Data Migration
 
 Do not migrate production memories, CRM data, Chroma/SQLite/PostgreSQL stores, OpReps, jobs, logs, credentials, recordings, screenshots, or user accounts. Public demonstrations begin with empty/synthetic state.
-

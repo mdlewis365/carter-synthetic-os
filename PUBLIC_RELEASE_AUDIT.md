@@ -165,7 +165,7 @@ are excluded.
 | Anthropic | Eager client construction requiring a key | Optional lazy provider configured only by environment. |
 | Google Gemini | SDK generation, uploads, CSC transcription | Optional lazy provider configured only by environment; document when audio is sent. |
 | ElevenLabs | TTS SDK/HTTP | Optional lazy provider; key and voice ID supplied by operator. |
-| ChromaDB | AMS/RAG persistence | Optional lazy adapter; no persistence directory copied. |
+| ChromaDB | AMS/RAG persistence | Adapter source only; no persistence directory copied and no dependency declared while `CVE-2026-45829` remains unresolved for the current package line. |
 | PostgreSQL/psycopg | AMS conversation store | Not required for public demo; legacy adapter omitted from core pending license/operations review. |
 | SQLite | No private integration found | Add an empty, opt-in local public memory adapter; do not claim it was migrated. |
 | Flask/SSE | Primary server and streamed job events | Preserve through a factory, CSRF/session checks, and in-memory jobs. |
@@ -307,6 +307,12 @@ Every cloud, local-model, persistence, and sensory SDK will be an optional
 extra. LICENSE_COMPATIBILITY_REPORT.md and THIRD_PARTY_NOTICES.md will carry
 the final evidence and unresolved legal questions. This audit is not legal
 advice.
+
+Post-construction security note: the first isolated `.[all]` audit resolved
+ChromaDB 1.5.9 and found critical advisory `PYSEC-2026-311` /
+`CVE-2026-45829`, with no fixed version reported. ChromaDB was consequently
+removed from every declared extra. The first-party adapter boundary remains
+for source review but is unavailable pending an upstream fix and fresh audit.
 
 ## Migration Decisions
 

@@ -70,4 +70,3 @@ EAS always remains engineering decision-support software. Licensed engineering j
 ## Non-Goals
 
 Governance does not provide unrestricted autonomy, legal compliance certification, patent clearance, safety certification, or scientific validation. It does not defend against a malicious host administrator or eliminate all prompt-injection and supply-chain risks.
-

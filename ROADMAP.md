@@ -33,4 +33,3 @@ This roadmap states intended research and engineering directions, not delivery p
 ## Non-Goals
 
 The roadmap does not target consciousness, sentience, AGI claims, unrestricted autonomous operation, replacement of licensed professionals, automated patent clearance, covert sensory collection, or production deployment before appropriate controls and validation exist.
-

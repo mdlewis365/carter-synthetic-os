@@ -25,4 +25,3 @@ Questions about approved branding use require an approved contact before publica
 **[APPROVED TRADEMARK CONTACT TO BE ADDED BEFORE PUBLICATION]**
 
 This notice is informational and is not legal advice. It does not limit rights that cannot lawfully be limited, including applicable nominative or descriptive use.
-

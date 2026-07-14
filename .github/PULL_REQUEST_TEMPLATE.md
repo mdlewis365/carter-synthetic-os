@@ -40,4 +40,3 @@ python -m pytest ...
 - [ ] EAS professional-review, SIS hypothesis/patent/safety, and CSC consent/retention boundaries remain visible where applicable.
 - [ ] I updated architecture, configuration, security/privacy, limitations, and release notes where behavior changed.
 - [ ] I disclosed checks I did not run and all known failures.
-

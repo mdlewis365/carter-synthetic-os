@@ -34,4 +34,3 @@ Reports should contain only the information needed to investigate. Maintainers w
 Maintainers may clarify expectations, edit or remove content, close or lock discussions, reject contributions, issue temporary restrictions, or ban participation. Decisions should be proportionate to impact, pattern, intent, response to correction, and community safety. Maintainers involved in a report should recuse themselves where practical.
 
 This policy governs project participation; it is not an employment process, legal procedure, or emergency service.
-

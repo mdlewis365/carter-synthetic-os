@@ -27,4 +27,3 @@ The copyright owner must confirm the dual/relicensing basis and all first-party 
 ## Third-Party Exceptions
 
 Dependencies, provider services, separately obtained model weights, training data, fonts, media, datasets, and other third-party material remain subject to their own terms. No copyright ownership is claimed over them. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and `LICENSE_COMPATIBILITY_REPORT.md` for the point-in-time release audit.
-

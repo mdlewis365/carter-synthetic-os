@@ -44,4 +44,3 @@ SAL treats candidate text as data. It does not evaluate Python, shell commands, 
 ## Research Status
 
 The layer is implemented as a public contract and covered by bounded tests. It has not been independently validated as a general semantic-truth engine, because it is not intended to be one. See [RESEARCH_STATUS.md](RESEARCH_STATUS.md).
-
