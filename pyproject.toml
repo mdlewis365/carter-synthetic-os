@@ -1,0 +1,153 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+[build-system]
+requires = ["setuptools>=77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carter-synthetic-os"
+version = "0.1.0"
+description = "Governed compound AI expert system and research platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Michael D. Lewis, doing business as Synthetic OS Labs" },
+]
+keywords = [
+  "compound-ai",
+  "expert-system",
+  "governance",
+  "deterministic-computation",
+  "research",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Web Environment",
+  "Framework :: Flask",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "Flask>=3.0,<4",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.66,<3"]
+anthropic = ["anthropic>=0.40,<1"]
+google = ["google-genai>=1.0,<2"]
+ollama = []
+csc = [
+  "google-genai>=1.0,<2",
+]
+dev = [
+  "bandit>=1.7,<2",
+  "build>=1.2,<2",
+  "detect-secrets>=1.5,<2",
+  "pip-audit>=2.7,<3",
+  "pip-licenses>=5,<6",
+  "pytest>=8.2,<9",
+  "pytest-cov>=5,<7",
+  "ruff>=0.8,<1",
+]
+all = [
+  "anthropic>=0.40,<1",
+  "google-genai>=1.0,<2",
+  "openai>=1.66,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/mdlewis365/carter-synthetic-os"
+Repository = "https://github.com/mdlewis365/carter-synthetic-os"
+Issues = "https://github.com/mdlewis365/carter-synthetic-os/issues"
+Changelog = "https://github.com/mdlewis365/carter-synthetic-os/blob/main/CHANGELOG.md"
+
+[project.scripts]
+carter-sos = "carter.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+carter = [
+  "evidence/manifest.json",
+  "legal/LICENSE",
+  "templates/*.html",
+  "static/*.css",
+  "static/*.js",
+]
+eas = ["engineering_packs/**/*.md"]
+
+[tool.pytest.ini_options]
+minversion = "8.2"
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "unit: isolated deterministic tests",
+  "integration: cross-module tests without external services",
+  "smoke: startup and public workflow checks",
+  "local_model: opt-in tests requiring a local model service",
+  "cloud_provider: opt-in tests that exercise a cloud SDK boundary",
+  "sensory: tests of sensory software or hardware boundaries",
+  "slow: tests that are intentionally time-consuming",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = [
+  "src/carter/static/*",
+  "src/carter/templates/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "raise NotImplementedError",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.format]
+exclude = [
+  "src/eas/decision_record.py",
+  "src/eas/governance.py",
+  "src/sis/evaluator_aggregation.py",
+  "src/sis/rejection_boundary_validation.py",
+  "src/sos/computation/mcm.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "S104", "S105", "S106"]
+"examples/**/*.py" = ["S101"]
+"src/eas/decision_record.py" = ["E501"]
+"src/eas/governance.py" = ["E501"]
+"src/sis/evaluator_aggregation.py" = ["E501"]
+"src/sis/rejection_boundary_validation.py" = ["E501"]
+"src/sos/computation/mcm.py" = ["E501", "S105"]
+
+[tool.bandit]
+exclude_dirs = [
+  "tests",
+  "examples/evidence/generated",
+  "src/sos/computation/mcm.py",
+]
+skips = ["B101"]
