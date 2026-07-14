@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Bug report
+description: Report a reproducible software defect using synthetic or redacted data.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include credentials, personal data, private memories, conversations, recordings, confidential inventions, or provider account details. Security vulnerabilities must be reported through SECURITY.md, not this form.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues and pull requests.
+          required: true
+        - label: This is not a security vulnerability or private-data exposure.
+          required: true
+        - label: The reproduction uses synthetic or safely redacted data.
+          required: true
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Subsystem
+      options:
+        - Carter / web application
+        - Synthetic OS
+        - EAS / MCM
+        - SIS
+        - CSC
+        - Provider integration
+        - Memory / persistence
+        - Packaging / scripts
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: 0.1.0 or full commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, install extra, backend class, and browser where relevant. Do not include secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction
+      description: Provide the smallest complete steps and synthetic input.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include sanitized traceback or logs only when needed.
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Verification commands and results
+      description: List exact commands run, failures, and relevant marker selection.
+  - type: textarea
+    id: impact
+    attributes:
+      label: Security, privacy, and data impact
+      description: State whether sessions, providers, persistence, sensory data, or professional-review boundaries are affected.

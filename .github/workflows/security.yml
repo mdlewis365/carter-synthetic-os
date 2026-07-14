@@ -1,0 +1,63 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Security checks
+
+on:
+  push:
+    branches: [main, "release/**"]
+  pull_request:
+  schedule:
+    - cron: "17 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-and-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install security scanners
+        run: python -m pip install "bandit>=1.7,<2" "detect-secrets>=1.5,<2"
+      - name: Bandit
+        run: |
+          bandit -c pyproject.toml -r src
+          # MCM is scanned separately after excluding reviewed domain-token,
+          # best-effort parser, and SQL-string false-positive rule classes.
+          bandit -r src/sos/computation/mcm.py -s B105,B112,B608
+      - name: Detect secrets in tracked files
+        shell: bash
+        run: detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install all declared runtime extras and audit tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[all]" "pip-audit>=2.7,<3" "pip-licenses>=5,<6"
+      - name: Audit known vulnerabilities in core and optional runtime dependencies
+        run: pip-audit --strict --progress-spinner off --skip-editable
+      - name: Export dependency licenses
+        run: pip-licenses --format=json --output-file=dependency-licenses.json
+      - name: Upload license inventory
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-license-inventory
+          path: dependency-licenses.json
+          if-no-files-found: error

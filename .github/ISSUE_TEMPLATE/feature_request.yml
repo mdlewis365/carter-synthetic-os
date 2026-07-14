@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
+name: Feature request
+description: Propose a bounded, testable project improvement.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Proposals must preserve the project's governed research scope. Do not submit confidential inventions, private data, credentials, or uncleared third-party content.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues, pull requests, limitations, and roadmap.
+          required: true
+        - label: I can describe this without confidential, personal, or proprietary material.
+          required: true
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Primary subsystem
+      options:
+        - Carter / web application
+        - Synthetic OS
+        - EAS / MCM
+        - SIS
+        - CSC
+        - Provider integration
+        - Memory / persistence
+        - Packaging / automation
+        - Documentation / community
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the concrete user/research need without prescribing implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include inputs, outputs, failure states, review gates, and what remains out of scope.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and acceptance criteria
+      description: State how the behavior can be tested reproducibly without private data or paid APIs.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Security, privacy, provider, and persistence impact
+      description: Identify new data flows, permissions, tools, retention, cloud transfers, or session boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Dependency, license, and provenance impact
+      description: Identify proposed dependencies/assets/data and their source and license. Do not paste third-party material.
+  - type: checkboxes
+    id: safeguards
+    attributes:
+      label: Domain safeguards
+      options:
+        - label: EAS changes will preserve professional-review gating where applicable.
+        - label: SIS changes will preserve hypothesis, prior-art, patent, safety, and experimental-review warnings where applicable.
+        - label: CSC changes will preserve explicit activation, visible state, session isolation, and no-retention defaults where applicable.
