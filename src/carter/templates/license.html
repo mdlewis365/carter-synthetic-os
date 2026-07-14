@@ -1,0 +1,34 @@
+<!doctype html>
+<!--
+SPDX-License-Identifier: AGPL-3.0-only
+Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>License | Carter Synthetic OS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-block">
+      <p class="brand">Carter Synthetic OS</p>
+      <p class="release">GNU Affero General Public License version 3 only</p>
+    </div>
+    <a class="header-link" href="/">Return to application</a>
+  </header>
+  <main class="license-view">
+    <h1>AGPL-3.0-only</h1>
+    <pre class="license-text">{{ license_text }}</pre>
+  </main>
+  <footer>
+    <p>Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs</p>
+    <p>
+      This software comes with no warranty.
+      <a href="https://github.com/mdlewis365/carter-synthetic-os"
+         rel="noopener noreferrer">Source Code</a>
+    </p>
+  </footer>
+</body>
+</html>

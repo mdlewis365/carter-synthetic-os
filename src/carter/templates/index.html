@@ -1,0 +1,196 @@
+<!doctype html>
+<!--
+SPDX-License-Identifier: AGPL-3.0-only
+Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Carter Synthetic OS</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-block">
+      <p class="brand">Carter Synthetic OS</p>
+      <p class="release">0.1.0 Initial Public Research Release</p>
+    </div>
+    <div class="runtime-badges" aria-label="Runtime status">
+      <span class="status-badge" id="provider-status">Provider: loading</span>
+      <span class="status-badge status-safe">Durable retention: off</span>
+      <span class="status-badge" id="session-status">Session: loading</span>
+      <span class="indicator" id="mic-indicator">Microphone off</span>
+      <span class="indicator" id="camera-indicator">Camera off</span>
+      <span class="indicator" id="tts-indicator">TTS idle</span>
+      <span class="status-badge" id="transcription-status">Transcription: loading</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Carter systems">
+    <button class="tab is-active" role="tab" aria-selected="true"
+            aria-controls="panel-carter" id="tab-carter" data-tab="carter">Carter</button>
+    <button class="tab" role="tab" aria-selected="false"
+            aria-controls="panel-eas" id="tab-eas" data-tab="eas">EAS</button>
+    <button class="tab" role="tab" aria-selected="false"
+            aria-controls="panel-sis" id="tab-sis" data-tab="sis">SIS</button>
+    <button class="tab" role="tab" aria-selected="false"
+            aria-controls="panel-csc" id="tab-csc" data-tab="csc">Sensory Console</button>
+    <button class="tab" role="tab" aria-selected="false"
+            aria-controls="panel-evidence" id="tab-evidence" data-tab="evidence">Evidence</button>
+  </nav>
+
+  <main>
+    <section class="panel is-active" role="tabpanel" id="panel-carter"
+             aria-labelledby="tab-carter">
+      <div class="panel-heading">
+        <div>
+          <h1>Carter</h1>
+          <p>Governed compound AI expert system</p>
+        </div>
+        <span class="mode-label" id="provider-mode-label">Provider loading</span>
+      </div>
+      <div class="chat-output" id="chat-output" aria-live="polite">
+        <article class="message system-message">
+          <strong>Runtime</strong>
+          <p>Public session ready. Durable memory is disabled; bounded session context remains in process.</p>
+        </article>
+      </div>
+      <form id="chat-form" class="command-form">
+        <label for="chat-input">Request</label>
+        <textarea id="chat-input" name="prompt" rows="4" maxlength="8000"
+                  required>Summarize the governance boundary in this public mock run.</textarea>
+        <div class="form-actions">
+          <button type="submit" class="primary">Run governed request</button>
+          <button type="button" id="clear-chat">Clear session view</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" role="tabpanel" id="panel-eas"
+             aria-labelledby="tab-eas" hidden>
+      <div class="panel-heading">
+        <div>
+          <h1>Engineering Assistance System</h1>
+          <p>Decision support with deterministic adjudication</p>
+        </div>
+        <span class="review-label">Professional review required</span>
+      </div>
+      <form id="eas-form" class="workflow-grid">
+        <label for="eas-mode">Engineering mode</label>
+        <select id="eas-mode" name="mode">
+          <option value="solve-problem">Solve problem</option>
+          <option value="diagnose-root-cause">Diagnose root cause</option>
+          <option value="review-design" selected>Review design</option>
+          <option value="suggest-improvements">Suggest improvements</option>
+          <option value="explore-novel-solution">Explore novel solution</option>
+        </select>
+        <label for="eas-problem">Problem statement</label>
+        <textarea id="eas-problem" rows="5" maxlength="8000">Evaluate the synthetic thermal enclosure cooling fixture.</textarea>
+        <button type="submit" class="primary">Run two-stage workflow</button>
+      </form>
+      <pre class="structured-output" id="eas-output" aria-live="polite">No run yet.</pre>
+    </section>
+
+    <section class="panel" role="tabpanel" id="panel-sis"
+             aria-labelledby="tab-sis" hidden>
+      <div class="panel-heading">
+        <div>
+          <h1>Synthetic Ideation System</h1>
+          <p>Governed hypothesis generation and evaluation</p>
+        </div>
+        <span class="review-label">Prior-art and safety review required</span>
+      </div>
+      <form id="sis-form" class="workflow-grid">
+        <label for="sis-mode">Invention mode</label>
+        <select id="sis-mode" name="mode">
+          <option value="mechanism-discovery">Mechanism discovery</option>
+          <option value="hybrid-system-development">Hybrid system</option>
+          <option value="system-architecture" selected>System architecture</option>
+          <option value="process-innovation">Process innovation</option>
+          <option value="algorithmic-method">Algorithmic method</option>
+          <option value="constraint-inversion">Constraint inversion</option>
+        </select>
+        <label for="sis-problem">Research problem</label>
+        <textarea id="sis-problem" rows="5" maxlength="8000">Create a synthetic inspection scheduling candidate for a teaching fixture.</textarea>
+        <button type="submit" class="primary">Generate governed candidate</button>
+      </form>
+      <pre class="structured-output" id="sis-output" aria-live="polite">No run yet.</pre>
+    </section>
+
+    <section class="panel" role="tabpanel" id="panel-csc"
+             aria-labelledby="tab-csc" hidden>
+      <div class="panel-heading">
+        <div>
+          <h1>Carter Sensory Console</h1>
+          <p>Explicit, session-scoped sensory boundaries</p>
+        </div>
+        <span class="review-label">Media disabled until explicit activation</span>
+      </div>
+      <div class="sensory-layout">
+        <div class="orb-stage">
+          <canvas id="voice-orb" width="360" height="360"
+                  aria-label="Voice activity visualization"></canvas>
+          <p id="attention-state">Background</p>
+        </div>
+        <div class="sensory-controls">
+          <div class="control-row">
+            <button type="button" id="toggle-mic">Start microphone</button>
+            <button type="button" id="toggle-camera">Start local camera preview</button>
+          </div>
+          <video id="camera-preview" autoplay muted playsinline hidden></video>
+          <form id="transcript-form" class="command-form">
+            <label for="transcript-input">Synthetic transcript input</label>
+            <textarea id="transcript-input" rows="3"
+                      maxlength="2000">Carter, classify this synthetic transcript.</textarea>
+            <button type="submit" class="primary">Add transcript event</button>
+          </form>
+          <form id="tts-form" class="command-form">
+            <label for="tts-input">Speech text</label>
+            <textarea id="tts-input" rows="2" maxlength="600">This is a synthetic Carter voice test.</textarea>
+            <button type="submit">Synthesize speech</button>
+          </form>
+          <audio id="tts-audio" controls hidden></audio>
+          <div class="control-row">
+            <button type="button" id="interpret-buffer">Interpret rolling buffer</button>
+            <button type="button" id="clear-buffer">Clear sensory session</button>
+          </div>
+          <pre class="structured-output compact" id="sensory-output"
+               aria-live="polite">No sensory events.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" role="tabpanel" id="panel-evidence"
+             aria-labelledby="tab-evidence" hidden>
+      <div class="panel-heading">
+        <div>
+          <h1>Reproducible Evidence</h1>
+          <p>One synthetic request through plan, computation, governance, and response</p>
+        </div>
+        <span class="mode-label">Deterministic mock backend</span>
+      </div>
+      <div class="evidence-list">
+        <a href="/api/evidence/manifest">Evidence manifest</a>
+        <a href="/api/status">Runtime status</a>
+        <a href="https://github.com/mdlewis365/carter-synthetic-os/tree/main/examples/evidence"
+           rel="noopener noreferrer">Evidence source</a>
+      </div>
+      <pre class="structured-output" id="evidence-output">Load the manifest to inspect artifact hashes.</pre>
+      <button type="button" id="load-evidence">Load evidence manifest</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs</p>
+    <p>
+      Licensed under <a href="/license">AGPL-3.0-only</a>.
+      This software comes with no warranty.
+      <a href="https://github.com/mdlewis365/carter-synthetic-os"
+         rel="noopener noreferrer">Source Code</a>
+    </p>
+  </footer>
+</body>
+</html>
