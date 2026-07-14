@@ -1,0 +1,50 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only -->
+
+# Security Policy
+
+## Supported Versions
+
+Before the first public release, only the release candidate on `release/carter-agpl-public` is under active security preparation. After publication, the latest `0.1.x` patch release is expected to receive security fixes; older snapshots and private forks are not guaranteed support. This table must be updated when a later series is supported.
+
+| Version | Supported |
+| --- | --- |
+| `0.1.x` | Yes, after public release |
+| Older / unreleased snapshots | No guarantee |
+
+## Private Reporting
+
+Do not open a public issue for a suspected vulnerability, exposed credential, private data, or exploit.
+
+Preferred channel after the repository is public: use GitHub's **Report a vulnerability** action on the repository's Security page. Maintainers must enable Private Vulnerability Reporting before relying on this route.
+
+If private vulnerability reporting is not yet enabled, use:
+
+**[APPROVED PRIVATE SECURITY CONTACT TO BE ADDED BEFORE PUBLICATION]**
+
+This placeholder is intentional. It must be replaced with an approved private contact or the GitHub private-reporting feature must be confirmed before public release. No security email address has been invented.
+
+Include the affected version/commit, component, prerequisites, impact, minimal reproduction, and suggested mitigation. Remove credentials and personal/private data; if a secret is essential to demonstrate impact, first ask how to transfer it securely.
+
+## Response
+
+Maintainers will attempt to acknowledge and triage reports, coordinate a fix, and credit reporters who request credit and acted in good faith. The project does not promise a response or remediation SLA. Do not publish details before maintainers have had a reasonable opportunity to investigate and protect users.
+
+## Scope Priorities
+
+High-priority examples include:
+
+- authentication, session, CSRF, route-authorization, or SSE ownership bypass;
+- credential or private-data exposure;
+- cross-session memory, transcript, job, or artifact access;
+- arbitrary code execution through MCM, SAL, providers, uploads, or tools;
+- unintended microphone/camera activation or sensory retention;
+- SSRF or unapproved data transfer through model endpoints;
+- dependency or build compromise affecting distributed artifacts.
+
+Model hallucination, prompt quality, unsupported engineering conclusions, and generated-concept novelty are usually product/research limitations rather than software vulnerabilities unless they cross a stated security boundary.
+
+## Operator Responsibilities
+
+Keep secrets outside source control, run the current patched version, bind local development to loopback, disable debug, use TLS and secure cookies for network access, restrict provider scopes/egress, keep persistence and sensory retention off unless reviewed, and follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md).
+
+This policy is not a guarantee that the software is free of vulnerabilities.
