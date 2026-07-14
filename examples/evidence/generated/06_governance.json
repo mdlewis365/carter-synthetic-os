@@ -1,0 +1,45 @@
+{
+  "computation_severity": "success",
+  "computation_status": "computed",
+  "constraint_summary": {
+    "blocking_failures": [],
+    "failed": 0,
+    "overall_pass": true,
+    "passed": 1,
+    "rejected_alternative_failures": [],
+    "rejected_option_failures": [],
+    "selected_candidate_failures": [],
+    "total": 1,
+    "unknown": 0,
+    "viable_non_selected_alternatives": []
+  },
+  "deterministic_gate_status": "computed_criteria_passed",
+  "deterministic_status_label": "Deterministic result computed; criteria passed",
+  "engineering_mode": "review-design",
+  "engineering_outcome": "pass",
+  "engineering_outcome_label": "Passed criteria",
+  "engineering_outcome_severity": "success",
+  "final_report_status_label": "Engineering advisory - qualified human review required",
+  "governance_reasons": [
+    "Deterministic MCM completed and all known required constraints passed.",
+    "Carter EAS is decision-support software; a qualified human must independently verify calculations, units, assumptions, constraints, codes, and safety."
+  ],
+  "governance_severity": "success",
+  "governance_status": "needs_human_review",
+  "human_review_required": true,
+  "mcm_computed_ok": true,
+  "mcm_required": true,
+  "mcm_status": "computed",
+  "primary_root_cause": null,
+  "professional_approval_status": "not_approved",
+  "public_release_gate": "mandatory_human_review",
+  "risk_classification": "medium",
+  "risk_reasons": [
+    "Default EAS risk classification is medium."
+  ],
+  "schema": "evidence.governance.v1",
+  "selected_configuration_key": "",
+  "selected_solution": "",
+  "selected_solution_pass": null,
+  "user_facing_status_label": "Engineering advisory - qualified human review required"
+}

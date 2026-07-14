@@ -1,0 +1,40 @@
+{
+  "deterministic": true,
+  "execution_timestamp": "2026-01-01T00:00:00+00:00",
+  "input_hash": "8ba4186fe3af39305929db320d9d9047b9a3714a847243bf5555dd5801d24e6b",
+  "language_model_invoked": false,
+  "model_backend": "mock",
+  "output_hashes": {
+    "01_user_input.json": "0b6d33198b17efb3ba4687a765ded60f083534f594de446aa06730ca90c5430f",
+    "02_normalized_request.json": "37531203901ff2c468d6668cb9afc7a6025a839a11584d253cd4574af4830db6",
+    "03_structured_plan.json": "7d0f0496d5f2281e0e75d3131a7d1309a2d7cf21c8b875803c12d116675bc53c",
+    "04_schema_validation.json": "e0b8d3128c6f193583cdfdd006f5cf4408e0ffe8ce30d63d944e8b668c2bb326",
+    "05_deterministic_computation.json": "3cd9c17c60092fd8f34cdce7ad623d7e155bc3aa699fca9be4f05d66803b68f7",
+    "06_governance.json": "01f9945e77dc6a347373417a78a8cc2de12b3b601bf2380696fbd788a0cf3d2c",
+    "07_final_response.json": "c456d8a156a9ad67ab404625a03210c0b425a7de4cffc01cde18d4bd580efe51",
+    "07_final_response.md": "780713850c1e66973b7a35b60f289fc835a61a1452a6338897deebc1251b0e85",
+    "08_execution_metadata.json": "1e29b43c6e0d200daaebe377c4ce970e0494a766e4b448b8304a21aaee0b3175",
+    "09_continuous_execution.json": "df4d897f2c819631ec3588570f32c984c409ec20db5672d1394571e677a193ee"
+  },
+  "probabilistic": false,
+  "python_version": "3.12.4",
+  "regeneration_command": "python -m examples.evidence.run_case",
+  "schema": "evidence.manifest.v1",
+  "software_version": "0.1.0",
+  "test_status": {
+    "collected": 8,
+    "details": {
+      "governance_bounded": true,
+      "human_review_required": true,
+      "mcm_computed": true,
+      "mock_planning_backend": true,
+      "no_language_model": true,
+      "schema_valid": true,
+      "synthetic_fixture": true,
+      "workflow_advisory_ready": true
+    },
+    "failed": 0,
+    "passed": 8
+  },
+  "timestamp_source": "fixed_synthetic_fixture"
+}

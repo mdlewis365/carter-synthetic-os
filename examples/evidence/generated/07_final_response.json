@@ -1,0 +1,21 @@
+{
+  "computed_outputs": {
+    "total_synthetic_heat_load": 150.0
+  },
+  "deterministic_gate_status": "computed_criteria_passed",
+  "human_review_required": true,
+  "kind": "deterministic_engineering_advisory",
+  "limitations": [
+    "EAS does not replace licensed engineering judgment.",
+    "EAS does not establish code compliance or safety.",
+    "A computed result does not establish experimental or production validation."
+  ],
+  "recommended_actions": [
+    "Review the structured assumptions and required inputs.",
+    "Independently reproduce calculations and unit conversions.",
+    "Check applicable codes, standards, hazards, and acceptance criteria.",
+    "Obtain approval from an appropriately qualified professional."
+  ],
+  "schema": "evidence.final_response.v1",
+  "summary": "MCM completed deterministic computation for: total_synthetic_heat_load. Results are not a professional certification or approval."
+}

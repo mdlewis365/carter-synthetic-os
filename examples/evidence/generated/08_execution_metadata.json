@@ -1,0 +1,31 @@
+{
+  "command": "python -m examples.evidence.run_case",
+  "deterministic": true,
+  "embedded_checks": {
+    "collected": 8,
+    "details": {
+      "governance_bounded": true,
+      "human_review_required": true,
+      "mcm_computed": true,
+      "mock_planning_backend": true,
+      "no_language_model": true,
+      "schema_valid": true,
+      "synthetic_fixture": true,
+      "workflow_advisory_ready": true
+    },
+    "failed": 0,
+    "passed": 8
+  },
+  "execution_timestamp": "2026-01-01T00:00:00+00:00",
+  "fixture_id": "synthetic_thermal_enclosure_v1",
+  "language_model_invoked": false,
+  "model_backend": "mock",
+  "network_access": false,
+  "paid_api_used": false,
+  "probabilistic": false,
+  "python_version": "3.12.4",
+  "repository_test_status": "Not run by the evidence command; see PUBLIC_RELEASE_REPORT.md.",
+  "schema": "evidence.execution_metadata.v1",
+  "software_version": "0.1.0",
+  "timestamp_source": "fixed_synthetic_fixture"
+}

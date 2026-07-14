@@ -1,0 +1,595 @@
+{
+  "deterministic_computation": {
+    "constraint_summary": {
+      "blocking_failures": [],
+      "failed": 0,
+      "margin_sensitive_passes": [],
+      "notes": [],
+      "overall_pass": true,
+      "passed": 1,
+      "total": 1,
+      "unknown": 0
+    },
+    "request": {
+      "computation_id": "synthetic-thermal-enclosure-v1",
+      "constraints": [
+        {
+          "comparator": "<=",
+          "description": "Synthetic demonstration limit; not a design requirement.",
+          "lhs": "electronics_heat",
+          "name": "synthetic_electronics_heat_limit",
+          "rhs": 150.0,
+          "unit": "W"
+        }
+      ],
+      "fixture_notice": "All values are synthetic demonstration data and are not suitable for design use.",
+      "mode": "review-design",
+      "objective": "Sum two synthetic heat loads for a public demonstration.",
+      "operation": "sum",
+      "requested_output": "total_synthetic_heat_load",
+      "sensitivity": {
+        "enabled": true,
+        "outputs": [
+          "total_synthetic_heat_load"
+        ],
+        "variables": {
+          "electronics_heat": {
+            "percent": 10.0
+          }
+        }
+      },
+      "variables": {
+        "ambient_heat_gain": {
+          "source": "synthetic_fixture",
+          "unit": "W",
+          "value": 30.0
+        },
+        "electronics_heat": {
+          "source": "synthetic_fixture",
+          "unit": "W",
+          "value": 120.0
+        }
+      }
+    },
+    "required": true,
+    "result": {
+      "computation_id": "synthetic-thermal-enclosure-v1",
+      "constraint_checks": {
+        "checks": [
+          {
+            "boolean_output": null,
+            "comparator": "<=",
+            "description": "Synthetic demonstration limit; not a design requirement.",
+            "expression": "electronics_heat <= 150.0",
+            "lhs": "electronics_heat",
+            "lhs_unit": "W",
+            "lhs_value": 120.0,
+            "margin": 30.0,
+            "margin_percent": 20.0,
+            "margin_sensitive": false,
+            "margin_unit": "W",
+            "message": "Constraint passed.",
+            "name": "synthetic_electronics_heat_limit",
+            "passes": true,
+            "rhs": 150.0,
+            "rhs_unit": "W",
+            "rhs_value": 150.0,
+            "severity": "pass",
+            "source": "structured",
+            "unit_validation": {
+              "message": "Constraint units are compatible: W.",
+              "severity": "info",
+              "status": "valid"
+            }
+          }
+        ],
+        "constraint_policy_notes": [],
+        "diagnostics": [],
+        "enabled": true,
+        "margin_sensitive_rules": [],
+        "qualitative_constraint_notes": [],
+        "summary": {
+          "blocking_failures": [],
+          "failed": 0,
+          "margin_sensitive_passes": [],
+          "notes": [],
+          "overall_pass": true,
+          "passed": 1,
+          "total": 1,
+          "unknown": 0
+        }
+      },
+      "constraints": [
+        {
+          "comparator": "<=",
+          "description": "Synthetic demonstration limit; not a design requirement.",
+          "lhs": "electronics_heat",
+          "name": "synthetic_electronics_heat_limit",
+          "rhs": 150.0,
+          "unit": "W"
+        }
+      ],
+      "diagnostics": [
+        "Executed operation: sum",
+        "Default +/-25% sensitivity was used because no sensitivity range was provided."
+      ],
+      "inputs_used": {
+        "ambient_heat_gain": 30.0,
+        "electronics_heat": 120.0
+      },
+      "mcm_run_health": {
+        "blocking_failures": [],
+        "constraint_failed": 0,
+        "constraint_passed": 1,
+        "constraint_total": 1,
+        "constraint_unknown": 0,
+        "diagnostic_categories": [],
+        "diagnostic_evidence_count": null,
+        "diagnostic_status": null,
+        "eliminated_cause_flags": null,
+        "equations_executed_count": 0,
+        "equations_skipped_count": 0,
+        "invalid_unit_outputs_count": 0,
+        "mcm_computed_ok": true,
+        "mcm_required": true,
+        "mcm_status": "computed",
+        "missing_outputs_count": 0,
+        "missing_variables_count": 0,
+        "overall_recommendation_status": null,
+        "overall_release_status": null,
+        "primary_root_cause": null,
+        "readiness_label": "computed_clean",
+        "recommended_concept_name": null,
+        "recommended_option_name": null,
+        "rejected_alternative_failures": null,
+        "rejected_candidate_failures": null,
+        "rejected_candidates_count": null,
+        "rejected_option_failures": null,
+        "screening_status": null,
+        "selected_candidate_all_criteria_pass": null,
+        "selected_candidate_failures": null,
+        "selected_candidate_key": null,
+        "selected_conductor_AWG": null,
+        "selected_config_label": null,
+        "selected_configuration_key": null,
+        "selected_configuration_label": null,
+        "selected_fuse_A": null,
+        "selected_option_margin_sensitive_warnings": null,
+        "selected_power_supply_A": null,
+        "selected_solution": null,
+        "selected_solution_pass": null,
+        "selection_status": null,
+        "supported_root_cause_flags": null,
+        "unit_warnings_count": 0,
+        "unresolved_cause_flags": null,
+        "viable_candidates": null,
+        "viable_candidates_count": null,
+        "viable_non_selected_alternatives": null
+      },
+      "message": "MCM completed deterministic operation.",
+      "mode": "review-design",
+      "module": "Synthetic_OS_MCM",
+      "objective": "Sum two synthetic heat loads for a public demonstration.",
+      "operation": "sum",
+      "outputs": {
+        "total_synthetic_heat_load": 150.0
+      },
+      "requested_output": "total_synthetic_heat_load",
+      "sensitivity_analysis": {
+        "baseline_outputs": {
+          "total_synthetic_heat_load": {
+            "source": null,
+            "unit": null,
+            "value": 150.0
+          }
+        },
+        "cases": [
+          {
+            "baseline_input_value": 120.0,
+            "diagnostics": {
+              "high": [
+                "Executed operation: sum"
+              ],
+              "low": [
+                "Executed operation: sum"
+              ]
+            },
+            "high_input_value": 132.0,
+            "high_outputs": {
+              "total_synthetic_heat_load": {
+                "source": null,
+                "unit": null,
+                "value": 162.0
+              }
+            },
+            "high_status": "computed",
+            "low_input_value": 108.0,
+            "low_outputs": {
+              "total_synthetic_heat_load": {
+                "source": null,
+                "unit": null,
+                "value": 138.0
+              }
+            },
+            "low_status": "computed",
+            "output_deltas": {
+              "total_synthetic_heat_load": {
+                "baseline": 150.0,
+                "high": 162.0,
+                "high_delta": 12.0,
+                "high_delta_percent": 8.0,
+                "low": 138.0,
+                "low_delta": -12.0,
+                "low_delta_percent": -8.0,
+                "type": "numeric",
+                "unit": null
+              }
+            },
+            "pass_fail_flips": [],
+            "perturbation_amount": 10.0,
+            "perturbation_type": "percent",
+            "varied_input": "electronics_heat"
+          }
+        ],
+        "diagnostics": [
+          "Default +/-25% sensitivity was used because no sensitivity range was provided."
+        ],
+        "enabled": true,
+        "summary": {
+          "largest_relative_change_percent": 8.0,
+          "most_sensitive_input": "electronics_heat",
+          "most_sensitive_output": "total_synthetic_heat_load",
+          "notes": [
+            "No requested boolean output changed under perturbation."
+          ],
+          "pass_fail_flips": []
+        }
+      },
+      "status": "computed",
+      "task_type": null
+    },
+    "run_health": {
+      "blocking_failures": [],
+      "constraint_failed": 0,
+      "constraint_passed": 1,
+      "constraint_total": 1,
+      "constraint_unknown": 0,
+      "diagnostic_categories": [],
+      "diagnostic_evidence_count": null,
+      "diagnostic_status": null,
+      "eliminated_cause_flags": null,
+      "equations_executed_count": 0,
+      "equations_skipped_count": 0,
+      "invalid_unit_outputs_count": 0,
+      "mcm_computed_ok": true,
+      "mcm_required": true,
+      "mcm_status": "computed",
+      "missing_outputs_count": 0,
+      "missing_variables_count": 0,
+      "overall_recommendation_status": null,
+      "overall_release_status": null,
+      "primary_root_cause": null,
+      "readiness_label": "computed_clean",
+      "recommended_concept_name": null,
+      "recommended_option_name": null,
+      "rejected_alternative_failures": null,
+      "rejected_candidate_failures": null,
+      "rejected_candidates_count": null,
+      "rejected_option_failures": null,
+      "screening_status": null,
+      "selected_candidate_all_criteria_pass": null,
+      "selected_candidate_failures": null,
+      "selected_candidate_key": null,
+      "selected_conductor_AWG": null,
+      "selected_config_label": null,
+      "selected_configuration_key": null,
+      "selected_configuration_label": null,
+      "selected_fuse_A": null,
+      "selected_option_margin_sensitive_warnings": null,
+      "selected_power_supply_A": null,
+      "selected_solution": null,
+      "selected_solution_pass": null,
+      "selection_status": null,
+      "supported_root_cause_flags": null,
+      "unit_warnings_count": 0,
+      "unresolved_cause_flags": null,
+      "viable_candidates": null,
+      "viable_candidates_count": null,
+      "viable_non_selected_alternatives": null
+    },
+    "schema": "evidence.deterministic_computation.v1",
+    "sensitivity": {
+      "baseline_outputs": {
+        "total_synthetic_heat_load": {
+          "source": null,
+          "unit": null,
+          "value": 150.0
+        }
+      },
+      "cases": [
+        {
+          "baseline_input_value": 120.0,
+          "diagnostics": {
+            "high": [
+              "Executed operation: sum"
+            ],
+            "low": [
+              "Executed operation: sum"
+            ]
+          },
+          "high_input_value": 132.0,
+          "high_outputs": {
+            "total_synthetic_heat_load": {
+              "source": null,
+              "unit": null,
+              "value": 162.0
+            }
+          },
+          "high_status": "computed",
+          "low_input_value": 108.0,
+          "low_outputs": {
+            "total_synthetic_heat_load": {
+              "source": null,
+              "unit": null,
+              "value": 138.0
+            }
+          },
+          "low_status": "computed",
+          "output_deltas": {
+            "total_synthetic_heat_load": {
+              "baseline": 150.0,
+              "high": 162.0,
+              "high_delta": 12.0,
+              "high_delta_percent": 8.0,
+              "low": 138.0,
+              "low_delta": -12.0,
+              "low_delta_percent": -8.0,
+              "type": "numeric",
+              "unit": null
+            }
+          },
+          "pass_fail_flips": [],
+          "perturbation_amount": 10.0,
+          "perturbation_type": "percent",
+          "varied_input": "electronics_heat"
+        }
+      ],
+      "diagnostics": [
+        "Default +/-25% sensitivity was used because no sensitivity range was provided."
+      ],
+      "enabled": true,
+      "summary": {
+        "largest_relative_change_percent": 8.0,
+        "most_sensitive_input": "electronics_heat",
+        "most_sensitive_output": "total_synthetic_heat_load",
+        "notes": [
+          "No requested boolean output changed under perturbation."
+        ],
+        "pass_fail_flips": []
+      }
+    },
+    "unit_validation": {
+      "checks": [],
+      "invalid_outputs": [],
+      "warnings": []
+    }
+  },
+  "execution_metadata": {
+    "command": "python -m examples.evidence.run_case",
+    "deterministic": true,
+    "embedded_checks": {
+      "collected": 8,
+      "details": {
+        "governance_bounded": true,
+        "human_review_required": true,
+        "mcm_computed": true,
+        "mock_planning_backend": true,
+        "no_language_model": true,
+        "schema_valid": true,
+        "synthetic_fixture": true,
+        "workflow_advisory_ready": true
+      },
+      "failed": 0,
+      "passed": 8
+    },
+    "execution_timestamp": "2026-01-01T00:00:00+00:00",
+    "fixture_id": "synthetic_thermal_enclosure_v1",
+    "language_model_invoked": false,
+    "model_backend": "mock",
+    "network_access": false,
+    "paid_api_used": false,
+    "probabilistic": false,
+    "python_version": "3.12.4",
+    "repository_test_status": "Not run by the evidence command; see PUBLIC_RELEASE_REPORT.md.",
+    "schema": "evidence.execution_metadata.v1",
+    "software_version": "0.1.0",
+    "timestamp_source": "fixed_synthetic_fixture"
+  },
+  "final_response": {
+    "computed_outputs": {
+      "total_synthetic_heat_load": 150.0
+    },
+    "deterministic_gate_status": "computed_criteria_passed",
+    "human_review_required": true,
+    "kind": "deterministic_engineering_advisory",
+    "limitations": [
+      "EAS does not replace licensed engineering judgment.",
+      "EAS does not establish code compliance or safety.",
+      "A computed result does not establish experimental or production validation."
+    ],
+    "recommended_actions": [
+      "Review the structured assumptions and required inputs.",
+      "Independently reproduce calculations and unit conversions.",
+      "Check applicable codes, standards, hazards, and acceptance criteria.",
+      "Obtain approval from an appropriately qualified professional."
+    ],
+    "schema": "evidence.final_response.v1",
+    "summary": "MCM completed deterministic computation for: total_synthetic_heat_load. Results are not a professional certification or approval."
+  },
+  "governance": {
+    "computation_severity": "success",
+    "computation_status": "computed",
+    "constraint_summary": {
+      "blocking_failures": [],
+      "failed": 0,
+      "overall_pass": true,
+      "passed": 1,
+      "rejected_alternative_failures": [],
+      "rejected_option_failures": [],
+      "selected_candidate_failures": [],
+      "total": 1,
+      "unknown": 0,
+      "viable_non_selected_alternatives": []
+    },
+    "deterministic_gate_status": "computed_criteria_passed",
+    "deterministic_status_label": "Deterministic result computed; criteria passed",
+    "engineering_mode": "review-design",
+    "engineering_outcome": "pass",
+    "engineering_outcome_label": "Passed criteria",
+    "engineering_outcome_severity": "success",
+    "final_report_status_label": "Engineering advisory - qualified human review required",
+    "governance_reasons": [
+      "Deterministic MCM completed and all known required constraints passed.",
+      "Carter EAS is decision-support software; a qualified human must independently verify calculations, units, assumptions, constraints, codes, and safety."
+    ],
+    "governance_severity": "success",
+    "governance_status": "needs_human_review",
+    "human_review_required": true,
+    "mcm_computed_ok": true,
+    "mcm_required": true,
+    "mcm_status": "computed",
+    "primary_root_cause": null,
+    "professional_approval_status": "not_approved",
+    "public_release_gate": "mandatory_human_review",
+    "risk_classification": "medium",
+    "risk_reasons": [
+      "Default EAS risk classification is medium."
+    ],
+    "schema": "evidence.governance.v1",
+    "selected_configuration_key": "",
+    "selected_solution": "",
+    "selected_solution_pass": null,
+    "user_facing_status_label": "Engineering advisory - qualified human review required"
+  },
+  "normalized_request": {
+    "assumptions": [],
+    "case_id": "public-evidence-thermal-001",
+    "constants": null,
+    "constraints": [],
+    "domain": "thermal_enclosure",
+    "equations": [],
+    "expression": null,
+    "fixture_id": "synthetic_thermal_enclosure_v1",
+    "inputs": null,
+    "mcm_request": null,
+    "mcm_required": null,
+    "mode": "review-design",
+    "objective": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+    "operation": null,
+    "problem_statement": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+    "requested_output": null,
+    "required_inputs": [],
+    "sensitivity": null,
+    "solve_for": [],
+    "timestamp_utc": "2026-01-01T00:00:00+00:00",
+    "uploaded_file_names": [],
+    "variables": null
+  },
+  "schema": "evidence.continuous_execution.v1",
+  "schema_validation": {
+    "errors": [],
+    "valid": true,
+    "warnings": []
+  },
+  "structured_plan": {
+    "actual_backend": {
+      "is_language_model": false,
+      "kind": "mock",
+      "name": "deterministic-synthetic-planner"
+    },
+    "plan": {
+      "assumptions": [],
+      "constraints": [
+        {
+          "comparator": "<=",
+          "description": "Synthetic demonstration limit; not a design requirement.",
+          "lhs": "electronics_heat",
+          "name": "synthetic_electronics_heat_limit",
+          "rhs": 150.0,
+          "unit": "W"
+        }
+      ],
+      "equations": [],
+      "human_review_required": true,
+      "mcm_request": {
+        "computation_id": "synthetic-thermal-enclosure-v1",
+        "constraints": [
+          {
+            "comparator": "<=",
+            "description": "Synthetic demonstration limit; not a design requirement.",
+            "lhs": "electronics_heat",
+            "name": "synthetic_electronics_heat_limit",
+            "rhs": 150.0,
+            "unit": "W"
+          }
+        ],
+        "fixture_notice": "All values are synthetic demonstration data and are not suitable for design use.",
+        "mode": "review-design",
+        "objective": "Sum two synthetic heat loads for a public demonstration.",
+        "operation": "sum",
+        "requested_output": "total_synthetic_heat_load",
+        "sensitivity": {
+          "enabled": true,
+          "outputs": [
+            "total_synthetic_heat_load"
+          ],
+          "variables": {
+            "electronics_heat": {
+              "percent": 10.0
+            }
+          }
+        },
+        "variables": {
+          "ambient_heat_gain": {
+            "source": "synthetic_fixture",
+            "unit": "W",
+            "value": 30.0
+          },
+          "electronics_heat": {
+            "source": "synthetic_fixture",
+            "unit": "W",
+            "value": 120.0
+          }
+        }
+      },
+      "mcm_required": true,
+      "mode": "review-design",
+      "objective": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+      "planning_backend": {
+        "is_language_model": false,
+        "kind": "mock",
+        "name": "deterministic-synthetic-planner"
+      },
+      "problem_statement": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+      "required_inputs": [],
+      "schema": "eas.stage_one_plan.v1",
+      "selected_packs": [
+        "modes/review_design_pack",
+        "thermal_enclosure_cooling_pack"
+      ],
+      "synthetic_fixture": "synthetic_thermal_enclosure_v1"
+    },
+    "planning_contract": "probabilistic_stage_one",
+    "probabilistic_boundary_exercised": false,
+    "schema": "evidence.structured_plan.v1"
+  },
+  "user_input": {
+    "case_id": "public-evidence-thermal-001",
+    "domain": "thermal_enclosure",
+    "fixture_id": "synthetic_thermal_enclosure_v1",
+    "mode": "review-design",
+    "problem_statement": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+    "schema": "evidence.input.v1",
+    "timestamp_utc": "2026-01-01T00:00:00+00:00"
+  }
+}

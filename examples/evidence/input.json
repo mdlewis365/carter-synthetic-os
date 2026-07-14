@@ -1,0 +1,10 @@
+{
+  "case_id": "public-evidence-thermal-001",
+  "domain": "thermal_enclosure",
+  "fixture_id": "synthetic_thermal_enclosure_v1",
+  "mode": "review-design",
+  "problem_statement": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+  "schema": "evidence.input.v1",
+  "timestamp_utc": "2026-01-01T00:00:00+00:00"
+}
+

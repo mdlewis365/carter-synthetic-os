@@ -1,0 +1,82 @@
+{
+  "actual_backend": {
+    "is_language_model": false,
+    "kind": "mock",
+    "name": "deterministic-synthetic-planner"
+  },
+  "plan": {
+    "assumptions": [],
+    "constraints": [
+      {
+        "comparator": "<=",
+        "description": "Synthetic demonstration limit; not a design requirement.",
+        "lhs": "electronics_heat",
+        "name": "synthetic_electronics_heat_limit",
+        "rhs": 150.0,
+        "unit": "W"
+      }
+    ],
+    "equations": [],
+    "human_review_required": true,
+    "mcm_request": {
+      "computation_id": "synthetic-thermal-enclosure-v1",
+      "constraints": [
+        {
+          "comparator": "<=",
+          "description": "Synthetic demonstration limit; not a design requirement.",
+          "lhs": "electronics_heat",
+          "name": "synthetic_electronics_heat_limit",
+          "rhs": 150.0,
+          "unit": "W"
+        }
+      ],
+      "fixture_notice": "All values are synthetic demonstration data and are not suitable for design use.",
+      "mode": "review-design",
+      "objective": "Sum two synthetic heat loads for a public demonstration.",
+      "operation": "sum",
+      "requested_output": "total_synthetic_heat_load",
+      "sensitivity": {
+        "enabled": true,
+        "outputs": [
+          "total_synthetic_heat_load"
+        ],
+        "variables": {
+          "electronics_heat": {
+            "percent": 10.0
+          }
+        }
+      },
+      "variables": {
+        "ambient_heat_gain": {
+          "source": "synthetic_fixture",
+          "unit": "W",
+          "value": 30.0
+        },
+        "electronics_heat": {
+          "source": "synthetic_fixture",
+          "unit": "W",
+          "value": 120.0
+        }
+      }
+    },
+    "mcm_required": true,
+    "mode": "review-design",
+    "objective": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+    "planning_backend": {
+      "is_language_model": false,
+      "kind": "mock",
+      "name": "deterministic-synthetic-planner"
+    },
+    "problem_statement": "Evaluate the synthetic thermal enclosure fixture for the public evidence case.",
+    "required_inputs": [],
+    "schema": "eas.stage_one_plan.v1",
+    "selected_packs": [
+      "modes/review_design_pack",
+      "thermal_enclosure_cooling_pack"
+    ],
+    "synthetic_fixture": "synthetic_thermal_enclosure_v1"
+  },
+  "planning_contract": "probabilistic_stage_one",
+  "probabilistic_boundary_exercised": false,
+  "schema": "evidence.structured_plan.v1"
+}
