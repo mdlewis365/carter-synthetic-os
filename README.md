@@ -5,220 +5,441 @@ Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs
 
 # Carter Synthetic OS
 
-Carter Synthetic OS is a governed compound AI expert system and research
-platform. It orchestrates probabilistic language-model providers with
-deterministic memory, computation, validation, governance, and observability
-components.
+**A governed compound AI research platform built around one principle: probabilistic AI should not govern or validate itself.**
 
-**Version:** 0.1.0, Initial Public Research Release
+Carter Synthetic OS combines language-model reasoning with bounded memory, deterministic computation, schema validation, governance gates, operational traceability, and required human review.
 
-**License:** GNU Affero General Public License v3.0 only
-(`AGPL-3.0-only`)
+Its public subsystems include:
 
+* **Synthetic Operating System (SOS)** — orchestration, governance, memory, provider, and computation boundaries
+* **Engineering Assistance System (EAS)** — governed engineering decision support
+* **Synthetic Ideation System (SIS)** — structured and evaluated technical ideation
+* **Carter Sensory Console (CSC)** — bounded speech, attention, interpretation, and sensory-state research
+
+**Version:** 0.1.0 — Initial Public Research Release
+**License:** GNU Affero General Public License v3.0 only (`AGPL-3.0-only`)
+**Creator:** Michael D. Lewis, founder of Synthetic OS Labs
 **Canonical source:** https://github.com/mdlewis365/carter-synthetic-os
+
+> **Current opportunity:** I am seeking AI engineering positions, technical collaborators, engineering pilot partners, and conversations concerning research or early-stage funding.
+
+[Quick Start](#quick-start) · [Architecture](#architecture) · [Reproducible Evidence](#reproducible-evidence) · [Documentation](#documentation)
+
+---
 
 ## Project Status
 
-This is an alpha research release. The repository contains runnable
-first-party implementations of Carter, Synthetic OS (SOS), the Engineering
-Assistance System (EAS), the Synthetic Ideation System (SIS), and the Carter
-Sensory Console (CSC). The deterministic mock experience and offline tests
-require no private data, model weights, paid API, or network access.
+This repository is the **Initial Public Research Release and reference runtime** of Carter/Synthetic OS.
 
-The release is prepared locally for human security, privacy, ownership,
-patent, and license review. It is not a production deployment recommendation,
-professional certification, scientific validation, or unrestricted autonomous
-system.
+It is a runnable, package-oriented public implementation derived from the architecture, deterministic engineering components, subsystem contracts, and operating concepts of the private Carter system.
 
-## What Carter Is
+The private Carter/Synthetic OS codebase remains the canonical operational and continuing R&D implementation. This public runtime is designed for:
 
-Carter is the user-facing orchestrator for a compound expert-system runtime.
-The public implementation:
+* inspection;
+* reproducibility;
+* research;
+* demonstration;
+* external testing;
+* contribution;
+* technical evaluation by employers, collaborators, and potential supporters.
 
-- normalizes and hashes requests;
-- assembles bounded, structured context;
-- applies deterministic governance gates;
-- routes to a clearly identified model provider;
-- maintains session-scoped rolling context;
-- keeps long-term memory writes opt-in;
-- streams responses with Server-Sent Events;
-- integrates EAS, SIS, and CSC through explicit interfaces;
-- records metadata and hashes instead of raw prompts in lifecycle events.
+It is not represented as a complete copy of the private Carter deployment.
 
-## What Carter Is Not
+The default mock experience and standard test suite require:
 
-Carter is not represented here as conscious, sentient, AGI, independently
-autonomous, professionally licensed, scientifically validated, or capable of
-guaranteeing factual correctness. Language-model output is probabilistic.
-Deterministic checks establish only the conditions implemented in code; they
-do not establish real-world safety, completeness, legality, or professional
-approval.
+* no private data;
+* no model weights;
+* no paid API;
+* no provider credentials;
+* no network access.
+
+This release is not a production deployment recommendation, professional certification, scientific validation, or unrestricted autonomous system.
+
+---
+
+## Why Carter Exists
+
+Language models are powerful probabilistic reasoners, but their outputs may be incomplete, inconsistent, unsupported, or wrong.
+
+Carter is an exploration of a different system design:
+
+> **Use probabilistic models to propose, interpret, and reason—but use explicit software boundaries to govern, validate, compute, record, and escalate.**
+
+The architecture separates several responsibilities that are often combined inside a single prompt or agent loop:
+
+* language generation;
+* memory retrieval;
+* deterministic calculation;
+* schema validation;
+* governance;
+* tool authorization;
+* lifecycle observation;
+* human review.
+
+The objective is not to eliminate uncertainty. It is to make uncertainty, authority, and failure states more visible.
+
+---
+
+## What This Repository Demonstrates
+
+Carter Synthetic OS provides inspectable proof of work across:
+
+* Python application and package architecture;
+* Flask APIs and Server-Sent Events;
+* local and cloud language-model provider boundaries;
+* deterministic mock execution;
+* bounded request and response contracts;
+* session-scoped memory;
+* optional persistence interfaces;
+* deterministic engineering computation;
+* engineering units and constraint handling;
+* governance and human-review states;
+* structured ideation workflows;
+* sensory-session isolation;
+* speech transcription and synthesis boundaries;
+* security-focused configuration;
+* reproducible execution evidence;
+* unit, integration, and smoke testing;
+* packaging, CI, and public-release documentation.
+
+The repository is intended to show not merely an AI prompt, but a compound system in which probabilistic and deterministic components have distinct responsibilities.
+
+---
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    U[User or browser] --> W[Flask and signed session boundary]
-    W --> C[Carter orchestration]
-    C --> G[SOS governance]
-    C --> X[Structured context]
-    X --> CRM[CRM session memory]
-    X --> AMS[AMS opt-in memory]
-    C --> R{Provider router}
-    R --> MOCK[Deterministic mock]
-    R --> OLLAMA[Local Ollama]
-    R --> CLOUD[Optional cloud providers]
-    C --> EAS[EAS]
-    EAS --> MCM[MCM deterministic computation]
-    EAS --> EDR[EDR and human-review gate]
-    C --> SIS[SIS hypothesis workflow]
-    SIS --> EV[Deterministic evaluators]
-    C --> CSC[CSC session sensory boundary]
-    C --> LCM[Redacted lifecycle events and OpRep metadata]
+    U[User or Browser] --> W[Flask and Signed Session Boundary]
+
+    W --> C[Carter Runtime]
+
+    C --> X[Structured Context Assembly]
+    X --> CRM[CRM Session Context]
+    X --> AMS[Opt-In Public Memory Interfaces]
+
+    C --> G[SOS Governance Boundaries]
+    C --> R{Model Provider Router}
+
+    R --> MOCK[Deterministic Mock Provider]
+    R --> OLLAMA[Optional Local Ollama]
+    R --> CLOUD[Optional Cloud Providers]
+
+    C --> EAS[Engineering Assistance System]
+    EAS --> MCM[MCM Deterministic Computation]
+    EAS --> EDR[Engineering Decision Record]
+    EDR --> HR[Human Review]
+
+    C --> SIS[Synthetic Ideation System]
+    SIS --> EV[Deterministic Evaluators]
+    EV --> HR
+
+    C --> CSC[Carter Sensory Console]
+    CSC --> INT[Experimental Interpretation Boundary]
+
+    C --> LCM[Redacted Lifecycle Events]
+    LCM --> OPR[Metadata-Only Public OpRep]
 ```
 
-The line between provider output and deterministic code is explicit.
-Probabilistic providers may propose text or structured candidates. SAL,
-schemas, MCM, governance gates, and record generation operate
-deterministically on their inputs.
+The boundary between probabilistic output and deterministic processing is explicit.
 
-See [Architecture](docs/ARCHITECTURE.md),
-[Data Flow](docs/DATA_FLOW.md), and
-[Threat Model](docs/THREAT_MODEL.md).
+Model providers may propose text or structured candidates. Schemas, the experimental SAL v0 boundary, MCM, governance gates, and record-generation components operate deterministically on the inputs they receive.
 
-## Subsystems
+The public runtime does not claim that deterministic processing makes language-model output factually correct. It establishes only the conditions explicitly implemented in code.
 
-### Synthetic Operating System
+See:
 
-SOS supplies provider-neutral orchestration, context assembly, temporal and
-session anchors, AMS and CRM interfaces, deterministic DIM deduplication, SAL
-JSON normalization, default-deny tool boundaries, model routing, metadata-only
-LCM events, and OpRep generation.
+* [Architecture](docs/ARCHITECTURE.md)
+* [Data Flow](docs/DATA_FLOW.md)
+* [Governance](docs/GOVERNANCE.md)
+* [Threat Model](docs/THREAT_MODEL.md)
 
-The private source audit did not find an active standalone DIM or SAL module.
-The bounded public DIM and SAL implementations are identified as 0.1.0
-architecture additions. See [SOS](docs/SOS.md),
-[Memory](docs/MEMORY.md), [Governance](docs/GOVERNANCE.md), and
-[SAL](docs/SAL.md).
+---
 
-### Engineering Assistance System
+## Why Carter Is Different
 
-EAS implements mode selection, deterministic stage-one fallback planning,
-stage-one schema validation, engineering-pack routing, MCM request execution,
-unit and constraint handling, sensitivity propagation, Engineering Decision
-Records, governance classification, and a final advisory.
+### Governance is externalized
 
-**EAS is engineering decision-support software. It does not replace licensed
-engineering judgment, code-compliance review, hazard analysis, safety
-analysis, testing, or professional approval. Every public EAS result requires
-qualified human review.**
+Language-model output is not automatically accepted as system truth, memory, authority, or permission to act.
 
-See [EAS](docs/EAS.md).
+### Computation is separated from generation
 
-### Synthetic Ideation System
+The Mathematical and Computational Module performs deterministic calculations, unit handling, constraint evaluation, sensitivity processing, diagnostics, and result classification outside the language model.
 
-SIS implements scientist-input normalization, six bounded invention modes,
-candidate structure, deterministic rejection and invariant checks, evaluator
-aggregation, optional MCM feasibility input, and output governance.
+### Failure states remain visible
 
-**SIS outputs are hypotheses or candidates. They require independent technical
-validation, prior-art review, patent analysis, safety assessment, and
-experimental confirmation.**
+The system can return bounded failure, uncertainty, unsupported input, schema rejection, or required human review rather than forcing a successful-looking answer.
 
-See [SIS](docs/SIS.md).
+### Memory is bounded and explicit
 
-### Carter Sensory Console
+The public runtime uses session-scoped memory by default. Persistent memory is optional and disabled unless deliberately configured.
 
-CSC implements explicit hearing and local camera-preview state, browser audio
-capture, PCM16 WAV conversion, in-memory transcription boundaries,
-wake-name/attention classification, bounded transcript buffers, governed
-interpretation, optional local Ollama interpretation, and configurable
-ElevenLabs speech.
+### Specialized systems share governed interfaces
 
-Microphone and camera permissions are disabled until direct user action.
-Camera frames are not accepted by the server. Raw audio is discarded after
-the configured transcription boundary. All sensory state is session-scoped
-and memory-only by default. Google transcription sends the selected audio
-chunk to Google only when `CSC_TRANSCRIPTION_PROVIDER=google` and a key are
-configured.
+EAS, SIS, and CSC operate through explicit subsystem boundaries rather than unrelated prompt chains.
 
-See [CSC](docs/CSC.md).
+### Evidence can be reproduced
 
-## Repository Layout
+The repository contains deterministic execution artifacts, metadata, and hashes that can be regenerated without a paid provider or private data.
 
-```text
-src/
-  carter/       Flask application, CLI, orchestration integration, UI
-  sos/          orchestration, governance, memory, models, MCM, logging, SAL
-  eas/          engineering workflow, packs, records, governance, fixtures
-  sis/          ideation workflow, schemas, evaluators
-  csc/          sensory state, WAV, transcription, interpretation, TTS
-  shared/       environment configuration, redaction, version
-tests/          unit, integration, and smoke coverage
-examples/       chat, EAS, SIS, CSC, and reproducible evidence
-docs/           architecture, security, operations, and subsystem references
-scripts/        setup, demo, and offline test commands
-```
+---
 
-Runtime templates and static files live under `src/carter` so they are
-included in installed wheels. Root `templates/` and `static/` notes document
-that packaging adaptation.
+## Public Subsystems
 
-## Requirements
+## Synthetic Operating System
 
-- Python 3.11 or newer
-- A browser for the interactive application
-- No provider credential for mock mode
-- Ollama only for optional local-model mode
-- Provider credentials only for explicitly selected cloud modes
+Synthetic OS provides the public orchestration and governance foundation for Carter.
 
-The test matrix targets Python 3.11, 3.12, and 3.13.
+The public SOS runtime includes:
+
+* normalized request contracts;
+* temporal and session anchors;
+* bounded context assembly;
+* provider-neutral model interfaces;
+* provider routing;
+* session CRM;
+* opt-in AMS-style memory interfaces;
+* deterministic DIM ingestion and deduplication;
+* governance gates;
+* default-deny tool boundaries;
+* lifecycle-event recording;
+* metadata-only public operational reports;
+* MCM deterministic computation;
+* an experimental SAL v0 structural-output boundary.
+
+### Experimental SAL v0
+
+The public `sos.sal` module is a new 0.1.0 research component.
+
+Its current responsibility is narrow:
+
+* accept bounded JSON-like provider output;
+* reject malformed or unsafe structural values;
+* require an object root;
+* return a controlled success or failure envelope.
+
+It does **not** currently implement complete semantic adjudication such as:
+
+* intent alignment;
+* domain truth assessment;
+* assumption auditing;
+* memory-authority adjudication;
+* confidence correction;
+* counter-framing;
+* semantic factual validation.
+
+It should therefore be understood as an **experimental structural-output boundary**, not the completed Semantic Adjudication Layer envisioned for the broader Carter architecture.
+
+See:
+
+* [Synthetic OS](docs/SOS.md)
+* [SAL](docs/SAL.md)
+* [Memory](docs/MEMORY.md)
+* [Governance](docs/GOVERNANCE.md)
+
+---
+
+## Engineering Assistance System
+
+EAS is a governed engineering decision-support workflow.
+
+The public implementation includes:
+
+* engineering-mode normalization;
+* engineering-pack discovery and selection;
+* structured stage-one plans;
+* schema validation;
+* deterministic mock planning;
+* optional provider-generated stage-one proposals;
+* MCM request execution;
+* unit and constraint processing;
+* sensitivity handling;
+* Engineering Decision Records;
+* governance classification;
+* bounded final advisories;
+* mandatory human-review status.
+
+The public EAS runtime preserves the directly derived deterministic engineering kernel while presenting a simplified research workflow around it.
+
+The private Carter implementation contains additional provider, upload, asynchronous-job, recovery, and model-generated reporting behavior that is not reproduced here.
+
+> **EAS does not replace licensed engineering judgment, code-compliance review, hazard analysis, safety analysis, physical testing, or professional approval. Every public EAS result requires qualified human review.**
+
+See [Engineering Assistance System](docs/EAS.md).
+
+---
+
+## Synthetic Ideation System
+
+SIS is a structured technical-ideation and hypothesis-evaluation workflow.
+
+The public implementation includes:
+
+* scientist-input normalization;
+* bounded invention modes;
+* structured candidate generation;
+* deterministic mock candidates;
+* provider-candidate normalization;
+* rejection-boundary checks;
+* invariant-claim checks;
+* novelty and risk heuristics;
+* evaluator aggregation;
+* optional MCM feasibility input;
+* governance of final candidate output.
+
+The public evaluator workflow is an experimental research composition. It is not represented as identical to the private SIS implementation or as proof that a proposed concept is novel, feasible, safe, or patentable.
+
+> **SIS outputs are hypotheses and candidates. They require independent technical validation, prior-art research, patent analysis, safety assessment, and experimental confirmation.**
+
+See [Synthetic Ideation System](docs/SIS.md).
+
+---
+
+## Carter Sensory Console
+
+CSC explores bounded sensory intake and interpretation for Carter.
+
+The public implementation includes:
+
+* explicit hearing activation;
+* explicit camera-preview state;
+* browser audio capture;
+* PCM16 WAV conversion and validation;
+* transcription-provider boundaries;
+* wake-name and attention classification;
+* bounded rolling transcript buffers;
+* session-scoped sensory state;
+* optional local Ollama interpretation;
+* configurable ElevenLabs speech;
+* an experimental, non-action-authorizing interpretation boundary.
+
+The public CSC interpreter cannot independently authorize:
+
+* a response;
+* a memory write;
+* an external action;
+* tool execution.
+
+Microphone and camera permissions remain disabled until direct user action.
+
+Camera frames remain in the browser and are not accepted by the server. Raw audio is processed within the configured transcription boundary and is not durably retained by the public runtime.
+
+See [Carter Sensory Console](docs/CSC.md).
+
+---
+
+## What This Release Is—and Is Not
+
+| This release is                                           | This release is not                         |
+| --------------------------------------------------------- | ------------------------------------------- |
+| A runnable public research runtime                        | A complete copy of private Carter           |
+| A reference implementation of the Carter/SOS architecture | A production deployment                     |
+| A deterministic mock-first demonstration                  | A claim that mock mode is an LLM            |
+| A governed compound AI software project                   | An unrestricted autonomous agent            |
+| A public engineering and research artifact                | Professional certification                  |
+| Evidence of system design and implementation              | Proof of scientific correctness             |
+| Open-source software under AGPL-3.0-only                  | A warranty of safety or fitness             |
+| A platform for research and contribution                  | A claim of consciousness, sentience, or AGI |
+
+Carter is not represented as conscious, sentient, independently autonomous, professionally licensed, scientifically validated, or capable of guaranteeing factual correctness.
+
+Language-model output remains probabilistic.
+
+Deterministic checks establish only the conditions encoded in software. They do not establish real-world safety, completeness, legality, or professional approval.
+
+---
 
 ## Quick Start
 
-Unix-like systems:
+### Requirements
 
-```bash
-python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -e .
-python -m carter.cli
-```
+* Python 3.11 or newer
+* A modern browser
+* No credentials for default mock mode
+* Ollama only for optional local-model mode
+* Provider credentials only for explicitly selected cloud modes
 
-Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
+git clone https://github.com/mdlewis365/carter-synthetic-os.git
+cd carter-synthetic-os
+
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+
 python -m pip install -e .
 python -m carter.cli
 ```
 
-Open http://127.0.0.1:5000. The server binds to loopback, uses the mock
-provider, disables debug mode, disables persistent memory, and disables
-sensory retention by default.
-
-The convenience setup scripts install development tools:
+### Unix-Like Systems
 
 ```bash
-./scripts/setup.sh
-./scripts/run_demo.sh
+git clone https://github.com/mdlewis365/carter-synthetic-os.git
+cd carter-synthetic-os
+
+python3 -m venv .venv
+. .venv/bin/activate
+
+python -m pip install -e .
+python -m carter.cli
 ```
+
+Open:
+
+```text
+http://127.0.0.1:5000
+```
+
+The default server:
+
+* binds to loopback;
+* uses the deterministic mock provider;
+* disables debug mode;
+* disables persistent memory;
+* disables sensory retention;
+* requires no API key.
+
+Convenience scripts are also provided:
 
 ```powershell
 .\scripts\setup.ps1
 .\scripts\run_demo.ps1
 ```
 
+```bash
+./scripts/setup.sh
+./scripts/run_demo.sh
+```
+
+---
+
 ## Mock Demonstration
 
-Mock mode is the default and is explicitly labeled in the API and interface.
-It is a deterministic fixture provider, not a language model. It exercises
-request normalization, governance, context assembly, streaming, EAS
-computation, SIS evaluation, CSC classification, and execution metadata
-without a network call.
+Mock mode is the default public experience.
 
-Run the individual examples after installation:
+It is an explicitly labeled deterministic fixture provider—not a language model.
+
+Mock mode exercises:
+
+* request normalization;
+* context assembly;
+* provider routing;
+* governance;
+* response streaming;
+* EAS computation;
+* SIS evaluation;
+* CSC attention and interpretation boundaries;
+* execution metadata.
+
+It does so without:
+
+* private data;
+* paid APIs;
+* model downloads;
+* external network calls.
+
+Run individual examples after installation:
 
 ```bash
 python -m examples.basic_chat.run
@@ -227,31 +448,56 @@ python -m examples.sis.run
 python -m examples.csc.run
 ```
 
+---
+
 ## Reproducible Evidence
 
-The evidence case uses only synthetic heat-load values. It records user input,
-normalized request, structured stage-one plan, schema validation,
-deterministic MCM output, governance, final response, execution metadata, and
-SHA-256 artifact hashes.
+The included evidence case uses a synthetic engineering scenario.
 
-Regenerate and verify:
+It records:
+
+1. user input;
+2. normalized request;
+3. structured stage-one plan;
+4. schema validation;
+5. deterministic MCM output;
+6. governance result;
+7. bounded final response;
+8. execution metadata;
+9. SHA-256 artifact hashes;
+10. a continuous execution trace.
+
+Regenerate the evidence:
 
 ```bash
 python -m examples.evidence.run_case
+```
+
+Verify the checked-in evidence:
+
+```bash
 python -m examples.evidence.run_case --check
 ```
 
-The structured plan uses the same contract as a probabilistic stage-one plan,
-but its evidence backend is the deterministic mock provider. The manifest
-states that no language model, paid API, or network access was used.
+The structured plan uses the same public contract expected from a probabilistic stage-one proposal, but the evidence case uses the deterministic mock provider.
 
-## Local Ollama Mode
+The manifest explicitly records that no language model, paid API, or provider network was used.
 
-The adapter uses Ollama's local `/api/generate` HTTP interface and defaults to
-`http://127.0.0.1:11434`. No model weights are distributed.
+---
 
-Install Ollama separately, obtain a model under its own license, and configure
-its exact local name:
+## Optional Model Providers
+
+The public runtime supports:
+
+* deterministic mock mode;
+* local Ollama;
+* OpenAI;
+* Anthropic;
+* Google.
+
+Provider packages are optional. Standard installation and testing do not require them.
+
+### Local Ollama
 
 ```bash
 ollama serve
@@ -260,6 +506,8 @@ export OLLAMA_MODEL=your-local-model
 python -m carter.cli
 ```
 
+PowerShell:
+
 ```powershell
 ollama serve
 $env:CARTER_PROVIDER = "ollama"
@@ -267,21 +515,17 @@ $env:OLLAMA_MODEL = "your-local-model"
 python -m carter.cli
 ```
 
-Version 0.1.0 provides API-level support rather than a named-model validation
-matrix. No local model has been independently benchmarked or validated by this
-release. Memory needs depend on model size, context, quantization, and Ollama
-configuration; consult the selected model's documentation. If Ollama is
-unavailable or no model is configured, the API returns a bounded provider
-error and does not silently fall back to a cloud provider.
+Ollama defaults to:
 
-Remote Ollama endpoints are rejected unless
-`CARTER_ALLOW_REMOTE_OLLAMA=true`. URLs containing credentials, query strings,
-or fragments are rejected.
+```text
+http://127.0.0.1:11434
+```
 
-## Optional Cloud Providers
+Remote Ollama endpoints require explicit opt-in. URLs containing embedded credentials, query strings, or fragments are rejected.
 
-Cloud SDKs and credentials are not required for installation, tests, evidence,
-or mock mode. Install only the selected extra:
+### Optional Cloud Providers
+
+Install only the selected provider extra:
 
 ```bash
 python -m pip install -e ".[openai]"
@@ -289,199 +533,294 @@ python -m pip install -e ".[anthropic]"
 python -m pip install -e ".[google]"
 ```
 
-Configure one provider:
-
-```dotenv
-CARTER_PROVIDER=openai
-OPENAI_API_KEY=
-OPENAI_MODEL=
-```
-
-Equivalent provider values are `anthropic` and `google`, with
-`ANTHROPIC_API_KEY`/`ANTHROPIC_MODEL` or
-`GOOGLE_API_KEY`/`GOOGLE_MODEL`. `CARTER_DEFAULT_MODEL` overrides the
-provider-specific model variable.
-
-Provider imports and client construction are lazy. Missing packages, keys,
-models, unavailable endpoints, and invalid responses fail through sanitized
-provider errors. Standard tests mock provider boundaries and never incur API
-charges.
+Provider credentials are read from environment variables and are not required by mock mode, standard tests, or evidence generation.
 
 See [Model Providers](docs/MODEL_PROVIDERS.md).
 
-## Configuration
+---
 
-Copy values from `.env.example` into your own untracked environment. The
-application does not automatically load dotenv files.
+## Security and Privacy Defaults
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `CARTER_PROVIDER` | `mock` | mock, ollama, openai, anthropic, or google |
-| `CARTER_DEFAULT_MODEL` | `mock-v1` in mock mode | provider model override |
-| `CARTER_DATA_DIR` | `./data` | opt-in local persistence root |
-| `CARTER_LOG_LEVEL` | `INFO` | application log level |
-| `CARTER_HOST` | `127.0.0.1` | development bind address |
-| `CARTER_PORT` | `5000` | HTTP port |
-| `CARTER_DEBUG` | `false` | Flask debug mode |
-| `CARTER_ALLOW_PUBLIC_BIND` | `false` | explicit non-loopback bind opt-in |
-| `CARTER_ENABLE_MEMORY` | `false` | session AMS writes |
-| `CARTER_ENABLE_SENSORY_RETENTION` | `false` | must remain false; durable sensory retention is not implemented |
-| `CARTER_SESSION_IDLE_TTL_SECONDS` | `3600` | idle expiry for in-process session data |
-| `FLASK_SECRET_KEY` | generated per process | signed-session key |
-| `OLLAMA_BASE_URL` | `http://127.0.0.1:11434` | local Ollama endpoint |
-| `CSC_TRANSCRIPTION_PROVIDER` | `disabled` | disabled or google |
-| `CSC_INTERPRETATION_BACKEND` | `mock` | mock, ollama, or disabled |
+The public runtime is designed to start conservatively.
 
-An unset, short, or placeholder Flask key is replaced at runtime with a random
-ephemeral key. This permits secret-free local startup, but sessions reset when
-the process exits. Configure a long random secret for a stable deployment;
-never commit it.
+Default boundaries include:
+
+* loopback-only server binding;
+* debug mode disabled;
+* signed, HTTP-only, SameSite session cookies;
+* header-based CSRF protection;
+* bounded request payloads;
+* restrictive browser security headers;
+* no default cross-origin API policy;
+* session-owned jobs;
+* process-local CRM and CSC buffers;
+* persistent memory disabled;
+* raw sensory retention disabled;
+* camera frames kept in the browser;
+* provider access disabled until explicitly configured;
+* redaction of content-bearing lifecycle fields;
+* environment-variable secrets;
+* no private Carter memories, conversations, jobs, recordings, credentials, or databases.
+
+This release does not claim production readiness.
+
+Any network deployment must add and review:
+
+* TLS;
+* secure-cookie settings;
+* maintained WSGI hosting;
+* reverse-proxy limits;
+* durable secret management;
+* monitoring;
+* retention policy;
+* provider data-processing terms;
+* authentication and authorization;
+* AGPL source-availability obligations.
+
+See:
+
+* [Privacy](PRIVACY.md)
+* [Security Policy](SECURITY.md)
+* [Threat Model](docs/THREAT_MODEL.md)
+* [Deployment](docs/DEPLOYMENT.md)
+
+---
 
 ## Testing
 
-Install the development extra and run the complete standard offline suite:
+Install development dependencies:
 
 ```bash
 python -m pip install -e ".[dev]"
+```
+
+Run the standard offline test suite:
+
+```bash
 python -m pytest -m "not local_model and not cloud_provider and not slow"
 ```
 
-Or use `./scripts/run_tests.sh` or `.\scripts\run_tests.ps1`. Test markers are
-`unit`, `integration`, `smoke`, `local_model`, `cloud_provider`, `sensory`, and
-`slow`. Local-model and cloud-provider tests are opt-in.
+Or use:
 
-See [Testing](docs/TESTING.md) and `PUBLIC_RELEASE_REPORT.md` for the exact
-release-preparation results.
+```powershell
+.\scripts\run_tests.ps1
+```
 
-## Privacy Model
+```bash
+./scripts/run_tests.sh
+```
 
-- No private memory, conversation, OpRep, job store, email list, recording, or
-  existing database is included.
-- CRM and CSC buffers are process-local and session-scoped.
-- Persistent memory is disabled by default.
-- SQLite requires explicit construction. Chroma adapter source is included, but no Chroma dependency is declared while `CVE-2026-45829` lacks an audited fixed release.
-- Raw audio is processed in memory and discarded.
-- Camera frames remain in the browser's local preview.
-- Lifecycle logs redact content-bearing fields and retain hashes/metadata.
-- Cloud data transfer occurs only after an operator selects and configures the
-  corresponding provider.
+The public suite includes:
 
-See [Privacy](PRIVACY.md) and [Data Flow](docs/DATA_FLOW.md).
+* unit tests;
+* integration tests;
+* smoke tests;
+* mocked provider tests;
+* governance tests;
+* memory-isolation tests;
+* EAS and SIS workflow tests;
+* CSC boundary tests;
+* hostile and resource-bounded MCM inputs.
 
-## Security Model
+Local-model, cloud-provider, sensory-hardware, and slow tests are opt-in.
 
-The Flask application uses signed, HTTP-only, SameSite session cookies,
-header-only CSRF tokens for state-changing routes, session-owned jobs,
-bounded payloads, a restrictive Content Security Policy, explicit browser
-permission controls, and no cross-origin API policy. Secrets are read only
-from environment variables and are never returned by status endpoints.
+See:
 
-The public release audit found credential-bearing screenshots in older source
-and documentation clones. Those images are excluded. Token revocation and
-older-history review remain human release blockers.
+* [Testing](docs/TESTING.md)
+* [Public Release Report](PUBLIC_RELEASE_REPORT.md)
 
-See [Security Policy](SECURITY.md), [Threat Model](docs/THREAT_MODEL.md),
-`SECURITY_RELEASE_AUDIT.md`, and `PUBLIC_PUSH_CHECKLIST.md`.
+---
 
-## Deployment
+## Known Limitations
 
-The built-in Flask server is for local evaluation. It binds to loopback unless
-`CARTER_ALLOW_PUBLIC_BIND=true`. Debug mode is off by default. This release
-does not claim production readiness and intentionally provides no container
-image that might imply otherwise.
+* The private Carter/Synthetic OS repository remains the canonical operational implementation.
+* The public runtime is not behaviorally identical to private Carter.
+* Mock mode is not a language model.
+* No local or cloud model is scientifically validated by this release.
+* Model output can be wrong, incomplete, biased, or unsafe.
+* Public AMS and CRM are simplified and do not reproduce private Carter continuity.
+* Public DIM is a new bounded 0.1.0 implementation.
+* Public SAL is an experimental structural-output boundary, not complete semantic adjudication.
+* Public SQLite support is newly designed and is not a migration of the private AMS database.
+* The public EAS advisory differs from the private model-generated final-report stage.
+* The public SIS evaluator workflow is experimental and not a direct port of the complete private workflow.
+* CSC interpretation is experimental and cannot authorize responses, memory writes, tools, or actions.
+* Camera support is browser-preview state only.
+* Standard tests do not contact provider networks or exercise physical sensory hardware.
+* Deterministic validation covers only encoded schemas, equations, units, constraints, and rules.
+* Independent technical, security, dependency, patent, ownership, and licensing review remains necessary.
 
-Any network deployment must add TLS, secure-cookie policy, a maintained WSGI
-server, reverse-proxy limits, private secret management, monitoring, retention
-decisions, provider data-processing review, and source availability consistent
-with AGPL section 13.
+See:
 
-See [Deployment](docs/DEPLOYMENT.md).
+* [Known Limitations](KNOWN_LIMITATIONS.md)
+* [Research Status](docs/RESEARCH_STATUS.md)
+* [Roadmap](ROADMAP.md)
+
+---
+
+## Repository Layout
+
+```text
+src/
+  carter/       Flask application, CLI, runtime integration, and public UI
+  sos/          orchestration, governance, memory, providers, MCM, logging, SAL
+  eas/          engineering workflows, packs, records, governance, fixtures
+  sis/          ideation workflows, schemas, candidates, evaluators
+  csc/          sensory state, WAV, transcription, interpretation, and TTS
+  shared/       configuration, redaction, and version utilities
+
+tests/
+  unit/         component-level tests
+  integration/  workflow and API integration tests
+  smoke/        secret-free end-to-end mock execution
+
+examples/
+  basic_chat/   mock Carter example
+  eas/          deterministic EAS example
+  sis/          structured SIS example
+  csc/          sensory-state example
+  evidence/     reproducible engineering evidence pipeline
+
+docs/           architecture, subsystem, security, deployment, and research docs
+scripts/        setup, demo, and offline test commands
+```
+
+Runtime templates and static resources are packaged beneath `src/carter`.
+
+---
 
 ## Documentation
 
-- [Architecture](docs/ARCHITECTURE.md)
-- [Synthetic OS](docs/SOS.md)
-- [Memory](docs/MEMORY.md)
-- [Governance](docs/GOVERNANCE.md)
-- [SAL](docs/SAL.md)
-- [EAS](docs/EAS.md)
-- [SIS](docs/SIS.md)
-- [CSC](docs/CSC.md)
-- [Model Providers](docs/MODEL_PROVIDERS.md)
-- [Data Flow](docs/DATA_FLOW.md)
-- [Deployment](docs/DEPLOYMENT.md)
-- [Threat Model](docs/THREAT_MODEL.md)
-- [Testing](docs/TESTING.md)
-- [Limitations](docs/LIMITATIONS.md)
-- [Research Status](docs/RESEARCH_STATUS.md)
+### Architecture and Operation
 
-## Limitations
+* [Architecture](docs/ARCHITECTURE.md)
+* [Data Flow](docs/DATA_FLOW.md)
+* [Synthetic OS](docs/SOS.md)
+* [Memory](docs/MEMORY.md)
+* [Governance](docs/GOVERNANCE.md)
+* [Model Providers](docs/MODEL_PROVIDERS.md)
+* [Deployment](docs/DEPLOYMENT.md)
 
-- Mock mode is not a language model.
-- No local or cloud model is scientifically validated by this release.
-- Model outputs can be wrong, incomplete, biased, or unsafe.
-- Deterministic validation covers only encoded schemas, equations, units, and
-  rules.
-- Public DIM and SAL are new bounded 0.1.0 implementations.
-- SQLite support is new to the public architecture; it was not migrated from
-  the private AMS.
-- Camera support is local preview only.
-- Standard tests do not contact provider networks or exercise physical sensory
-  hardware.
-- Dependency, model, asset, patent, and ownership reviews require human
-  completion before public visibility.
+### Subsystems
 
-See [Known Limitations](KNOWN_LIMITATIONS.md) and
-[Research Status](docs/RESEARCH_STATUS.md).
+* [Semantic Adjudication Layer](docs/SAL.md)
+* [Engineering Assistance System](docs/EAS.md)
+* [Synthetic Ideation System](docs/SIS.md)
+* [Carter Sensory Console](docs/CSC.md)
+
+### Validation and Safety
+
+* [Testing](docs/TESTING.md)
+* [Research Status](docs/RESEARCH_STATUS.md)
+* [Technical Limitations](docs/LIMITATIONS.md)
+* [Known Limitations](KNOWN_LIMITATIONS.md)
+* [Threat Model](docs/THREAT_MODEL.md)
+* [Privacy](PRIVACY.md)
+* [Security](SECURITY.md)
+
+### Release and Participation
+
+* [Public Release Report](PUBLIC_RELEASE_REPORT.md)
+* [Release Notes](RELEASE_NOTES.md)
+* [Roadmap](ROADMAP.md)
+* [Contributing](CONTRIBUTING.md)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
+
+---
+
+## Employment, Pilots, Collaboration, and Funding
+
+Carter Synthetic OS represents several years of independent AI systems engineering and research by Michael D. Lewis through Synthetic OS Labs.
+
+The project demonstrates experience in:
+
+* AI application architecture;
+* agent and compound-system design;
+* local and cloud model integration;
+* deterministic validation;
+* engineering computation;
+* AI governance;
+* persistent and session memory;
+* schema-driven workflows;
+* Flask and SSE application development;
+* security-conscious public packaging;
+* test and evidence design;
+* technical documentation;
+* end-to-end research system development.
+
+Michael is currently interested in:
+
+* AI Engineer positions;
+* Software Engineer roles involving AI systems;
+* Applied AI and agentic-system engineering;
+* governed or safety-conscious AI development;
+* engineering-software pilot partnerships;
+* technical collaboration;
+* research support;
+* grants, sponsorship, and early-stage funding conversations.
+
+For employment, pilot, collaboration, or funding inquiries, contact Michael through the GitHub profile associated with this repository.
+
+---
 
 ## Contributing
 
-Read [Contributing](CONTRIBUTING.md) and the
-[Code of Conduct](CODE_OF_CONDUCT.md). Accepted contributions are distributed
-under `AGPL-3.0-only`. No contributor license agreement is imposed by this
-repository.
+Contributions are welcome when they preserve:
 
-Security reports should follow [SECURITY.md](SECURITY.md), which intentionally
-contains a placeholder until an approved private reporting address exists.
+* explicit probabilistic and deterministic boundaries;
+* bounded inputs and outputs;
+* human-review requirements;
+* privacy-safe defaults;
+* reproducibility;
+* honest capability claims;
+* failure transparency.
 
-## Licensing And Notices
+Read:
 
-First-party software is offered under the GNU Affero General Public License
-version 3 only. See [LICENSE](LICENSE), [Copyright](COPYRIGHT.md),
-[Third-Party Notices](THIRD_PARTY_NOTICES.md), and
-[License Compatibility Report](LICENSE_COMPATIBILITY_REPORT.md).
+* [Contributing](CONTRIBUTING.md)
+* [Code of Conduct](CODE_OF_CONDUCT.md)
+* [Security Policy](SECURITY.md)
 
-The software license does not itself grant a right to imply endorsement or
-official origin through project names or branding. See
-[Trademarks](TRADEMARKS.md).
+Accepted contributions are distributed under `AGPL-3.0-only`.
 
-Interactive users can open the complete license and canonical source link from
-every application view.
+No contributor license agreement is currently imposed by this repository.
 
-## Source-Code Availability
+---
 
-The canonical source location is:
+## License and Notices
 
-https://github.com/mdlewis365/carter-synthetic-os
+First-party software is offered under the GNU Affero General Public License version 3 only.
 
-Operators who modify and provide network access to this AGPL-covered program
-must review their corresponding-source obligations. This statement is not
-legal advice.
+See:
 
-## Roadmap
+* [LICENSE](LICENSE)
+* [Copyright](COPYRIGHT.md)
+* [Third-Party Notices](THIRD_PARTY_NOTICES.md)
+* [License Compatibility Report](LICENSE_COMPATIBILITY_REPORT.md)
+* [Trademarks](TRADEMARKS.md)
 
-Near-term work is limited to evidence-backed improvements: independent review
-of engineering packs and deterministic rules, provider-specific opt-in tests,
-retention-policy controls, broader schema fuzzing, accessibility review,
-model-compatibility records, and externally reproducible research cases.
+Operators who modify this AGPL-covered program and provide access to it over a network must review their corresponding-source obligations.
 
-See [Roadmap](ROADMAP.md).
+This statement is not legal advice.
 
-## Author And Attribution
+---
+
+## Author and Attribution
+
+**Michael D. Lewis**
+Founder, Synthetic OS Labs
+Creator and originating architect of Carter and Synthetic OS
 
 Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs.
 
-Project names include Carter, Synthetic OS, Synthetic Operating System,
-Engineering Assistance System (EAS), Synthetic Ideation System (SIS), and
-Carter Sensory Console (CSC). Third-party dependencies and exceptions are
-listed separately.
+Project names include:
+
+* Carter
+* Carter Synthetic OS
+* Synthetic OS
+* Synthetic Operating System
+* Engineering Assistance System
+* Synthetic Ideation System
+* Carter Sensory Console
+
+Third-party dependencies, licenses, and exceptions are documented separately.
