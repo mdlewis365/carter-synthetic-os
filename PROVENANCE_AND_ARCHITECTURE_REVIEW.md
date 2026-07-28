@@ -20,6 +20,45 @@ This document is a technical provenance statement. It is not legal advice, a pat
 
 ---
 
+## Current Implementation Reconciliation
+
+This statement was reconciled on 2026-07-27 against private implementation
+commit `df0230b9386437a12d8ac4b2c65bf37d68eee9a2`. The public repository baseline
+for that comparison is `79a1417809ab96c67968a53b44256863d8fdb7c5`.
+
+The current private code names PGM the **Prompt Governance Module**. Its
+executable responsibilities are AMS/RAG retrieval and assembly of those
+sources with CRM conversation, the current request, timestamp, configured
+Carter name, an application-supplied user label, and prompt-level policy. Many
+other named modules inside PGM express model-facing governance responsibilities
+through prompt construction. Those responsibilities influence probabilistic
+generation and are distinct from deterministic Python enforcement.
+
+The new private commit revises model-facing governance, including its Prime
+Directives section, and adds Emergency Claims and Tool-Action Governance.
+Public documentation records only the architectural effect: asserted emergency
+claims are not thereby verified, and consequential tool actions require
+authorization and applicable host controls. The private operative prompt text
+is excluded, and prompt instructions are not represented as deterministic
+enforcement.
+
+SOSP (Security Operations and Support Protocol) was removed from current PGM;
+no SOSP reference remains in tracked private source at commit `df0230b`. The
+private host may supply the account email associated with its authenticated
+session as PGM contextual identity metadata, but Carter does not independently
+verify real-world identity and the email alone does not establish identity or
+authority. Session binding and account-context isolation require further
+hardening and testing. The privacy boundary is
+documented in
+[docs/PGM.md](docs/PGM.md), [PRIVACY.md](PRIVACY.md), and
+[docs/THREAT_MODEL.md](docs/THREAT_MODEL.md).
+
+This reconciliation updates current architectural claims. It does not rewrite
+the source-lineage findings for the public release files or convert current
+private prompt text into public implementation provenance.
+
+---
+
 ## Originating Architecture
 
 Carter and Synthetic OS were originated and developed by:
@@ -37,9 +76,9 @@ The originating architecture includes the broader concepts, system organization,
 * Engineering Assistance System;
 * Synthetic Ideation System;
 * Carter Sensory Console;
-* Mathematical and Computational Module;
+* Math Computation Module;
 * Active Memory Subsystem;
-* Contextual or conversational memory;
+* the private Conversation Recovery Module and public rolling-context memory;
 * lifecycle and operational reporting;
 * prompt and output governance;
 * and related deterministic and probabilistic system boundaries.
@@ -78,7 +117,7 @@ Several public components retain strong source-level continuity with first-party
 
 These include portions of:
 
-* the Mathematical and Computational Module;
+* the Math Computation Module;
 * Engineering Decision Record generation;
 * EAS engineering governance;
 * engineering-domain packs;
@@ -326,7 +365,7 @@ AI coding and language-model tools assisted with activities such as:
 
 AI assistance does not alter the origin of Carter and Synthetic OS or transfer architectural authority away from their creator.
 
-Michael D. Lewis defined the system direction, supplied the originating private architecture and code, established the release objectives and constraints, reviewed material changes, and retains responsibility for approving the public architecture and release claims.
+Michael D. Lewis defined the system direction, supplied the originating private architecture and code, established the release objectives and constraints, and retains responsibility for reviewing and approving material public architecture and release claims.
 
 Because AI-generated or AI-modified code can contain mistakes, all public components remain subject to human review, testing, correction, and continuing maintenance.
 
@@ -334,13 +373,16 @@ Because AI-generated or AI-modified code can contain mistakes, all public compon
 
 ## Architectural Disposition
 
-Michael D. Lewis has reviewed the intended relationship between the public repository and the private Carter/Synthetic OS implementation.
+The repository records the intended public/private relationship below. This
+2026-07-27 reconciliation does not itself establish or replace Michael D.
+Lewis's human architectural approval. The uncommitted documentation changes and
+the current private implementation differences remain subject to his review.
 
-For the purposes of the initial public research release, the repository is approved to be described as:
+Subject to that review, the proposed description is:
 
 > **Carter Synthetic OS: an initial public research release and reference implementation containing directly derived engineering kernels, refactored and reimplemented Carter/Synthetic OS behavior, and new public-release infrastructure.**
 
-This approval does not assert that:
+This proposed disposition does not assert that:
 
 * every public component is behaviorally identical to the private system;
 * every experimental component is part of the final canonical architecture;
@@ -421,6 +463,7 @@ That principle connects the directly derived engineering components, the reimple
 ---
 
 **Document status:** Initial Public Research Release
+**Current reconciliation:** 2026-07-27 against private commit `df0230b`
 **Architectural authority:** Michael D. Lewis
 **Organization:** Synthetic OS Labs
 **Release year:** 2026

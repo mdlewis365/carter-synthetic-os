@@ -304,7 +304,7 @@ def evaluate_governance(record_or_inputs: Any = None, **inputs: Any) -> dict:
                 f"Deterministic MCM completed and {failed} constraint(s) failed."
             )
         elif total > 0 and failed == 0 and unknown == 0:
-            governance_status = "computed_certified"
+            governance_status = "computed_criteria_passed"
             final_label = "Deterministic result computed; criteria passed"
             reasons.append("Deterministic MCM completed and all known required constraints passed.")
         else:
@@ -443,7 +443,7 @@ def _computation_severity(computation_status: str) -> str:
 
 def _engineering_outcome(governance_status: str, engineering_mode: str) -> str:
     status = str(governance_status or "").strip().lower()
-    if status in {"computed_certified", "computed_selection_pass"}:
+    if status in {"computed_criteria_passed", "computed_selection_pass"}:
         return "pass"
     if status in {"computed_screening_pass"}:
         return "selected_option_pass"
@@ -507,7 +507,7 @@ def _governance_severity(
     ):
         return "success"
     if status in {
-        "computed_certified",
+        "computed_criteria_passed",
         "computed_selection_pass",
         "computed_screening_pass",
         "computed_diagnostic_result",

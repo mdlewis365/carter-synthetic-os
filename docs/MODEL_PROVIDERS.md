@@ -82,6 +82,18 @@ Selecting a cloud provider sends the governed request and necessary context outs
 
 Provider construction performs no service call and SDK imports are lazy. If an extra is absent, credentials are missing, a model is unspecified, or a service is unreachable, generation raises a sanitized `ProviderError` such as `missing_dependency`, `missing_api_key`, `model_not_configured`, `generation_failed`, or Ollama `unavailable`. Standard installation and tests do not fall back silently from local/mock mode to a paid provider.
 
+## Current Private Provider Comparison
+
+The optional/lazy/secret-free statements above describe the public `0.1.0`
+research/reference package only. The full private host has different provider,
+startup, persistence, and configuration assumptions; it should not be
+described as having the public runtime's mock-first behavior.
+
+When an external model is selected, permitted host-provided account context in
+the private PGM request may cross the local trust boundary. Provider disclosure
+and minimization must account for that field. See [PGM.md](PGM.md) and
+[Privacy](../PRIVACY.md).
+
 ## CSC Providers
 
 CSC transcription is disabled by default:

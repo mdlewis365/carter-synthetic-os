@@ -34,6 +34,22 @@ The browser/server session, request/parser boundary, model-provider boundary, me
 | Malicious or vulnerable dependency | Minimal core, optional extras, pinned/declared metadata, CI audit workflows. | Audits are point-in-time; review advisories, lock deployments, and verify model licenses separately. |
 | Calculation/report overclaim | Schema validation, deterministic recomputation, status classification, mandatory warnings. | Incorrect inputs/models can produce plausible errors; professional and experimental review remains mandatory. |
 
+## Current Private Account-Context Risks
+
+The current private host may supply the account email associated with its
+authenticated session to PGM as contextual identity metadata. This creates
+boundaries that do not exist in the public `0.1.0` runtime:
+
+| Threat | Required mitigation before multi-user deployment |
+| --- | --- |
+| Account context could be associated with the wrong session or treated as identity or authority. | Harden session binding and account-context isolation, add dedicated tests, and keep authentication and authorization in deterministic host controls. |
+| Account context included in a model request could be disclosed through provider processing or operational retention. | Minimize or pseudonymize the value, disclose external transfer, redact operational records, limit retention, and control provider processing. |
+| An asserted emergency or urgency claim could be treated as verified or used to pressure a consequential tool action. | Treat the claim as unverified input, require applicable evidence and explicit authorization, and enforce tool policy in deterministic host controls. Prompt guidance alone is insufficient. |
+
+Carter does not independently verify real-world identity, and PGM prompt
+governance does not turn account context into authentication. See
+[PGM.md](PGM.md).
+
 ## Abuse Cases
 
 The project should not be deployed as an unrestricted execution agent, covert recording system, identity/authentication system based on wake words, source of professional engineering approval, automated patent-clearance system, or safety/emergency monitor. Controls are designed around bounded research and decision-support workflows.

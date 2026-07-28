@@ -50,6 +50,18 @@ flowchart TD
 
 With no provider supplied, the stage-one plan and stage-two advisory are deterministic fixtures and clearly identify the mock backend. With an optional model provider, only the proposed stage-one plan is probabilistic. Stage two is assembled from validated plan, MCM, EDR, and governance data; provider output never decides governance status. Schema validation, supported MCM work, EDR construction, advisory assembly, and governance classification remain deterministic for a fixed input and software version.
 
+## Current Private Implementation Comparison
+
+The active private EAS interface uses the v2 server workflow. That path
+preselects engineering packs, runs a model activation using a PGM-assembled
+prompt for the stage-one plan, parses and validates the result, invokes MCM
+when requested, builds the EDR/governance/evidence records, and then runs a
+second model activation using a PGM-assembled prompt for the final report
+before report sanitation and persistence.
+The private second stage is therefore probabilistic; it is not the deterministic
+public advisory renderer described above. Older EAS routes remain in the private
+server but are legacy paths, not the current UI target.
+
 ## Stage-One Plan
 
 Stage one expresses the work as structured data rather than free-form executable instructions. Depending on mode and problem, it can identify:

@@ -11,6 +11,33 @@ Target version: 0.1.0, Initial Public Research Release
 
 License target: GNU Affero General Public License v3.0 only (AGPL-3.0-only)
 
+## 2026-07-21 Reconciliation Addendum
+
+This file is a release-time audit record, not a continuously rewritten inventory
+of the private repository. Its original observations remain dated 2026-07-13.
+Current implementation claims were rechecked at private commit
+`ceca0f5ff6cb7f81661860b18fdb67c21fa6a3b5`.
+
+The current code names PGM the **Prompt Governance Module**. SOSP (Security
+Operations and Support Protocol) has been removed from PGM, including its prior
+identity-binding language. Current implementation behavior is documented in
+[docs/PGM.md](docs/PGM.md).
+
+The public SAL delivered by this release is narrower than the original audit
+action wording: it is structural JSON-object normalization and does not perform
+or record complete semantic adjudication. The original PGM/SAL rows below are
+preserved as audit history; current behavior is defined by the public source and
+maintained subsystem documentation.
+
+### 2026-07-27 Follow-Up
+
+The current committed private reference is
+`df0230b9386437a12d8ac4b2c65bf37d68eee9a2`, a confirmed descendant of
+`ceca0f5`. Its revised PGM governance is described at a non-operative
+architectural level in [docs/PGM.md](docs/PGM.md). The delta also adds a private
+EAS example PDF; that artifact was not copied and remains outside the public
+release boundary.
+
 ## Scope And Repository Boundaries
 
 This audit was completed before implementation files were copied into the

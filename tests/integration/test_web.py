@@ -41,12 +41,51 @@ def test_secret_free_startup_and_health(client) -> None:
     }
 
 
+def test_secure_cookie_configuration_reaches_flask() -> None:
+    app = create_app(
+        load_settings({"CARTER_SESSION_COOKIE_SECURE": "true"}),
+        testing=True,
+    )
+
+    assert app.config["SESSION_COOKIE_SECURE"] is True
+
+
 def test_session_discloses_sensory_cloud_boundary_before_activation(client) -> None:
     data = client.get("/api/session").get_json()
 
     assert data["transcription_provider"] == "disabled"
     assert data["audio_cloud_transfer"] is False
     assert data["session_idle_ttl_seconds"] == 3600
+    assert data["model_configured"] is True
+
+
+def test_session_omits_configured_model_identifier() -> None:
+    model_identifier = "synthetic-private-model-identifier"
+    app = create_app(
+        load_settings({"CARTER_DEFAULT_MODEL": model_identifier}),
+        testing=True,
+    )
+
+    client = app.test_client()
+    headers, data = authorize(client)
+    chat = client.post(
+        "/api/chat",
+        json={"prompt": "Run a synthetic model-metadata minimization check."},
+        headers=headers,
+    ).get_json()
+    stream = client.post(
+        "/api/chat/stream",
+        json={"prompt": "Run a synthetic streaming metadata minimization check."},
+        headers=headers,
+    ).get_data(as_text=True)
+
+    assert "model" not in data
+    assert data["model_configured"] is True
+    assert model_identifier not in repr(data)
+    assert "model" not in chat["provider"]
+    assert chat["provider"]["model_configured"] is True
+    assert model_identifier not in repr(chat)
+    assert model_identifier not in stream
 
 
 def test_interactive_interface_contains_legal_and_source_notices(client) -> None:

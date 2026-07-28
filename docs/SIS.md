@@ -47,6 +47,14 @@ flowchart TD
 
 The audited private SIS route did not call MCM or the separate NPAM/IVA/CIT helper. Evaluator and MCM coordination in this repository is a public `0.1.0` architecture change, not evidence that those integrations were active in the private runtime.
 
+At private commit `df0230b`, the active SIS submission path uses
+`Synthetic_IS_MPM` to construct the scientist prompt and then sends it through
+the normal Carter/PGM generation worker. Optional external model evaluation can
+be appended while scientist mode is active. The active private path does not
+invoke PAC or invention-gate helpers; those responsibilities remain conceptual
+or experimental. Prior-art clearance, NPAM/IVA/CIT execution, and PAC behavior
+must therefore not be described as active private SIS capabilities.
+
 ## Evaluators And Feasibility
 
 Evaluator results are structured opinions or heuristics over candidate fields. Rejection checks can identify a declared prohibited pattern or missing invariant. Feasibility interfaces can request a bounded calculation when inputs and an implemented MCM operation are available. Unsupported questions remain untested rather than being converted to invented evidence.

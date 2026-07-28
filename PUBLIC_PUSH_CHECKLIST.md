@@ -10,6 +10,11 @@ visibility change, tag, release, package upload, deployment, or announcement.
 Record the reviewer, date, evidence, and disposition for every item. A checked
 box without review evidence is not approval.
 
+The 2026-07-25 working-tree checks and 2026-07-27 private-reference
+reconciliation are summarized in `PUBLIC_RELEASE_REPORT.md` and
+`SECURITY_RELEASE_AUDIT.md`. They do not check any box below: final-commit
+reproduction and the named human reviews remain required.
+
 ## Intellectual Property And Legal
 
 - [ ] **IP and patent review:** an authorized reviewer has assessed Carter,
@@ -51,6 +56,11 @@ box without review evidence is not approval.
 - [ ] **Threat model:** authentication, CSRF, session isolation, SSE ownership,
   provider boundaries, sensory activation, retention, rate limits, and
   deployment assumptions in `docs/THREAT_MODEL.md` have been reviewed.
+- [ ] **PGM boundary disclosure:** the release owner has reviewed the public
+  PGM, account-context, emergency-claim, tool-action, privacy, security, and
+  threat-model wording and confirmed that it is accurate without exposing
+  operative prompt language or unnecessary private authentication/session
+  mechanics.
 - [ ] **Dependency security:** the exact release environment passes
   `pip-audit`; ChromaDB remains absent while `CVE-2026-45829` has no approved
   fixed release.

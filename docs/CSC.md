@@ -13,10 +13,12 @@ flowchart LR
     W --> T[Configured transcription boundary]
     T --> D[Wake-name and role classification]
     D --> R[Session rolling transcript]
-    R --> I[Governed interpretation]
-    I --> O[Local Ollama by default when enabled]
-    I --> C[Carter response boundary]
-    C --> S[Optional TTS]
+    R --> Q[Interpretation request]
+    Q --> O[Configured interpretation backend; mock default]
+    O --> I[Governed normalization]
+    I --> G[No response, memory, tool, or action authority]
+    G --> J[Session interpretation result]
+    C[Caller-supplied response text] --> S[Optional TTS]
     S --> V[Voice-orb state]
     K[Explicit camera activation] --> P[Local browser preview only]
 ```
@@ -42,7 +44,12 @@ Cloud transcription sends audio to the configured provider. In the supported Goo
 
 ## Interpretation
 
-Interpretation is isolated from transcription. A configured local Ollama service can receive bounded transcript context and return structured interpretation JSON. The normalization layer rejects malformed output and preserves explicit unknown states. If Ollama is unavailable, CSC reports an unavailable-provider state rather than fabricating an interpretation.
+Interpretation is isolated from transcription. The public default is a
+deterministic mock interpretation boundary. When explicitly configured, a local
+Ollama service can receive bounded transcript context and return structured
+interpretation JSON. The normalization layer rejects malformed output and
+preserves explicit unknown states. If Ollama is unavailable, CSC reports an
+unavailable-provider state rather than fabricating an interpretation.
 
 Rolling transcript and latest interpretation state are keyed to the active session. Cross-session access is prohibited. Explicit reset removes the state immediately; otherwise the in-process state expires after 3600 seconds of inactivity by default or at process exit. Browser-close cleanup is best effort. Durable sensory retention is unavailable in `0.1.0`, and configuration attempts to enable it are rejected.
 
@@ -55,6 +62,22 @@ The voice orb is a visual state indicator, not evidence of emotion, awareness, o
 ## Camera Boundary
 
 The audited private tree contained no camera implementation. The `0.1.0` public boundary is limited to an explicit browser-local preview, disabled by default. The release does not claim server-side image capture, storage, model interpretation, recognition, or camera-derived memory.
+
+## Current Private Implementation
+
+At private commit `df0230b`, CSC starts with hearing disabled and requires an
+explicit toggle. Browser audio is transcribed through Gemini, receives basic
+priority metadata, and enters a session-keyed in-memory rolling transcript.
+Interpretation is a manually invoked local-Ollama CSC path, and ElevenLabs TTS
+is configurable. Raw audio retention is reported as disabled.
+
+That private path has no camera implementation. Its basic priority
+classification explicitly is not AAM or SAL adjudication. AAM priority triage,
+SAL semantic adjudication, candidate queueing, and an automatic response/TTS
+hook are marked pending. The current interpretation result is not automatically
+submitted to Carter or PGM. These are implementation facts, not a claim that
+the pending architecture is abandoned. See [PGM.md](PGM.md) and
+[Research Status](RESEARCH_STATUS.md).
 
 ## Privacy And Security Requirements
 

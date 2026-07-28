@@ -18,6 +18,7 @@ def test_secret_free_startup_uses_ephemeral_signing_key() -> None:
     assert settings.debug is False
     assert settings.enable_memory is False
     assert settings.enable_sensory_retention is False
+    assert settings.session_cookie_secure is False
     assert settings.ephemeral_secret is True
     assert len(settings.flask_secret_key) >= 32
 
@@ -99,6 +100,13 @@ def test_debug_mode_is_rejected_on_public_bind() -> None:
                 "CARTER_DEBUG": "true",
             }
         )
+
+
+def test_secure_session_cookie_can_be_enabled_for_https_deployment() -> None:
+    settings = load_settings({"CARTER_SESSION_COOKIE_SECURE": "true"})
+
+    assert settings.session_cookie_secure is True
+    assert settings.public_dict()["session_cookie_secure"] is True
 
 
 def test_invalid_boolean_is_not_silently_enabled() -> None:

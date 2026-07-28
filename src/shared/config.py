@@ -98,6 +98,7 @@ class Settings:
     csc_ollama_model: str
     csc_buffer_seconds: int
     csc_buffer_max_events: int
+    session_cookie_secure: bool
 
     def public_dict(self) -> dict[str, object]:
         return {
@@ -116,6 +117,7 @@ class Settings:
             "transcription_provider": self.csc_transcription_provider,
             "interpretation_backend": self.csc_interpretation_backend,
             "secret_mode": "ephemeral" if self.ephemeral_secret else "configured",
+            "session_cookie_secure": self.session_cookie_secure,
         }
 
 
@@ -222,4 +224,5 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
             minimum=1,
             maximum=240,
         ),
+        session_cookie_secure=_boolean(source, "CARTER_SESSION_COOKIE_SECURE", False),
     )

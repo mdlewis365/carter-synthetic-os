@@ -204,7 +204,7 @@ class CarterRuntime:
             status="completed",
             metadata={
                 "provider": response.provider,
-                "model": response.model,
+                "model_configured": bool(response.model),
                 "output_hash": response.output_hash,
             },
         )
@@ -226,7 +226,7 @@ class CarterRuntime:
             "request_id": normalized.request_id,
             "governance_status": gate.status.value,
             "provider": self.provider.name,
-            "model": self.settings.default_model,
+            "model_configured": bool(self.settings.default_model),
         }
         if gate.status is GovernanceStatus.BLOCK:
             yield {"type": "error", "error": "request_blocked_by_governance"}
@@ -312,7 +312,7 @@ class CarterRuntime:
             "response": response_text,
             "provider": {
                 "name": provider,
-                "model": model,
+                "model_configured": bool(model),
                 "metadata": dict(provider_metadata or {}),
                 "probabilistic": provider not in {None, "mock"},
             },

@@ -16,6 +16,7 @@ CARTER_PROVIDER=mock
 CARTER_ENABLE_MEMORY=false
 CARTER_ENABLE_SENSORY_RETENTION=false
 CARTER_SESSION_IDLE_TTL_SECONDS=3600
+CARTER_SESSION_COOKIE_SECURE=false
 ```
 
 `CARTER_ENABLE_SENSORY_RETENTION=true` is rejected in this release. The idle
@@ -26,6 +27,11 @@ are enabled.
 Use `.env.example` as a placeholder reference and export configuration through the process environment. The application does not require or automatically load a dotenv file. If local tooling creates one, replace `FLASK_SECRET_KEY` with a long random value and keep the file untracked. After setup, start the mock demonstration with `./scripts/run_demo.sh` on POSIX or `.\scripts\run_demo.ps1` on PowerShell. The root README records the full quick start.
 
 Do not bind to a non-loopback address simply to work around browser or proxy configuration. A reachable deployment needs a documented authentication design, TLS, reverse-proxy limits, security headers, CSRF protection, secure cookie settings, monitoring, patching, and incident response.
+
+`CARTER_SESSION_COOKIE_SECURE` defaults to `false` for the loopback HTTP
+demonstration. Set it to `true` whenever the browser uses HTTPS. This switch
+only marks the cookie `Secure`; it does not configure TLS, authenticate users,
+validate proxy headers, or supply the other missing deployment controls.
 
 The configuration rejects non-loopback `CARTER_HOST` values unless an operator explicitly sets `CARTER_ALLOW_PUBLIC_BIND=true`. That opt-in only acknowledges the changed boundary; it does not add the missing production controls.
 
@@ -60,6 +66,18 @@ Microphone and camera APIs generally require a secure browser context outside lo
 A public network deployment requires work beyond this release, including an approved identity provider, authorization model, rate limiting, request quotas, process isolation for tools, malware/content controls for uploads, outbound network policy, centralized secret management, encrypted storage, audit-retention rules, observability, backups, and a tested vulnerability/incident process.
 
 No Cloudflare tunnel configuration, production domain, production account, or deployment token is included. Docker support is omitted rather than implying a maintained production image.
+
+## Current Private Host Difference
+
+The safe-default and optional-provider statements above apply to the public
+`0.1.0` research/reference implementation, not the full private host. The
+private host has different startup, provider, persistence, identity, and
+deployment assumptions and requires a separate security and configuration
+review before network or multi-user use. The maintained Carter deployment is
+authentication-protected, and guided or demonstration access may be available
+upon request. That fact does not transfer the private authentication
+implementation or its assurances to this public reference runtime. See
+[PGM.md](PGM.md) and [Threat Model](THREAT_MODEL.md).
 
 ## AGPL Network Use
 

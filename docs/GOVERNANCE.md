@@ -4,7 +4,7 @@
 
 Governance constrains how Carter turns untrusted inputs and probabilistic candidates into user-facing output. It does not make model output true and does not replace a qualified reviewer.
 
-## Control Flow
+## Packaged EAS/SIS Provider Control Flow
 
 ```mermaid
 flowchart LR
@@ -14,16 +14,17 @@ flowchart LR
     end
     subgraph Deterministic
         V[Schema validation]
-        M[MCM / bounded adjudication]
+        M[MCM supported computation]
         S[SAL normalization]
         G[Governance gate]
     end
-    P --> V
+    P --> S
+    C --> S
+    S -->|structured object| V
+    S -->|invalid provider object| G
     V -->|valid| M
     V -->|invalid| G
-    M --> S
-    S --> G
-    C --> S
+    M --> G
     G --> A{Permitted outcome}
     A -->|pass with limits| R[Final response]
     A -->|review required| H[Human-review status]
@@ -31,6 +32,34 @@ flowchart LR
 ```
 
 The shaded conceptual boundary is important: deterministic processing can validate the shape of a probabilistic plan and recompute supported values, but it cannot validate every premise or claim in generated prose.
+
+In the packaged Flask runtime's non-mock EAS/SIS provider path, SAL is a
+structural JSON-object boundary before workflow schema validation. It is not
+called after MCM and does not semantically approve MCM results. Mock workflows
+bypass that provider SAL call and apply their workflow schemas directly.
+Library callers that invoke `EngineeringWorkflow` or `IdeationWorkflow` with a
+provider directly must supply an appropriate structured-provider boundary;
+those workflow classes do not themselves invoke `sos.sal`.
+
+## Current Private PGM Governance
+
+The current private Prompt Governance Module (PGM) retrieves AMS/RAG context
+and assembles a large provider prompt containing policy and architectural
+instructions. Those instructions are interpreted probabilistically by the
+selected language model. Named PGM sections such as SDCM express model-facing
+governance responsibilities through prompt construction. They are distinct
+from separately implemented deterministic Python enforcement.
+
+Private executable enforcement remains distributed: the Flask host performs
+authentication, authorization, route, and resource-ownership checks, while EAS
+performs schema validation, MCM computation, EDR construction, and
+deterministic engineering governance. See [PGM.md](PGM.md).
+
+The current private PGM revision also addresses emergency claims and
+consequential tool actions. Its public-safe architectural effect is limited:
+asserting an emergency does not verify it, and a model instruction cannot grant
+tool authority. Applicable authorization, validation, allowlisting, and host
+controls remain necessary before consequential action.
 
 ## Inputs To A Decision
 

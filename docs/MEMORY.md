@@ -4,6 +4,21 @@
 
 Carter uses memory to provide bounded continuity. Memory is untrusted context: storage or retrieval does not establish that a claim is correct, current, complete, or authorized to override the current user request.
 
+## Terminology And Private Comparison
+
+The current private code names CRM the **Conversation Recovery Module** and LCM
+the **Log Conversations Module**. Private CRM loads, saves, trims, backs up, and
+recovers a filesystem conversation. Private LCM writes prompt/response
+operational files. The public `RollingContextMemory` and `LifecycleMonitor` are
+bounded replacements; this documentation does not redefine the private acronym
+expansions or claim persistence equivalence.
+
+The private Prompt Governance Module retrieves AMS and RAG context and includes
+those results with the CRM conversation in its provider prompt. Its memory
+policy is model-facing governance: it influences probabilistic generation but
+is not deterministic validation that every response follows the stated
+precedence. See [PGM.md](PGM.md).
+
 ## Lifecycle
 
 ```mermaid
@@ -26,7 +41,7 @@ flowchart TD
 
 Durable retention is off by default. The normal public demonstration keeps state in memory, expires inactive session state after 3600 seconds by default, and ships with no user records.
 
-## CRM
+## Public Rolling Context
 
 `RollingContextMemory` is short-term conversation context. It is bounded by configured limits and keyed by session. Callers cannot use one browser session to read another session's context. Explicit reset removes context immediately; idle expiry and process exit provide server-side cleanup when browser-close notification is unavailable.
 

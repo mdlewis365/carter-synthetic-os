@@ -7,6 +7,26 @@ All notable public changes will be recorded here. The project follows semantic v
 ## [Unreleased]
 
 - Local public-release audit and human approval remain pending before any push or tag.
+- Reconciled maintained documentation through private commit `df0230b` without
+  copying private prompt or account data.
+- Documented the public-safe architectural boundary for the revised private
+  Prime Directives and Emergency Claims and Tool-Action Governance without
+  reproducing operative prompt language.
+- Documented removal of SOSP from current PGM, the implemented Prompt
+  Governance Module responsibilities, and the host-supplied
+  authenticated-session account-email context/privacy boundary.
+- Distinguished host/deterministic controls from model-facing PGM governance
+  and planned or experimental CSC behavior, and corrected public SAL/MCM
+  terminology.
+- Minimized public response metadata by replacing configured model identifiers
+  with configuration-presence booleans and removing the session-derived TTS
+  header.
+- Added an explicit secure-cookie configuration switch and documented the
+  public runtime's lack of production user authentication.
+- Renamed the EAS deterministic completion state from the misleading
+  `computed_certified` label to `computed_criteria_passed`.
+- Added tests for metadata minimization, secure-cookie propagation, and the
+  corrected EAS gate status.
 
 ## [0.1.0] - Unreleased
 

@@ -5,21 +5,34 @@
 
 Release: `0.1.0` - Initial Public Research Release
 
-Preparation date: 2026-07-13
+Preparation date: 2026-07-27
 
 Branch: `release/carter-agpl-public`
 
-Publication status: **local preparation complete; public push blocked pending
-the human gates in `RELEASE_BLOCKERS.md` and `PUBLIC_PUSH_CHECKLIST.md`.**
+Publication status: **technical working-tree verification complete; public
+push blocked pending the human gates in `RELEASE_BLOCKERS.md` and
+`PUBLIC_PUSH_CHECKLIST.md`, plus verification of the exact authorized commit.**
+
+> **Current-documentation note:** The candidate was prepared on 2026-07-13,
+> technically reverified on 2026-07-25, and reconciled and retested against the
+> new committed private reference on 2026-07-27. This is a report on the public
+> working tree, not a current private-source inventory. The bounded comparison
+> uses private commit `df0230b`; see `docs/PGM.md` and
+> `PROVENANCE_AND_ARCHITECTURE_REVIEW.md` for the implementation findings.
 
 ## Systems Released
+
+Carter is the flagship implementation of Synthetic OS. EAS and SIS are
+functional systems operating within Carter, and CSC is the Carter Sensory
+Console.
 
 - **Carter:** governed conversational runtime, provider selection, structured
   context, bounded session continuity, synchronous and SSE response paths,
   subsystem routing, and a runnable Flask interface.
 - **Synthetic Operating System:** orchestration contracts, temporal/context
   anchors, CRM, AMS-compatible interfaces, DIM ingestion/deduplication, LCM
-  metadata events, operational reports, SAL adjudication, tool boundaries,
+  metadata events, operational reports, SAL structural-output normalization,
+  tool boundaries,
   registry, deterministic governance, provider adapters, SQLite, and a
   source-visible but dependency-blocked Chroma boundary.
 - **Engineering Assistance System:** five modes, deterministic and
@@ -44,18 +57,21 @@ claim.
 
 ## Migration And File Scope
 
-The final release tree contains 190 tracked files after this report is added.
-It includes 93 files under `src`, 16 public test modules, 23 example/evidence
-files, 15 subsystem/operations documents, six setup/run/test scripts, and eight
-GitHub community/automation files.
+The current working tree contains 192 tracked files plus the proposed
+`docs/PGM.md`. If that document is reviewed and added, the proposed release
+tree will contain 193 files. It includes 93 files under `src`, 16 public test
+modules, 23 example/evidence files, 16 subsystem/operations documents, six
+setup/run/test scripts, and eight GitHub community/automation files.
 
 Cleared first-party implementation migrated or adapted into the monorepository
-includes the complete deterministic MCM, Engineering Decision Record helpers,
-EAS governance gate, 18 reviewed engineering-pack Markdown files (including
-their pack README), cleared SIS schema/evaluator modules, and public SOS
-contracts. Security- or privacy-sensitive monolithic Carter, SOS memory,
-provider, UI, and CSC behavior was reimplemented as modular public code rather
-than copied byte for byte.
+includes the large directly derived or adapted deterministic MCM kernel,
+Engineering Decision Record helpers, EAS governance gate, 18 included
+engineering-pack Markdown files (including their pack README), cleared SIS
+schema/evaluator modules, and public SOS contracts. Final ownership and
+standards-derived-content review of those materials remains a human gate.
+Security- or privacy-sensitive monolithic Carter, SOS memory, provider, UI, and
+CSC behavior was reimplemented as modular public code rather than copied byte
+for byte.
 
 Every excluded source/data/asset class, replacement decision, and runtime
 effect is recorded in `EXCLUSIONS.md`. Private Git history was not copied.
@@ -63,8 +79,8 @@ effect is recorded in `EXCLUSIONS.md`. Private Git history was not copied.
 ## Architecture Changes
 
 - Split the production-style Flask monolith into importable `carter`, `sos`,
-  `eas`, `sis`, `csc`, and `shared` packages without changing the essential
-  five-system boundaries.
+  `eas`, `sis`, `csc`, and `shared` packages while preserving the essential
+  Carter/Synthetic OS functional boundaries.
 - Replaced global/private state with opaque session ownership, bounded
   in-memory jobs, idle expiry, explicit clear operations, CSRF checks, and
   owner-checked job/SSE access.
@@ -79,6 +95,9 @@ effect is recorded in `EXCLUSIONS.md`. Private Git history was not copied.
   migrated production components.
 - Replaced raw/private logs and operational reports with redacted metadata and
   artifact hashes.
+- Reduced response metadata to configuration-presence booleans instead of
+  returning provider model identifiers, and removed the session-derived TTS
+  response header.
 
 ## Configuration And Security Changes
 
@@ -88,6 +107,8 @@ effect is recorded in `EXCLUSIONS.md`. Private Git history was not copied.
 - Defaults are mock provider, `127.0.0.1` bind, Flask debug off, remote Ollama
   rejected, durable memory off, sensory retention rejected, microphone/camera
   off, and a 3600-second in-process idle TTL.
+- Added `CARTER_SESSION_COOKIE_SECURE`; it remains `false` for the loopback HTTP
+  quick start and must be set to `true` behind operator-configured HTTPS.
 - No production domain, tunnel, user account, database, voice ID, memory,
   recording, report, log, absolute local path, or operational credential was
   included.
@@ -122,17 +143,24 @@ pytest-cov 6.3.0:
 
 | Metric | Result |
 | --- | ---: |
-| Tests collected | 169 |
-| Passed | 169 |
+| Tests collected | 172 |
+| Passed | 172 |
 | Failed | 0 |
 | Skipped | 0 |
 | Source statements | 13,378 |
 | Branch-aware coverage | 32% |
 
-The coverage value includes the full migrated 17,000-line MCM module rather
-than excluding it to inflate the result. No standard test used the network,
-provider credentials, paid APIs, a microphone, camera hardware, or model
-weights.
+The coverage value includes the large 17,000-line MCM module rather than
+excluding it to inflate the result. That module has 16% line coverage in this
+suite, which is a material residual validation risk and does not establish
+semantic correctness across its possible engineering uses. No standard test
+used the network, provider credentials, paid APIs, a microphone, camera
+hardware, or model weights.
+
+After the 2026-07-27 documentation-only reconciliation, the full offline suite
+was rerun: all 172 tests passed again with no failures or skips. Runtime and
+test files were unchanged by that reconciliation; the coverage figures above
+remain from the 2026-07-25 branch-aware run.
 
 Additional verification completed:
 
@@ -149,8 +177,23 @@ Additional verification completed:
 - installed-wheel smoke: health, AGPL license, evidence manifest, and 18 pack
   Markdown files available; `License-Expression` is `AGPL-3.0-only`; no
   ChromaDB requirement is declared;
-- final safe all-extras environment: 63 third-party distributions, `pip check`
-  clean, and pip-audit 2.10.1 reported no known vulnerabilities.
+- project-scoped `pip-audit` resolution: no known vulnerabilities in the
+  dependencies declared by the local project;
+- staged-candidate verification: before creation of the release-candidate
+  commit, verification was completed for 40 changed paths in a 193-file indexed
+  tree; its complete cached diff was inspected; the baseline-aware
+  `detect-secrets-hook` passed without mutating `.secrets.baseline`; and all
+  other staged technical checks passed. Exact-commit and release-artifact
+  verification was required after commit creation, with the results recorded
+  without modifying the exact commit being verified. At the time this record
+  was prepared, B-01 through B-08 and all applicable human publication gates
+  remained open.
+
+The machine-wide Python environment is not a release environment: `pip check`
+reports unrelated pre-existing package conflicts, and a machine-wide
+`pip-audit --strict` stops at the non-PyPI `en-core-web-lg` distribution. Those
+results do not invalidate the clean project-scoped audit, but they also do not
+qualify an exact locked release environment.
 
 Live cloud, Ollama, ElevenLabs, microphone, camera, and cross-browser tests were
 not executed. They remain opt-in validation gaps, not hidden passes.
@@ -212,13 +255,21 @@ Third-party dependencies and services retain their own licenses and terms.
 - The mock provider proves pipeline behavior only; it is not a language model
   or quality benchmark.
 - EAS/MCM and packs are not professionally, regulatorily, or production
-  validated. Every result requires qualified independent review.
+  validated. The MCM receives only 16% line coverage in the public suite.
+  Every result requires qualified independent review.
 - SIS cannot establish novelty, patentability, feasibility, safety, or
   experimental validity.
 - CSC camera support is local preview only; durable sensory retention is not
   implemented; optional provider/hardware behavior is not certified.
 - The Flask server is a research/development runtime, not a production identity
   or high-availability platform.
+- The maintained Carter deployment is authentication-protected, but this
+  public research runtime has no user-authentication implementation. Its signed
+  anonymous session ownership and CSRF controls are not proof of real-world
+  identity, account isolation, or production authorization.
+- The current private PGM's emergency-claim and tool-action guidance is
+  model-facing prompt governance. It does not make emergency assertions
+  verified facts or replace host authorization and tool controls.
 
 The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 `RELEASE_BLOCKERS.md`.

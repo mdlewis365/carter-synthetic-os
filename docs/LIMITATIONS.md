@@ -51,6 +51,24 @@ Carter Synthetic OS `0.1.0` is an initial public research release. Its implement
 - Ephemeral deletion is not a cryptographic erasure guarantee.
 - Dependency and model-license conclusions require continued human review.
 
+## Current Private Implementation Comparison
+
+- The current private Prompt Governance Module expresses named model-facing
+  governance responsibilities through prompt construction. Those
+  responsibilities are distinct from host authentication/authorization and
+  separately implemented deterministic Python enforcement.
+- The private host may supply the account email associated with its
+  authenticated session as contextual identity metadata, not independent
+  identity or authority. Session binding and account-context isolation require
+  further hardening and testing.
+- The private CSC has no camera implementation. AAM priority triage, SAL
+  semantic adjudication, candidate queueing, and automatic response/TTS
+  integration are still marked pending; CSC interpretation is not automatically
+  submitted to Carter or PGM.
+- Public mock-mode, provider, persistence, and orchestration behavior belongs to
+  this research/reference implementation and is not behaviorally identical to
+  the full private host.
+
 ## Legal And Research
 
 The software provides no legal, patent, export-control, privacy, security, medical, or regulatory advice. The initial public release remains blocked from publication until the human checks in `PUBLIC_PUSH_CHECKLIST.md` and the release reports are resolved.

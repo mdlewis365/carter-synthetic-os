@@ -17,6 +17,19 @@ This document describes the public `0.1.0` paths. The repository contains no pro
 
 With a cloud provider, step 5 crosses the local trust boundary. With Ollama on loopback, it crosses into the operator's local Ollama process. With mock mode, it remains in process.
 
+## Private Host Account Context
+
+The private host may supply the account email associated with its authenticated
+session to PGM as contextual identity metadata for Carter, EAS, and SIS
+generation. PGM includes permitted account context in the assembled model
+prompt, so an external provider may receive it when selected.
+
+Carter does not independently verify real-world identity, and the email alone
+does not establish authentication or authority. Session binding and
+account-context isolation require further hardening and dedicated testing. The
+public `0.1.0` research/reference implementation does not reproduce this path.
+See [PGM.md](PGM.md) and [Privacy](../PRIVACY.md).
+
 ## Specialized Workflows
 
 EAS can pass a model-produced structured plan into schema validation and then the supported subset into MCM. Deterministic results, EDR, and governance metadata are used to produce the final advisory output. Authorized supporting-file content, if enabled by the host, must be bounded and treated as untrusted.

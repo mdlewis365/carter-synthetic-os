@@ -7,6 +7,9 @@
 ## Overview
 
 Carter Synthetic OS is a governed compound AI system and research platform.
+Carter is the flagship implementation of Synthetic OS. EAS and SIS are
+functional systems operating within Carter, and CSC is the Carter Sensory
+Console.
 
 It coordinates probabilistic language-model reasoning with explicit software boundaries for:
 
@@ -51,19 +54,21 @@ flowchart LR
 
     C --> SOS[Synthetic OS]
     SOS --> GOV[Governance Boundaries]
-    SOS --> SAL[Experimental SAL v0]
     SOS --> R{Provider Router}
 
     R --> MOCK[Deterministic Mock Provider]
     R --> OLLAMA[Optional Local Ollama]
     R --> CLOUD[Optional Cloud Providers]
+    R -. Packaged non-mock EAS/SIS adapter .-> SAL[Experimental SAL v0]
 
     C --> EAS[Engineering Assistance System]
+    SAL -. Structured plan object .-> EAS
     EAS --> MCM[Math Computation Module]
     EAS --> EDR[Engineering Decision Record]
     EDR --> HR[Qualified Human Review]
 
     C --> SIS[Synthetic Ideation System]
+    SAL -. Structured candidate object .-> SIS
     SIS --> EVAL[Candidate Evaluation Boundaries]
     EVAL --> HR
 
@@ -81,13 +86,18 @@ The Flask application provides the public host and request boundary.
 
 Carter normalizes incoming requests and selects an appropriate bounded workflow. Synthetic OS supplies shared orchestration, context, provider, governance, memory, computation, and reporting interfaces.
 
-The specialized public systems are:
+The specialized public functional systems and console are:
 
 * **EAS** — governed engineering decision support;
 * **SIS** — structured technical ideation and candidate evaluation;
 * **CSC** — bounded sensory-state, transcription, interpretation, and speech research.
 
 These systems share governed interfaces but do not all execute the same internal sequence.
+
+The SAL edges above are conditional and specific to the packaged Flask
+runtime's non-mock EAS/SIS provider adapter. Carter chat, CSC, memory, MCM, and
+the generic orchestration path do not call `sos.sal`; direct EAS/SIS library
+callers must supply their own equivalent provider boundary.
 
 ---
 
@@ -120,7 +130,9 @@ It does not contain:
 
 ### Synthetic Operating System
 
-Synthetic OS provides the common architectural foundation beneath Carter and the specialized systems.
+Synthetic OS provides the common architectural foundation implemented through
+Carter. EAS and SIS operate as functional systems within Carter; CSC supplies
+the bounded sensory-console boundary.
 
 The public SOS runtime includes:
 
@@ -190,9 +202,9 @@ When Ollama or an optional cloud provider is configured, provider generation is 
 | CRM                             | Bounded, session-scoped rolling context with configurable turn and idle-expiry limits. It is not a reproduction of private persistent conversation recovery.                               |
 | AMS                             | Public memory interface using bounded, session-isolated storage by default. Optional persistence requires deliberate configuration. No private memories are included.                      |
 | DIM                             | New public ingestion, normalization, hashing, and deduplication contract. It is an experimental public interface rather than a migrated private DIM runtime.                               |
-| SAL                             | Experimental structural-output boundary that accepts bounded JSON-like provider output and rejects malformed or unsupported structures. It is not a completed semantic adjudication layer. |
+| SAL                             | Experimental structural-output boundary used by the packaged non-mock EAS/SIS provider adapter. It accepts bounded JSON-like output and rejects malformed or unsupported structures; it is not a completed semantic adjudication layer. |
 | Governance                      | Deterministic status, failure, review, and tool-boundary interfaces operate only on the information and rules explicitly provided to them.                                                 |
-| MCM                             | Deterministic Math Computation Module for supported calculations, units, constraints, sensitivity processing, diagnostics, and result classification.                                      |
+| MCM                             | Deterministic Math Computation Module for supported calculations, units, constraints, sensitivity processing, diagnostics, and result classification.                                  |
 | LCM and OpRep                   | Bounded, metadata-oriented lifecycle events and content-redacted public reports. The public runtime does not reproduce private-style raw prompt and response logging.                      |
 | Providers                       | Deterministic mock mode is the default. Ollama and cloud-provider integrations are optional and loaded only when configured.                                                               |
 | Jobs                            | Public jobs are bounded and session-owned. They do not reproduce the persistence, recovery, or asynchronous behavior of the private runtime.                                               |
@@ -204,9 +216,13 @@ When Ollama or an optional cloud provider is configured, provider generation is 
 
 ## Memory Architecture
 
-### CRM
+### Public Rolling Context (CRM-Compatible Boundary)
 
-The public Contextual or Conversational Recall Memory boundary maintains a bounded rolling context for the active signed session.
+The public `RollingContextMemory` boundary maintains bounded conversation
+context for the active signed session. The current private code expands CRM as
+**Conversation Recovery Module** and provides filesystem recovery behavior;
+the public boundary does not reproduce that persistence or redefine the private
+module name.
 
 CRM is intended to support short-term conversational continuity.
 
@@ -489,6 +505,13 @@ Data is sent to an optional cloud provider only when an operator deliberately in
 
 ## Identity and Continuity
 
+This documentation uses **Carter system identity** for configured system
+instructions and continuity, and **user identity context** for an account label
+supplied by the host application. They are different data and authority
+boundaries.
+
+### Carter System Identity
+
 Carter’s public identity is represented through a first-party system instruction and machine-readable metadata.
 
 That identity defines:
@@ -517,6 +540,17 @@ Continuity does not imply:
 * sentience;
 * independent sovereignty;
 * or access to private Carter memories.
+
+### Application-Supplied User Context
+
+In the current private implementation, the host may supply the account email
+associated with its authenticated session to PGM as contextual identity
+metadata included in the model prompt. Carter does not independently
+verify real-world identity, and that context does not by itself establish
+identity, authentication, or authority. Session binding and account-context
+isolation require further hardening and testing. The public `0.1.0` runtime does
+not reproduce this account-context path.
+See [Prompt Governance Module](PGM.md) and [Data Flow](DATA_FLOW.md).
 
 ---
 
@@ -568,6 +602,36 @@ The public release intentionally replaces or excludes portions of the private ru
 The public package architecture, deterministic mock provider, session isolation, optional integrations, metadata-oriented reporting, public DIM, and SAL v0 are version `0.1.0` public architecture decisions.
 
 They should not be interpreted as proof that identical components were previously active in the private runtime.
+
+### Current Private Snapshot
+
+This comparison was checked against private commit
+`df0230b9386437a12d8ac4b2c65bf37d68eee9a2` on 2026-07-27.
+
+The active private host is `carterServe.py`. Its PGM is named the **Prompt
+Governance Module** and performs executable AMS/RAG retrieval and prompt
+assembly. It combines those sources with CRM conversation, the request,
+timestamp, configured Carter name, an application-supplied email label, and a
+large prompt policy before provider generation. Its named sections express
+model-facing governance responsibilities and architectural specifications
+through prompt construction. They influence probabilistic model behavior and
+must be distinguished from separately implemented deterministic Python
+enforcement.
+
+The current PGM revision adds model-facing Emergency Claims and Tool-Action
+Governance and revises its Prime Directives section. Architecturally, asserted
+emergencies remain unverified until supported by applicable evidence, and
+consequential tool actions remain subject to authorization and host controls.
+Prompt instructions do not themselves implement those deterministic controls.
+
+SOSP (Security Operations and Support Protocol) was removed from the current
+PGM. No SOSP reference remains in tracked private source at commit `df0230b`.
+Authentication, authorization, route, and resource-ownership checks execute in
+the Flask host, while PGM policy is model-facing governance. Details are in
+[PGM.md](PGM.md).
+
+The public package has no PGM module and no equivalent role-login/email path.
+Its structured orchestration is a separate bounded public implementation.
 
 ---
 
@@ -661,6 +725,7 @@ It is designed to make uncertainty, authority, computation, failure, and human-r
 See:
 
 * [Data Flow](DATA_FLOW.md)
+* [Prompt Governance Module](PGM.md)
 * [Synthetic Operating System](SOS.md)
 * [Memory](MEMORY.md)
 * [Governance](GOVERNANCE.md)

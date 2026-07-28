@@ -2,17 +2,23 @@
 
 # Semantic Adjudication Layer
 
-SAL is a bounded public interface for normalizing and adjudicating structured candidate output. The audited private tree did not contain a standalone active SAL module. The `sos.sal` implementation is new in `0.1.0` and is deliberately limited.
+SAL is the project name for a bounded public interface whose current code
+normalizes and structurally validates one JSON object. The name **Semantic
+Adjudication Layer** describes broader architectural intent; the `0.1.0`
+implementation does not perform general semantic adjudication. The audited
+private tree did not contain a standalone active SAL module. `sos.sal` is new
+public code and is deliberately limited.
 
 ## Responsibilities
 
 SAL can:
 
-- extract and normalize expected JSON-like output;
+- parse a JSON object or remove one enclosing Markdown JSON fence;
 - reject malformed or structurally unsupported values;
-- preserve explicit unknown and missing states;
-- produce a structured adjudication result for governance;
-- separate model-provided fields from deterministic results.
+- reject missing caller-declared required fields;
+- enforce configured payload-size, nesting-depth, and collection-size bounds;
+- return a structured validity result for workflow schema validation or
+  governance.
 
 SAL does not:
 
@@ -29,13 +35,29 @@ flowchart LR
     U[Untrusted model text] --> N[JSON normalization]
     N --> V{Expected structure?}
     V -- No --> F[Explicit invalid result]
-    V -- Yes --> A[Adjudicated fields]
+    V -- Yes --> A[Structurally accepted object]
     D[Deterministic computation] --> G[Governance]
     A --> G
     G --> R[Permitted response or review status]
 ```
 
-Normalization must not invent omitted required values. Recovery may remove transport wrappers or select an already-present structured object; it must preserve uncertainty and report failures.
+Normalization does not invent omitted required values, repair malformed JSON,
+or extract an object from surrounding prose. Its only text repair is removal of
+one enclosing Markdown JSON fence. Workflow-specific schemas and governance
+must still interpret the returned object.
+
+## Runtime Integration
+
+The packaged Flask runtime calls `normalize_json` through its non-mock EAS/SIS
+provider adapter before workflow-specific schema validation. The Carter chat
+path, CSC interpretation path, memory components, MCM, and generic SOS
+orchestration do not call `sos.sal`. Mock EAS/SIS workflows also bypass SAL and
+use deterministic fixtures plus their workflow schemas.
+
+`EngineeringWorkflow` and `IdeationWorkflow` accept provider objects directly
+as a library interface. A caller using that interface must provide structured
+objects or an equivalent boundary; the workflow classes do not call SAL on the
+caller's behalf.
 
 ## Security Considerations
 

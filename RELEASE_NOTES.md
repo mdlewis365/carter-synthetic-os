@@ -4,7 +4,10 @@
 
 ## Initial Public Research Release
 
-Carter Synthetic OS `0.1.0` is the first proposed public implementation release of Carter, Synthetic Operating System, Engineering Assistance System, Synthetic Ideation System, and Carter Sensory Console in one monorepository.
+Carter Synthetic OS `0.1.0` is the first proposed public implementation release
+of Carter, the flagship implementation of Synthetic OS, in one monorepository.
+EAS and SIS operate as functional systems within Carter, and CSC is the Carter
+Sensory Console.
 
 The release demonstrates a governed compound AI pipeline: probabilistic model planning/generation is separated from deterministic normalization, schema validation, computation, governance, and evidence generation. The basic mock demonstration runs without private data, a network connection, or a paid API. Local Ollama and cloud providers are optional.
 
@@ -20,6 +23,13 @@ The release demonstrates a governed compound AI pipeline: probabilistic model pl
 ## Important Boundaries
 
 EAS is engineering decision-support software and every result requires qualified human review. SIS outputs are hypotheses/candidates requiring independent validation, prior-art and patent analysis, safety assessment, and experiment. CSC media features are disabled until explicit activation and do not retain sensory data by default.
+
+The maintained Carter deployment is authentication-protected, and guided or
+demonstration access may be available upon request. The public research runtime
+does not contain that private authentication implementation: it provides
+signed anonymous session ownership and CSRF controls, not verified real-world
+identity, account isolation, or production authorization. HTTPS deployments
+must enable the secure-cookie setting.
 
 DIM and SAL are new bounded public `0.1.0` interfaces. No active private DIM/SAL subsystem was available to migrate. The private source also had no camera implementation; this release's camera boundary is browser-local preview only.
 

@@ -16,6 +16,26 @@ Carter Synthetic OS is self-hosted research software. The repository itself adds
 
 Ephemeral processing is not a guarantee of cryptographic erasure. Process memory, operating-system swap, crash capture, proxy logs, backups, and provider systems may create additional copies depending on deployment.
 
+## Current Private Account-Email Processing
+
+The current private Carter host may supply the account email associated with
+its authenticated session to the Prompt Governance Module (PGM) as contextual
+identity metadata. PGM includes that context in the assembled model prompt.
+This is personal-data processing, not independent real-world identity
+verification, and the email alone must not be treated as authentication or
+authority.
+
+Session binding and account-context isolation require further hardening and
+dedicated testing. The private host or its surrounding operational environment
+may also retain account context. These limitations do not describe the public
+`0.1.0` session model, which does not reproduce this path.
+
+When an external model provider is selected, permitted account context may
+leave the local system. Operators must provide appropriate notice, minimize the
+value used, restrict access, define retention and deletion, redact logs and
+reports, and confirm authority for provider transfer. See
+[docs/PGM.md](docs/PGM.md).
+
 ## Provider Transfers
 
 Selecting Ollama sends allowed request/transcript context to the configured Ollama endpoint. The safe default is loopback. Selecting OpenAI, Anthropic, or Google sends request data and allowed context to that provider. Selecting Google for CSC transcription sends captured audio. Selecting ElevenLabs sends response text and provider authentication data for TTS.

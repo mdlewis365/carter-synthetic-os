@@ -279,9 +279,7 @@ def _run_mcm(plan: Mapping[str, Any], plan_valid: bool) -> dict[str, Any]:
 def _enforce_public_review_gate(gate: Mapping[str, Any]) -> dict[str, Any]:
     result = dict(gate)
     source_status = str(result.get("governance_status") or "unknown")
-    result["deterministic_gate_status"] = (
-        "computed_criteria_passed" if source_status == "computed_certified" else source_status
-    )
+    result["deterministic_gate_status"] = source_status
     result["deterministic_status_label"] = str(result.get("final_report_status_label") or "unknown")
     result["governance_status"] = "needs_human_review"
     result["human_review_required"] = True

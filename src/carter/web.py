@@ -93,7 +93,7 @@ def create_app(
         SESSION_COOKIE_NAME="carter_public_session",
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
-        SESSION_COOKIE_SECURE=False,
+        SESSION_COOKIE_SECURE=configured.session_cookie_secure,
         PERMANENT_SESSION_LIFETIME=configured.session_idle_ttl_seconds,
         JSON_SORT_KEYS=True,
     )
@@ -186,7 +186,7 @@ def create_app(
                 "session_id": session_id,
                 "csrf_token": csrf_token,
                 "provider": runtime.provider.name,
-                "model": configured.default_model,
+                "model_configured": bool(configured.default_model),
                 "mock": runtime.provider.name == "mock",
                 "retention": "session_memory_only",
                 "session_idle_ttl_seconds": configured.session_idle_ttl_seconds,
@@ -437,7 +437,6 @@ def create_app(
             return jsonify(result.public_dict()), 503
         response = Response(result.audio_bytes, mimetype=result.content_type)
         response.headers["Content-Disposition"] = "inline"
-        response.headers["X-Carter-Session"] = session_id[:8]
         return response
 
     @app.post("/api/csc/playback")

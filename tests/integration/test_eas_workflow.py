@@ -36,13 +36,13 @@ def test_eas_fixture_runs_full_two_stage_workflow_offline() -> None:
     assert result["governance"]["governance_status"] == "needs_human_review"
     assert result["governance"]["public_release_gate"] == "mandatory_human_review"
     assert result["governance"]["professional_approval_status"] == "not_approved"
+    assert result["governance"]["deterministic_gate_status"] == "computed_criteria_passed"
     assert result["engineering_decision_record"]["human_review_required"] is True
     assert result["decision_record_validation"]["valid"] is True
     assert result["final_response"]["human_review_required"] is True
     assert result["structured_plan"] == result["stage_one_plan"]
     assert result["computation"] == result["mcm"]
     assert result["execution_metadata"]["record_timestamp_source"] == ("fixed_synthetic_fixture")
-    assert "computed_certified" not in json.dumps(result)
     json.dumps(result)
 
 

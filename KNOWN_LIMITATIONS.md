@@ -15,6 +15,9 @@
 - CSC camera support is local browser preview only; no server-side vision interpretation is included.
 - Durable memory and sensory retention are off by default; bounded session context remains in process until clear, idle expiry, or process exit.
 - The server has not been claimed as independently penetration tested or production hardened.
+- The public research/reference runtime is not behaviorally identical to the
+  full private host. Current PGM, account-context, and CSC differences are
+  maintained in `docs/PGM.md`, `docs/CSC.md`, and `docs/LIMITATIONS.md`.
 - Dependency, model, engineering-pack, authorship, IP, and patent reviews retain human blockers before publication.
 
 The maintained detailed discussion is [docs/LIMITATIONS.md](docs/LIMITATIONS.md). Exact test failures, skips, and release blockers belong in the final public release reports and must not be hidden.

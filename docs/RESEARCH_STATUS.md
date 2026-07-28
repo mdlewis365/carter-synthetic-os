@@ -31,6 +31,20 @@ Version `0.1.0`, **Initial Public Research Release**, makes implementation avail
 | CSC audio/transcript boundaries | Yes | Synthetic/session tests | No medical, surveillance, or safety validation. |
 | CSC camera | Local preview boundary only | Browser boundary as available | No server-side interpretation claim. |
 
+## Current Private Snapshot
+
+The private source was reconciled at commit `df0230b` on 2026-07-27.
+
+| Area | Code-backed behavior | Conceptual, pending, or limited behavior |
+| --- | --- | --- |
+| PGM | AMS/RAG retrieval and assembly of CRM, request, time, configured Carter name, host-provided account context, and prompt policy. Current prompt policy includes revised Prime Directives and emergency-claim/tool-action guidance. | Named model-facing governance responsibilities influence probabilistic generation and are distinct from deterministic Python enforcement. Emergency assertions remain unverified, and consequential actions still require host authorization and controls. |
+| SOSP | No reference remains in tracked private files at commit `df0230b`; it was removed from PGM. | Historical references belong only in explicitly dated history. |
+| User context | The private host may pass the account email associated with its authenticated session to PGM as contextual identity metadata. | It is not independent identity or authority; session binding and account-context isolation require hardening and testing. |
+| Private CSC | Explicit hearing, Gemini transcription, basic priority metadata, session transcript buffer, manual local Ollama interpretation, and configurable TTS. | Interpretation is not automatically submitted to Carter or PGM; AAM priority triage, SAL semantic adjudication, candidate queueing, automatic response/TTS integration, and camera handling remain planned. |
+
+See [PGM.md](PGM.md) for the evidence boundary. These entries describe the
+private implementation and do not change the public component-status table.
+
 ## Evidence Interpretation
 
 The checked-in evidence case proves that the included code can execute one synthetic deterministic workflow and generate the recorded artifacts and hashes under the reported environment. It does not prove performance on private data, general model intelligence, engineering fitness, invention novelty, or production security.

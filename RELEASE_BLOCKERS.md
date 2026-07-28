@@ -5,7 +5,7 @@
 
 Release: `0.1.0` (Initial Public Research Release)
 
-Status date: 2026-07-13
+Status date: 2026-07-27
 
 **Publication status: blocked pending human review.** No GitHub push, visibility
 change, tag, or public release may occur until every publication gate below is
@@ -14,6 +14,21 @@ resolved and the confirmations in `PUBLIC_PUSH_CHECKLIST.md` are recorded.
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
 claim legal, security, scientific, or professional-engineering approval.
+
+Before creation of the release-candidate commit, staged-candidate verification
+was completed for 40 changed paths in a 193-file indexed tree. Its complete
+cached diff was inspected, the baseline-aware `detect-secrets-hook` passed
+without mutating `.secrets.baseline`, and all other staged technical checks
+passed. Exact-commit and release-artifact verification was required after
+commit creation, with the results recorded without modifying the exact commit
+being verified. At the time this staged-candidate record was prepared, B-01
+through B-08 and all applicable human publication gates remained open.
+
+The private implementation reference was advanced to committed descendant
+`df0230b` on 2026-07-27. Its revised PGM governance is documented only at an
+architectural level, and its newly committed example PDF remains private and
+excluded. This does not close provenance, privacy, or exact-commit review gates.
+The complete public offline suite passed again after that reconciliation.
 
 ## Must Resolve Before Public Push
 

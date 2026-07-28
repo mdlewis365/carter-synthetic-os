@@ -157,7 +157,7 @@ def validate_engineering_decision_record(record: Any) -> dict:
 
     known_governance_statuses = {
         "not_required",
-        "computed_certified",
+        "computed_criteria_passed",
         "computed_selection_pass",
         "computed_with_failure",
         "computed_with_unknowns",

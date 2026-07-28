@@ -12,7 +12,7 @@ Synthetic Operating System (SOS) is the coordination layer beneath Carter and th
 | `sos.memory` | `RollingContextMemory`, `InMemoryAMS`, `DIMIngestor`, optional SQLite, and a disabled Chroma adapter boundary. |
 | `sos.models` | Provider-neutral requests/responses, provider construction, and typed provider failures. |
 | `sos.governance` | Risk/status decisions and an allowlisted tool boundary. |
-| `sos.sal` | Bounded JSON normalization and semantic-adjudication contracts. |
+| `sos.sal` | Bounded JSON-object normalization and structural validation; broader semantic adjudication remains architectural intent. |
 | `sos.computation` | MCM deterministic calculation, units, constraints, selection, and supported sensitivity behavior. |
 | `sos.logging` | LCM redacted bounded metadata events and metadata-only OpRep records. |
 | `sos.registry` | Explicit subsystem/provider registration. |
@@ -57,9 +57,24 @@ Context assembly gives the current request priority over recalled content. Memor
 
 The privacy-sensitive private PGM prompt/identity assembly is not copied. Its public architectural role is represented by generic normalization, explicit anchors, structured context assembly, and governance. There is no separate full RAG subsystem in `0.1.0`; Chroma adapter source is included without a declared dependency, corpus, or embedding model because the current dependency line is blocked by `CVE-2026-45829`.
 
+In the current private implementation, PGM means **Prompt Governance Module**.
+It performs AMS/RAG retrieval and assembles those sources with CRM conversation,
+the request, timestamp, configured Carter name, account context, and prompt-level
+policy. Its named modules express model-facing governance responsibilities
+through prompt construction and are distinct from deterministic Python
+enforcement. Authentication and authorization remain host controls. See
+[PGM.md](PGM.md).
+
 ## Governance, SAL, And Tools
 
-Governance returns a bounded status and review requirement based on structured signals. SAL normalizes structured model output and records adjudication outcomes; it does not prove semantic truth. Tool execution is deny-by-default and limited to registered callables and validated arguments. The public tool boundary does not create arbitrary shell or unrestricted network access.
+Governance returns a bounded status and review requirement based on structured
+signals. In the packaged non-mock EAS/SIS provider adapter, SAL normalizes one
+structured model object and returns a controlled result. Carter chat, CSC,
+memory, MCM, and generic orchestration do not call it. `sos.sal` does not log or
+persist adjudication outcomes and does not prove semantic truth. Tool execution
+is deny-by-default and limited to registered callables and validated arguments.
+The public tool boundary does not create arbitrary shell or unrestricted
+network access.
 
 ## Model Routing
 

@@ -3,7 +3,11 @@
 
 # Security Release Audit
 
-Audit date: 2026-07-13
+Initial audit date: 2026-07-13
+
+Working-tree reverification dates: 2026-07-25 and 2026-07-27
+
+Private-reference reconciliation date: 2026-07-27
 
 Release candidate: Carter Synthetic OS 0.1.0, Initial Public Research Release
 
@@ -170,6 +174,65 @@ environment. This is not a claim about every resolver result permitted by the
 project's version ranges, operator-supplied Ollama/model software, cloud
 services, or future installations. Re-run the audit against the exact locked
 artifacts selected for release.
+
+### 2026-07-25 Working-Tree Reverification
+
+The reconciled public working tree was reverified before final report updates:
+
+- 172 of 172 offline tests passed with 32% branch-aware source coverage; the
+  large MCM module had 16% line coverage and remains a material semantic and
+  engineering-validation risk;
+- Ruff lint and format checks passed, both bounded Bandit scans reported zero
+  issues, the reproducible evidence check passed, and JavaScript syntax passed;
+- sdist and wheel builds succeeded, and an installed-wheel smoke test verified
+  health, AGPL metadata/license availability, evidence, and all 18 engineering
+  pack files;
+- project-scoped `pip-audit` found no known vulnerabilities in the declared
+  dependency set;
+- a baseline-aware all-files secret scan found no unbaselined findings, and
+  bounded public-history searches found no high-confidence credential, private
+  path, or media/database/key artifact candidates.
+
+The release code was also hardened to avoid returning configured model
+identifiers in session, chat, stream, and lifecycle metadata; to remove the
+session-derived TTS response header; and to expose an explicit secure-cookie
+configuration switch for HTTPS deployment.
+
+Two qualifications remain. The general machine Python environment has
+unrelated dependency conflicts and includes a non-PyPI language model that
+prevents a strict machine-wide audit. Before creation of the release-candidate
+commit, staged-candidate verification was completed for 40 changed paths in a
+193-file indexed tree: its complete cached diff was inspected, the
+baseline-aware `detect-secrets-hook` passed without mutating
+`.secrets.baseline`, and all other staged technical checks passed. Exact-commit
+and release-artifact verification was required after commit creation, with the
+results recorded without modifying the exact commit being verified. At the
+time this record was prepared, B-01 through B-08 and all applicable human
+publication gates remained open.
+
+### 2026-07-27 Private-Reference Reconciliation
+
+Private commit `df0230b9386437a12d8ac4b2c65bf37d68eee9a2` was confirmed as a
+descendant of the previously reviewed `ceca0f5` reference. Its committed delta
+contains the revised private PGM, a small host activation call-site adjustment,
+and a private EAS example PDF. None of those files or their operative contents
+was copied into the public repository.
+
+The PGM delta revises prompt-level governance and adds an emergency-claim and
+tool-action boundary. Public documentation records only that emergency
+assertions are not thereby verified and consequential tool actions require
+authorization and applicable host controls. Prompt text is not deterministic
+enforcement.
+
+The new private PDF remains excluded. A bounded in-memory inspection found no
+credential signature, embedded URL credential, email-like value, or absolute
+local path in extracted text, but that automated result is not provenance,
+privacy, or publication clearance.
+
+After this documentation-only reconciliation, 41 targeted governance/web tests
+and the complete 172-test offline suite passed. Markdown-link, baseline-aware
+secret, absolute-path, sensitive-artifact, and diff-whitespace checks also
+passed. No runtime or test file changed during the reconciliation.
 
 ## Security And Privacy Remediations
 

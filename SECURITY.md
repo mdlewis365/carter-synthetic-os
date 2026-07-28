@@ -34,6 +34,8 @@ Maintainers will attempt to acknowledge and triage reports, coordinate a fix, an
 High-priority examples include:
 
 - authentication, session, CSRF, route-authorization, or SSE ownership bypass;
+- account-email/user-context confusion across authenticated sessions or requests;
+- emergency or urgency claims bypassing authorization or consequential-tool controls;
 - credential or private-data exposure;
 - cross-session memory, transcript, job, or artifact access;
 - arbitrary code execution through MCM, SAL, providers, uploads, or tools;
@@ -42,6 +44,25 @@ High-priority examples include:
 - dependency or build compromise affecting distributed artifacts.
 
 Model hallucination, prompt quality, unsupported engineering conclusions, and generated-concept novelty are usually product/research limitations rather than software vulnerabilities unless they cross a stated security boundary.
+
+## Current Private Identity-Context Limitation
+
+The private host may supply the account email associated with its authenticated
+session to PGM as contextual identity metadata. Carter does not independently
+verify real-world identity, and the value must not be treated as authentication
+or authorization. Session binding and account-context isolation require further
+hardening and dedicated testing before multi-user or network deployment.
+
+Account context should be minimized before provider transfer and redacted from
+logs, reports, memory, job metadata, and provider errors. This limitation
+concerns the private operational source; the public `0.1.0` research/reference
+runtime does not implement that account-context path. See
+[docs/PGM.md](docs/PGM.md) and [PRIVACY.md](PRIVACY.md).
+
+The current private PGM includes model-facing emergency-claim and tool-action
+guidance. It does not verify emergency statements or deterministically
+authorize tools. Consequential actions remain subject to applicable host
+authorization, validation, allowlisting, and audit controls.
 
 ## Operator Responsibilities
 

@@ -9,12 +9,14 @@ Copyright (C) 2023-2026 Michael D. Lewis, doing business as Synthetic OS Labs
 
 Carter Synthetic OS combines language-model reasoning with bounded memory, deterministic computation, schema validation, governance gates, operational traceability, and required human review.
 
-Its public subsystems include:
+Carter is the flagship implementation of Synthetic OS. EAS and SIS are
+functional systems operating within Carter; CSC is the Carter Sensory Console.
+The public release exposes:
 
-* **Synthetic Operating System (SOS)** — orchestration, governance, memory, provider, and computation boundaries
 * **Engineering Assistance System (EAS)** — governed engineering decision support
 * **Synthetic Ideation System (SIS)** — structured and evaluated technical ideation
 * **Carter Sensory Console (CSC)** — bounded speech, attention, interpretation, and sensory-state research
+* **Synthetic Operating System (SOS) foundations** — shared orchestration, governance, memory, provider, and computation boundaries
 
 **Version:** 0.1.0 — Initial Public Research Release
 **License:** GNU Affero General Public License v3.0 only (`AGPL-3.0-only`)
@@ -54,6 +56,50 @@ The default mock experience and standard test suite require:
 * no network access.
 
 This release is not a production deployment recommendation, professional certification, scientific validation, or unrestricted autonomous system.
+
+The maintained Carter deployment is authentication-protected. Guided or
+demonstration access may be available upon request. The public reference
+runtime in this repository does not include the private authentication
+implementation; its signed anonymous sessions are continuity and CSRF
+boundaries, not user authentication, and it must not be exposed as a
+production multi-user service without an independently reviewed identity and
+authorization layer.
+
+---
+
+## Current Private Implementation Reconciliation
+
+The maintained documentation was reconciled on 2026-07-27 against private
+implementation commit `df0230b9386437a12d8ac4b2c65bf37d68eee9a2`.
+
+The current private code names PGM the **Prompt Governance Module**. It
+retrieves AMS and RAG context and assembles those sources with CRM conversation,
+the current request, time, configured Carter name, application-supplied user
+context, and prompt-level governance instructions. Many other named modules
+inside the PGM text express model-facing governance responsibilities through
+prompt construction. Those responsibilities influence probabilistic model
+behavior and are distinct from deterministic Python enforcement.
+
+The current private PGM also contains revised model-facing governance,
+including a Prime Directives revision and Emergency Claims and Tool-Action
+Governance. At a public architectural level, emergency statements are not
+verified facts merely because they are asserted, and consequential tool actions
+require authorization and applicable host controls. Prompt text alone does not
+verify an emergency, authorize or execute a tool, or deterministically enforce
+compliance.
+
+SOSP (Security Operations and Support Protocol) has been removed from the
+current PGM and is not an active component. The private host may supply the
+account email associated with its authenticated session to PGM as contextual
+identity metadata. Carter does not independently verify real-world identity,
+and the email alone does not establish identity or authority. Session binding
+and account-context isolation require further hardening and testing. See
+[Prompt Governance Module](docs/PGM.md) for the verified flow, privacy boundary,
+and implemented-versus-conceptual distinctions.
+
+This reconciliation describes the private source of truth for comparison. The
+public `0.1.0` runtime does not contain the private PGM prompt corpus or its
+account-email integration.
 
 ---
 
@@ -164,7 +210,7 @@ Language-model output is not automatically accepted as system truth, memory, aut
 
 ### Computation is separated from generation
 
-The Mathematical and Computational Module performs deterministic calculations, unit handling, constraint evaluation, sensitivity processing, diagnostics, and result classification outside the language model.
+The Math Computation Module performs deterministic calculations, unit handling, constraint evaluation, sensitivity processing, diagnostics, and result classification outside the language model.
 
 ### Failure states remain visible
 
@@ -548,6 +594,7 @@ Default boundaries include:
 * loopback-only server binding;
 * debug mode disabled;
 * signed, HTTP-only, SameSite session cookies;
+* an explicit secure-cookie switch for operator-configured HTTPS;
 * header-based CSRF protection;
 * bounded request payloads;
 * restrictive browser security headers;
@@ -695,6 +742,7 @@ Runtime templates and static resources are packaged beneath `src/carter`.
 
 * [Architecture](docs/ARCHITECTURE.md)
 * [Data Flow](docs/DATA_FLOW.md)
+* [Prompt Governance Module](docs/PGM.md)
 * [Synthetic OS](docs/SOS.md)
 * [Memory](docs/MEMORY.md)
 * [Governance](docs/GOVERNANCE.md)
