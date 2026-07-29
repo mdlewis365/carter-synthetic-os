@@ -18,6 +18,11 @@
 - The public research/reference runtime is not behaviorally identical to the
   full private host. Current PGM, account-context, and CSC differences are
   maintained in `docs/PGM.md`, `docs/CSC.md`, and `docs/LIMITATIONS.md`.
-- Dependency, model, engineering-pack, authorship, IP, and patent reviews retain human blockers before publication.
+- Release-owner decisions on authorship, AGPL authority, patent-disclosure
+  timing, engineering-pack provenance, dependency licensing, and privacy are
+  recorded as resolved or accepted in `RELEASE_BLOCKERS.md`. Continued
+  dependency/model review and the lack of independent professional validation
+  remain disclosed limitations, not unresolved blockers to the public source
+  repository.
 
 The maintained detailed discussion is [docs/LIMITATIONS.md](docs/LIMITATIONS.md). Exact test failures, skips, and release blockers belong in the final public release reports and must not be hidden.

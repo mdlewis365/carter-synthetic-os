@@ -4,20 +4,27 @@
 
 ## Supported Versions
 
-Before the first public release, only the release candidate on `release/carter-agpl-public` is under active security preparation. After publication, the latest `0.1.x` patch release is expected to receive security fixes; older snapshots and private forks are not guaranteed support. This table must be updated when a later series is supported.
+The canonical source repository is public. Until `v0.1.0` is formally tagged
+and released, the current `main` release candidate receives security fixes.
+After that release, the latest `0.1.x` patch release is expected to receive
+security fixes; older snapshots and private forks are not guaranteed support.
+This table must be updated when a later series is supported.
 
 | Version | Supported |
 | --- | --- |
-| `0.1.x` | Yes, after public release |
+| Public `main` / `0.1.0` release candidate | Yes |
+| Latest tagged `0.1.x` | Yes, after formal release |
 | Older / unreleased snapshots | No guarantee |
 
 ## Private Reporting
 
 Do not open a public issue for a suspected vulnerability, exposed credential, private data, or exploit.
 
-Preferred channel after the repository is public: use GitHub's **Report a vulnerability** action on the repository's Security page. Maintainers must enable Private Vulnerability Reporting before relying on this route.
+Preferred channel: use GitHub's **Report a vulnerability** action on the
+repository's Security page. Private Vulnerability Reporting was verified
+enabled on July 29, 2026.
 
-If private vulnerability reporting is not yet enabled, email
+As a monitored private fallback, email
 [security@syntheticoslabs.com](mailto:security@syntheticoslabs.com). This
 tested, monitored private reporting address was approved by the release owner
 on July 28, 2026.

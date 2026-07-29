@@ -11,6 +11,19 @@ Target version: 0.1.0, Initial Public Research Release
 
 License target: GNU Affero General Public License v3.0 only (AGPL-3.0-only)
 
+> **Operational supersession notice (2026-07-29):** This document is primarily
+> a dated pre-implementation audit. Its original inventories, concerns, and
+> blocker table are preserved as historical evidence rather than rewritten.
+> Operationally, release-owner decisions B-01 through B-07 were subsequently
+> resolved or accepted, `docs/PGM.md` was committed, and the canonical source
+> repository became public. Verified public `main` is
+> `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941` with 193 tracked files. No
+> `v0.1.0` tag or GitHub release exists; the eventual documentation-merge
+> commit and rebuilt release artifacts still require exact verification before
+> separate tag and release authorization. Maintained current dispositions are
+> in `RELEASE_BLOCKERS.md`, `PUBLIC_RELEASE_REPORT.md`, and
+> `PUBLIC_PUSH_CHECKLIST.md`.
+
 ## 2026-07-21 Reconciliation Addendum
 
 This file is a release-time audit record, not a continuously rewritten inventory

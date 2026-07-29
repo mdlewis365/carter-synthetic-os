@@ -6,7 +6,15 @@ All notable public changes will be recorded here. The project follows semantic v
 
 ## [Unreleased]
 
-- Local public-release audit and human approval remain pending before any push or tag.
+- Published the canonical source repository at
+  `https://github.com/mdlewis365/carter-synthetic-os`; public `main` is
+  verified at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`. Version `0.1.0`
+  remains unreleased: no `v0.1.0` tag or GitHub release has been created.
+- Merged security remediation PRs #3 and #4 with normal merge commits. CodeQL
+  automatically marked alerts #1 through #7 fixed without dismissal; current
+  CodeQL, secret-scanning, and Dependabot vulnerability alert counts are zero.
+- Reverified 226 offline tests with 35% branch-aware overall coverage, 20% MCM
+  coverage, and 83% web-boundary coverage.
 - Reconciled maintained documentation through private commit `df0230b` without
   copying private prompt or account data.
 - Documented the public-safe architectural boundary for the revised private
@@ -54,7 +62,9 @@ All notable public changes will be recorded here. The project follows semantic v
 - DIM and SAL are bounded new public interfaces rather than migrated active private modules.
 - Camera support is local preview only.
 - EAS requires independent professional review; SIS candidates require technical, patent, prior-art, safety, and experimental review.
-- Publication remains blocked on the human items recorded in the release audit and push checklist.
+- Release-owner decisions B-01 through B-07 are resolved. Formal `v0.1.0`
+  tagging and release remain pending exact verification of the eventual
+  documentation-merge commit and rebuilt release artifacts.
 
 [Unreleased]: https://github.com/mdlewis365/carter-synthetic-os/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/mdlewis365/carter-synthetic-os/releases/tag/v0.1.0

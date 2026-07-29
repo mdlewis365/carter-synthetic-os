@@ -69,9 +69,10 @@ reproduced here.
 | Other private PDF, TXT, CSV, and report fixtures outside cleared first-party source/packs | All matching uncleared artifacts | Generated artifact / ownership unclear | Inputs and outputs were not individually proven synthetic and redistributable. | Synthetic replacements where needed for tests. | Historical/private examples are absent. |
 
 The 18 first-party engineering pack Markdown files were included rather than
-excluded, but publication remains blocked on human authorship, IP, and
-controlled-source review. No pack should be interpreted as reproducing a
-licensed engineering standard.
+excluded. Michael D. Lewis recorded the release-owner authorship, IP, and
+controlled-source provenance decision for those files on July 28, 2026. No
+pack should be interpreted as reproducing or replacing a licensed engineering
+standard, and independent professional validation remains outside the release.
 
 ## SIS Source And Draft Material
 
