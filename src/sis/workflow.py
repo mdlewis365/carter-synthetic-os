@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from dataclasses import asdict, is_dataclass
@@ -24,6 +25,8 @@ from .candidates import (
 from .evaluators import evaluate_candidate, govern_output
 from .invention_mode_enum import normalize_mode
 from .scientist_input_schema import ScientistInput
+
+logger = logging.getLogger(__name__)
 
 WORKFLOW_SCHEMA = "sis.workflow_result.v1"
 DEFAULT_REJECTION_BOUNDARIES = [
@@ -45,8 +48,8 @@ class IdeationWorkflow:
             return _invalid_result("SIS payload must be a mapping.")
         try:
             mode = normalize_mode(payload.get("invention_mode") or payload.get("mode"))
-        except ValueError as exc:
-            return _invalid_result(str(exc))
+        except ValueError:
+            return _invalid_result("Invention mode is not supported.")
 
         scientist_input = _build_scientist_input(payload, mode.value)
         input_errors = scientist_input.validate()
@@ -61,7 +64,7 @@ class IdeationWorkflow:
             "is_language_model": provider is not None,
         }
 
-        provider_error: str | None = None
+        provider_failed = False
         if input_errors:
             candidate: dict[str, Any] = {}
         elif provider is None:
@@ -74,8 +77,9 @@ class IdeationWorkflow:
                     mode.value,
                 )
                 candidate = normalize_provider_candidate(raw_candidate, scientist_input, mode)
-            except Exception as exc:
-                provider_error = type(exc).__name__
+            except Exception:
+                logger.exception("SIS candidate provider failed.")
+                provider_failed = True
                 candidate = normalize_provider_candidate({}, scientist_input, mode)
 
         candidate_validation = validate_candidate(candidate)
@@ -88,10 +92,10 @@ class IdeationWorkflow:
         governance = govern_output(candidate_validation["valid"], evaluation)
 
         errors = list(input_errors) + list(candidate_validation["errors"])
-        if provider_error:
-            errors.append(f"Candidate provider failed ({provider_error}).")
+        if provider_failed:
+            errors.append("Candidate provider failed.")
         status = governance["status"]
-        if input_errors or provider_error:
+        if input_errors or provider_failed:
             status = "invalid_request" if input_errors else "provider_failure"
 
         return _json_safe(

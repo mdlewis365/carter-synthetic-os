@@ -11,10 +11,13 @@ import ast
 import copy
 import difflib
 import keyword
+import logging
 import math
 import operator
 import re
 from decimal import Decimal
+
+logger = logging.getLogger(__name__)
 
 SUPPORTED_OPERATIONS = {
     "add": sum,
@@ -1077,11 +1080,12 @@ def _process_without_sensitivity(mcm_request: dict) -> dict:
             ],
         )
 
-    except Exception as e:
+    except Exception:
+        logger.exception("MCM processing failed.")
         return _base_result(
             mcm_request if isinstance(mcm_request, dict) else {},
             status="error",
-            message=f"MCM processing error: {e}",
+            message="MCM processing failed.",
             outputs={},
             diagnostics=["MCM caught an internal exception and returned a structured error."],
         )
@@ -2718,8 +2722,12 @@ def _preflight_equation_variable_references(mcm_request, repair=True, strict=Fal
         lhs, rhs = parsed
         try:
             references = sorted(_collect_names(rhs))
-        except Exception as e:
-            diagnostics.append(f"Preflight skipped variable-reference validation for equation {index}: {e}")
+        except Exception:
+            logger.exception("MCM preflight variable-reference validation failed.")
+            diagnostics.append(
+                f"Preflight skipped variable-reference validation for equation {index} "
+                "because parsing failed."
+            )
             known_names.add(lhs)
             known_units.setdefault(lhs, _unit_from_name_suffix(lhs))
             continue
@@ -3884,16 +3892,17 @@ def _process_equation_plan(mcm_request, inputs, router_diagnostics=None):
                 "reason": f"Missing numeric variable: {missing}",
             })
             continue
-        except Exception as e:
+        except Exception:
+            logger.exception("MCM safe expression evaluation failed.")
             unsupported.append({
                 "equation": name,
                 "expression": expression,
-                "reason": str(e),
+                "reason": "Expression could not be evaluated safely.",
             })
             skipped.append({
                 "equation": name,
                 "expression": expression,
-                "reason": f"Unsupported expression: {e}",
+                "reason": "Unsupported expression.",
             })
             continue
 
@@ -5144,9 +5153,29 @@ def _is_candidate_specific_criterion_output(name):
 
 def _looks_like_candidate_label_token(token):
     text = str(token or "").lower()
-    return bool(
-        re.fullmatch(r"[a-z]|\d+|p\d+", text)
-        or re.fullmatch(r"\d+(?:in|inch|inches|awg|a|amp|amps|hp|kw|w|ft|mm|cm|m)", text)
+    if (len(text) == 1 and "a" <= text <= "z") or text.isdecimal():
+        return True
+    if text.startswith("p") and text[1:].isdecimal():
+        return True
+    unit_suffixes = (
+        "in",
+        "inch",
+        "inches",
+        "awg",
+        "a",
+        "amp",
+        "amps",
+        "hp",
+        "kw",
+        "w",
+        "ft",
+        "mm",
+        "cm",
+        "m",
+    )
+    return any(
+        text.endswith(suffix) and text[: -len(suffix)].isdecimal()
+        for suffix in unit_suffixes
     )
 
 
@@ -6023,11 +6052,18 @@ def _unit_from_name_suffix(name):
     if any(marker in lowered for marker in ("velocity", "speed", "airflow", "flow")):
         return None
     compact = lowered.replace("_", "")
-    if re.search(r"\d+(?:\.\d+)?in$", compact):
+    if _has_numeric_unit_suffix(compact, "in"):
         return "in"
-    if re.search(r"\d+(?:\.\d+)?ft$", compact):
+    if _has_numeric_unit_suffix(compact, "ft"):
         return "ft"
     return None
+
+
+def _has_numeric_unit_suffix(text, suffix):
+    if not text.endswith(suffix):
+        return False
+    stem = text[: -len(suffix)]
+    return bool(stem) and stem[-1].isdecimal()
 
 
 def _compound_unit_from_name_suffix(lowered):
@@ -7049,9 +7085,9 @@ def normalize_unit(unit: str | None) -> str | None:
     if not text:
         return "dimensionless"
 
-    list_match = re.fullmatch(r"(?i)\s*(?:list|array|vector)\s*[\[\(]\s*(.+?)\s*[\]\)]\s*", text)
-    if list_match:
-        return _make_list_unit(list_match.group(1))
+    list_element_unit = _list_element_unit_text(text)
+    if list_element_unit is not None:
+        return _make_list_unit(list_element_unit)
 
     compact = (
         text
@@ -7092,6 +7128,22 @@ def normalize_unit(unit: str | None) -> str | None:
         return "kJ/kg/C"
 
     return text
+
+
+def _list_element_unit_text(text):
+    stripped = text.strip()
+    lowered = stripped.lower()
+    for prefix in ("list", "array", "vector"):
+        if not lowered.startswith(prefix):
+            continue
+        remainder = stripped[len(prefix) :].lstrip()
+        if (
+            len(remainder) >= 3
+            and remainder[0] in "[("
+            and remainder[-1] in "])"
+        ):
+            return remainder[1:-1]
+    return None
 
 
 def _canonical_compound_unit_alias(text):
@@ -12089,10 +12141,16 @@ def _normalize_piecewise_inner_default_argument(inner):
     args = _split_top_level_arguments(inner)
     if not args:
         return inner, False
-    match = re.fullmatch(r"\s*else\s*=\s*(.+?)\s*", args[-1], flags=re.IGNORECASE | re.DOTALL)
-    if not match:
+    candidate = args[-1].lstrip()
+    if candidate[:4].lower() != "else":
         return inner, False
-    args[-1] = match.group(1).strip()
+    remainder = candidate[4:].lstrip()
+    if not remainder.startswith("="):
+        return inner, False
+    raw_value = remainder[1:]
+    if not raw_value:
+        return inner, False
+    args[-1] = raw_value.strip()
     return ", ".join(arg.strip() for arg in args), True
 
 

@@ -151,5 +151,5 @@ def test_sis_provider_exception_message_is_not_reflected() -> None:
         provider=FailingProvider(),
     )
     assert result["status"] == "provider_failure"
-    assert "Candidate provider failed (RuntimeError)." in result["errors"]
+    assert "Candidate provider failed." in result["errors"]
     assert "synthetic-secret-must-not-survive" not in json.dumps(result)
