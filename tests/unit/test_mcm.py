@@ -256,3 +256,159 @@ def test_mcm_internal_exception_details_are_not_returned(
     assert result["message"] == "MCM processing failed."
     assert "UNIQUE-MCM-SENTINEL" not in repr(result)
     assert "C:\\private\\provider\\sentinel.txt" not in repr(result)
+
+
+class SensitiveMCMError(ValueError):
+    pass
+
+
+_MCM_EXCEPTION_DETAIL = (
+    "UNIQUE-MCM-BOUNDARY-SENTINEL Traceback SensitiveMCMError "
+    "C:\\private\\provider\\sentinel.txt internal-provider-detail"
+)
+
+
+def _assert_mcm_exception_detail_is_private(result: object) -> None:
+    rendered = repr(result)
+    for marker in (
+        "UNIQUE-MCM-BOUNDARY-SENTINEL",
+        "Traceback",
+        "SensitiveMCMError",
+        "C:\\private\\provider\\sentinel.txt",
+        "internal-provider-detail",
+    ):
+        assert marker not in rendered
+
+
+def test_mcm_unit_inference_exception_uses_fixed_public_message(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    def fail(*_args, **_kwargs):
+        raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+
+    monkeypatch.setattr(mcm, "_infer_unit_node", fail)
+    result = mcm.infer_rhs_unit("load + 1", {"load": "N"})
+
+    assert result["message"] == "Unit compatibility was not validated for this expression."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_expression_exception_uses_fixed_public_message(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    def fail(*_args, **_kwargs):
+        raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+
+    monkeypatch.setattr(mcm, "_safe_eval", fail)
+    result = mcm._process_expression(
+        {"expression": "load + 1"},
+        "load + 1",
+        {"load": 2.0},
+    )
+
+    assert result["message"] == "Expression could not be evaluated safely."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_operation_exception_uses_fixed_public_message(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    def fail(_values):
+        raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+
+    monkeypatch.setitem(mcm.SUPPORTED_OPERATIONS, "sum", fail)
+    result = mcm._process_operation(
+        {"operation": "sum"},
+        "sum",
+        {"load": 2.0},
+    )
+
+    assert result["message"] == "Operation could not be completed."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_operation_result_validation_exception_uses_fixed_public_message(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    original = mcm._validate_evaluated_value
+    calls = 0
+
+    def fail_on_result(value, depth=0):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+        return original(value, depth)
+
+    monkeypatch.setattr(mcm, "_validate_evaluated_value", fail_on_result)
+    result = mcm._process_operation(
+        {"operation": "sum"},
+        "sum",
+        {"load": 2.0},
+    )
+
+    assert result["message"] == "Operation result was rejected by the public evaluator."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_base_result_validation_exception_uses_fixed_public_message(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    def fail(*_args, **_kwargs):
+        raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+
+    monkeypatch.setattr(mcm, "_validate_evaluated_value", fail)
+    result = mcm._base_result(
+        {},
+        status="computed",
+        message="Synthetic computed result.",
+        outputs={"result": 1.0},
+        diagnostics=[],
+    )
+
+    assert result["message"] == "MCM rejected an unbounded or non-finite result."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_constraint_exception_uses_fixed_public_reason(
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    def fail(*_args, **_kwargs):
+        raise SensitiveMCMError(_MCM_EXCEPTION_DETAIL)
+
+    monkeypatch.setattr(mcm, "evaluate_constraint", fail)
+    result = mcm._evaluate_constraint_spec(
+        {"name": "synthetic", "lhs": "load", "comparator": "<=", "rhs": 10},
+        {"load": 5.0},
+        {"load": "N"},
+    )
+
+    assert result["message"] == "Constraint could not be evaluated."
+    _assert_mcm_exception_detail_is_private(result)
+    assert "UNIQUE-MCM-BOUNDARY-SENTINEL" in caplog.text
+
+
+def test_mcm_missing_variable_diagnostic_is_derived_from_expression() -> None:
+    result = mcm._process_expression(
+        {"expression": "missing_load + 1"},
+        "missing_load + 1",
+        {},
+    )
+
+    assert result["message"] == "Expression references variables with no numeric value."
+    assert result["diagnostics"] == ["Missing numeric value for variable: missing_load"]
+
+
+def test_mcm_syntax_validation_does_not_return_parser_exception_message() -> None:
+    assert mcm._safe_rhs_expression_error("1 +") == "syntax error"
