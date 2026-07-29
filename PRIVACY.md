@@ -58,9 +58,9 @@ Raw audio, TTS audio, and camera frames are not durably retained by the applicat
 
 For an operator-run deployment, privacy access, correction, export, and deletion requests must go to that operator. Synthetic OS Labs cannot access or delete data held solely by an independent self-hosted deployment or its providers.
 
-Before the canonical repository is public, an approved project privacy contact is still pending:
-
-**[APPROVED PRIVACY CONTACT TO BE ADDED BEFORE PUBLICATION]**
+Project privacy inquiries may be sent to
+[privacy@syntheticoslabs.com](mailto:privacy@syntheticoslabs.com). This tested,
+monitored address was approved by the release owner on July 28, 2026.
 
 Do not include personal data in public repository issues.
 

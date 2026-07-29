@@ -5,19 +5,20 @@
 
 Release: `0.1.0` - Initial Public Research Release
 
-Preparation date: 2026-07-27
+Preparation date: 2026-07-28
 
 Branch: `release/carter-agpl-public`
 
-Publication status: **technical working-tree verification complete; public
-push blocked pending the human gates in `RELEASE_BLOCKERS.md` and
-`PUBLIC_PUSH_CHECKLIST.md`, plus verification of the exact authorized commit.**
+Publication status: **release-owner decisions B-01 through B-07 are recorded;
+the documentation-only commit carrying those decisions requires exact
+post-commit verification and separate remote/push authorization.**
 
 > **Current-documentation note:** The candidate was prepared on 2026-07-13,
-> technically reverified on 2026-07-25, and reconciled and retested against the
-> new committed private reference on 2026-07-27. This is a report on the public
-> working tree, not a current private-source inventory. The bounded comparison
-> uses private commit `df0230b`; see `docs/PGM.md` and
+> technically reverified on 2026-07-25, reconciled and retested against the new
+> committed private reference on 2026-07-27, and received the recorded
+> release-owner decisions on 2026-07-28. This is a report on the public
+> candidate, not a current private-source inventory. The bounded comparison uses
+> private commit `df0230b`; see `docs/PGM.md` and
 > `PROVENANCE_AND_ARCHITECTURE_REVIEW.md` for the implementation findings.
 
 ## Systems Released
@@ -243,14 +244,55 @@ no-warranty, license-view, and canonical source-code notices.
 Third-party dependencies and services retain their own licenses and terms.
 `LICENSE_COMPATIBILITY_REPORT.md` is a technical inventory, not legal advice.
 
-## Known Limitations And Blockers
+On July 28, 2026, Michael D. Lewis accepted the documented technical
+dependency-license review for this Initial Public Research Release. No
+dependency source is bundled or vendored in the wheel. This owner acceptance is
+not a legal opinion, and future dependency resolutions and rebuilt artifacts
+must be re-audited.
 
-- Publication remains blocked on human copyright/IP/patent, engineering-pack,
-  transitive-license, privacy, final-history, and final-artifact review.
-- Tokens visible in excluded legacy screenshots must be revoked or confirmed
-  expired, and older public documentation histories must be audited.
-- `SECURITY.md` needs an approved private reporting channel before visibility
-  changes.
+## Release-Owner Decisions
+
+Michael D. Lewis recorded on July 28, 2026 that he is the sole human developer
+and release owner, authorizes distribution under `AGPL-3.0-only`, and knows of
+no employer, client, collaborator, contractor, unauthorized third-party
+material, or other right restricting this release. He directed, selected,
+integrated, modified, tested, organized, and approved the included work using
+AI systems as development tools. AI assistance remains disclosed; no claim is
+made that every AI-generated element independently qualifies for copyright
+protection.
+
+He knowingly chose public disclosure without obtaining patent review first and
+accepts its possible effect on patent options. This records no conclusion about
+whether any material is patentable.
+
+He reviewed and approved the 18 engineering packs and recorded that they were
+not knowingly copied or adapted from paid standards, proprietary manuals,
+employer/customer procedures, protected tables, controlled-source examples, or
+other unauthorized third-party material.
+
+He approved `docs/PGM.md`, the privacy and exclusion findings, intentional
+publication of his name, business identity, and Git author email, the 32%
+overall and 16% MCM coverage values, the lack of independent professional
+validation, disabled ChromaDB, optional integration limitations, and exact
+verification evidence for `7acd4c4`.
+
+## Known Limitations And Remaining Gate
+
+- B-01 through B-07 have recorded release-owner dispositions in
+  `RELEASE_BLOCKERS.md`.
+- The three excluded legacy screenshots displayed two genuine session bearer
+  tokens. Committed lifecycle evidence shows random, process-local, in-memory
+  sessions with 24-hour expiration. Because the screenshots entered the legacy
+  repositories on June 25, 2026, those sessions expired by June 26, 2026 at the
+  latest under the committed implementation; a restart also invalidated them.
+  No role password or evidence of unauthorized use was found. Present validity
+  is reasonably excluded, without claiming misuse was impossible. Screenshot
+  replacement/removal remains separate repository hygiene.
+- Tested, monitored security, privacy, and trademark/branding contacts are now
+  published in the applicable policy files.
+- The documentation-only commit carrying these decisions must receive exact
+  post-commit verification. Its SHA and results are recorded externally rather
+  than inserted into the commit itself.
 - Chroma-backed persistence is unavailable pending an audited fixed release.
 - The mock provider proves pipeline behavior only; it is not a language model
   or quality benchmark.
@@ -274,22 +316,17 @@ Third-party dependencies and services retain their own licenses and terms.
 The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 `RELEASE_BLOCKERS.md`.
 
-## Recommended Human Review Sequence
+## Remaining Release Sequence
 
-1. Review authorship, employer/contract rights, patents, all engineering packs,
-   prior BSD documentation grants, and third-party licenses/notices.
-2. Revoke/confirm excluded screenshot tokens and audit every older public
-   documentation branch, tag, release, issue, and commit.
-3. Review the complete final tree, exclusions, privacy model, threat model,
-   generated evidence, package contents, and all local commits.
-4. Approve and test a private vulnerability-reporting channel.
-5. From the exact proposed commit, rerun tests, coverage, evidence, Ruff,
-   Bandit, detect-secrets, history searches, dependency audit, build, and wheel
-   smoke checks on supported Python versions.
-6. Complete every confirmation in `PUBLIC_PUSH_CHECKLIST.md` and document any
-   accepted residual risk.
-7. Only then perform the first human-controlled push and visibility decision.
-   Verify public CI before creating the later `v0.1.0` tag or release.
+1. Create the single documentation-only approval commit.
+2. From that exact commit, rerun tests, coverage, evidence, Ruff, Bandit,
+   detect-secrets, history/path/artifact searches, dependency audit, build,
+   wheel inspection/smoke, pack verification, and the public/private PGM
+   boundary check.
+3. Record the exact commit, tree, parent, artifact hashes, and results
+   externally without modifying the verified commit.
+4. Obtain separate authorization before configuring a remote or pushing.
+5. Verify the public repository and CI before any later `v0.1.0` tag or release.
 
 No remote was configured and no remote push, visibility change, tag, or release
 was performed during this preparation.

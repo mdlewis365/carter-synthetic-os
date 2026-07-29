@@ -15,3 +15,18 @@ maintained in [`docs/CSC.md`](docs/CSC.md). That distinction does not alter
 Michael D. Lewis's originating architectural authorship.
 
 I describe this work as AI-assisted engineering: human-originated architecture and technical direction, implemented through a combination of manual development and governed AI coding assistance.
+
+## Release-Owner Affirmation
+
+On July 28, 2026, Michael D. Lewis recorded that he is the project's sole human
+developer and release owner. He directed, selected, integrated, modified,
+tested, organized, and approved the included work while using AI systems as
+development tools.
+
+To the best of his knowledge, no employer, client, collaborator, contractor, or
+other person holds rights that restrict this release, and no unauthorized
+third-party material is included. He authorizes distribution of the first-party
+release material under `AGPL-3.0-only`.
+
+AI assistance remains disclosed. This affirmation does not claim that every
+AI-generated element independently qualifies for copyright protection.

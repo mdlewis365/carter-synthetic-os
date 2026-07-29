@@ -22,7 +22,11 @@ Contributors must preserve applicable notices and identify material that has dif
 
 The earlier documentation-only repositories for Synthetic Operating System, Engineering Assistance System, and Synthetic Ideation System were published under BSD-3-Clause terms. Grants already made for those versions remain effective. This monorepository contains rewritten and expanded material under `AGPL-3.0-only`; it does not purport to withdraw permissions previously granted for older repository versions.
 
-The copyright owner must confirm the dual/relicensing basis and all first-party ownership, employer/contract, and patent considerations before the public push.
+On July 28, 2026, the release owner recorded his first-party ownership and
+distribution-authority decision for this Initial Public Research Release,
+including the continuing effect of the prior grants. The separate
+patent-disclosure decision is recorded in `RELEASE_BLOCKERS.md`. These owner
+decisions are factual release approvals, not legal opinions.
 
 ## Third-Party Exceptions
 

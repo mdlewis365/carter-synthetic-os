@@ -5,11 +5,13 @@
 
 Release: `0.1.0` (Initial Public Research Release)
 
-Status date: 2026-07-27
+Status date: 2026-07-28
 
-**Publication status: blocked pending human review.** No GitHub push, visibility
-change, tag, or public release may occur until every publication gate below is
-resolved and the confirmations in `PUBLIC_PUSH_CHECKLIST.md` are recorded.
+**Publication status: release-owner decisions for B-01 through B-07 are
+recorded.** The documentation-only commit carrying this record must receive
+exact post-commit verification before a separate human authorization may
+configure a remote or push. This document does not authorize a GitHub push,
+visibility change, tag, or public release.
 
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
@@ -24,24 +26,26 @@ commit creation, with the results recorded without modifying the exact commit
 being verified. At the time this staged-candidate record was prepared, B-01
 through B-08 and all applicable human publication gates remained open.
 
-The private implementation reference was advanced to committed descendant
-`df0230b` on 2026-07-27. Its revised PGM governance is documented only at an
-architectural level, and its newly committed example PDF remains private and
-excluded. This does not close provenance, privacy, or exact-commit review gates.
-The complete public offline suite passed again after that reconciliation.
+Commit `7acd4c4cbeb248004e05ab0de7150bbfae7e7167` was subsequently verified as
+an exact 193-file release-candidate tree. Its tests, scans, evidence, build,
+wheel, engineering-pack, and public/private PGM boundary checks passed. Michael
+D. Lewis accepted that exact-commit evidence on July 28, 2026. The
+documentation-only successor that contains this approval record must be
+verified after creation, with its SHA and results recorded externally rather
+than inserted into the commit itself.
 
-## Must Resolve Before Public Push
+## Publication-Gate Disposition
 
-| ID | Open blocker | Required resolution | Publication effect |
+| ID | July 28, 2026 disposition | Preserved qualification | Status |
 | --- | --- | --- | --- |
-| B-01 | First-party authorship, copyright ownership, and AGPL relicensing have not received final human signoff across migrated implementation, snippets, documentation, templates, browser code, and tests. | Owner/counsel reviews the final tree and migration provenance, resolves any joint or employer authorship question, and records authority to distribute every first-party file under `AGPL-3.0-only`. | Blocks all public distribution. |
-| B-02 | Patent and invention-disclosure review is incomplete for Carter, SOS, EAS, SIS, CSC, MCM, SAL, engineering packs, and migrated research material. | Owner/counsel identifies patent-sensitive disclosures, confirms publication timing, and approves the final public scope. | Blocks all public distribution. |
-| B-03 | Engineering-pack provenance and standards-derived-content review is incomplete. A technical classification as first-party is not legal proof of ownership or redistribution rights. | Review every included pack for author, source, quotation, table, formula, standard, and third-party attribution; remove or rewrite anything not cleared. | Blocks publication of the packs and therefore the current release tree. |
-| B-04 | Third-party and transitive license review remains a human legal task. Package metadata and the point-in-time tooling report are not a compatibility opinion. | Review the final resolved dependency inventory, full license texts, notices, optional SDK distribution model, and built wheel; preserve all required notices. | Blocks final release approval. |
-| B-05 | Private screenshots found during source/documentation audit contained authentication-like query or token material. Exclusion prevents new-copy exposure but does not establish revocation or erase older repository history. | Confirm every affected credential/token is revoked or expired; scan all branches, tags, releases, issues, and history of the older documentation repositories and any prior publication locations; rotate when status is uncertain. Record no secret values in the resolution. | Blocks making the new repository public. |
-| B-06 | `SECURITY.md` intentionally contains an unapproved private-contact placeholder. | Enable and verify GitHub Private Vulnerability Reporting for the canonical repository, or replace the placeholder with an approved private security-reporting contact. Test the selected path before publication. | Blocks making the repository public. |
-| B-07 | Final privacy and exclusion review is incomplete. Automated scans cannot prove that memories, conversations, identities, recordings, job payloads, provider identifiers, or operational data are absent. | Human reviewers inspect the final diff, all commits, generated evidence, packaged artifacts, and exclusion report; rerun secret/privacy scans immediately before the first push. | Blocks all public distribution. |
-| B-08 | Final release evidence is point-in-time and can be invalidated by later edits. | From the exact proposed public commit, reproduce evidence, run the full non-network suite, run lint/format/security/build checks, inspect the wheel, record exact results, and approve any failures or skips without concealment. | Blocks the first push/tag until complete. |
+| B-01 | Michael D. Lewis, the sole human developer and release owner, recorded his ownership and distribution-authority decision. To the best of his knowledge, no employer, client, collaborator, contractor, or other person holds rights restricting the release, and no unauthorized third-party material is included. He authorizes `AGPL-3.0-only` distribution. | AI systems were development tools under his direction, selection, integration, modification, testing, organization, and approval. No claim is made that every AI-generated element independently qualifies for copyright protection. | Owner gate resolved. |
+| B-02 | Michael knowingly chose to proceed with public disclosure without obtaining patent review first and accepts the possible effect on patent options. | No statement is made that any material is or is not patentable. | Owner gate resolved. |
+| B-03 | Michael recorded that all 18 engineering packs were produced through his AI-assisted development process, reviewed and approved by him, and were not knowingly copied or adapted from paid standards, proprietary manuals, employer/customer procedures, protected tables, controlled-source examples, or other unauthorized third-party material. | The packs remain research guidance, not standards or independent professional validation. | Owner gate resolved. |
+| B-04 | Michael accepted the documented technical dependency-license review for this Initial Public Research Release. | This is owner acceptance of technical evidence, not a legal opinion. No dependency source is bundled or vendored in the wheel. Future resolutions and rebuilt artifacts must be re-audited. | Owner gate resolved. |
+| B-05 | Offline source and lifecycle review established that the three legacy screenshots exposed two genuine random session bearer tokens. The in-memory, process-local sessions expired after 24 hours; the screenshots entered the legacy repositories on June 25, 2026, so under the committed implementation the sessions expired by June 26, 2026 at the latest. Any server restart also invalidated them. | No role password was exposed, and no evidence of unauthorized use was found; misuse is not claimed to have been mathematically impossible. Present validity is reasonably excluded by the documented expiration and in-memory lifecycle. Screenshot replacement/removal remains repository hygiene, not a blocker for this candidate. | Owner gate resolved. |
+| B-06 | Tested, monitored security, privacy, and trademark/branding contacts were approved and placed in their respective policy files. | GitHub Private Vulnerability Reporting remains optional until separately enabled and tested. | Owner gate resolved. |
+| B-07 | Michael approved `docs/PGM.md`, the privacy and exclusion findings, and intentional publication of his name, business identity, and Git author email. He also accepted the disclosed coverage, independent-validation, disabled-ChromaDB, and optional-integration limitations. | Automated scans do not replace future review of changed files or artifacts. No private prompt or private operational material is approved for release. | Owner gate resolved. |
+| B-08 | The technical record for `7acd4c4` was completed and accepted. | The documentation-only commit carrying this record must receive exact post-commit tests, scans, build, wheel, pack, and PGM-boundary verification. Record its SHA/results externally without modifying it. | Pending exact verification of the record-carrying commit. |
 
 ## Capability-Specific Blocks And Validation Gaps
 
@@ -55,11 +59,11 @@ be described accurately unless their stated resolution is completed.
 | C-03 | SIS candidates have not been independently established as novel, patentable, feasible, safe, or experimentally valid. | Describe outputs as hypotheses/candidates requiring prior-art, patent, safety, feasibility, and experimental review. | External technical and legal validation for the particular claim; no general validation may be inferred. |
 | C-04 | Optional live OpenAI, Anthropic, Google, Ollama, ElevenLabs, browser microphone, camera, and cross-browser flows are operator/environment dependent and have not been certified by the deterministic mock suite. | Keep them opt-in, fail closed when unconfigured, disclose data-transfer boundaries, and report unexecuted live tests as gaps. No cloud test may incur charges by default. | Run approved opt-in integration and browser tests using non-production accounts/data; record versions, costs, scopes, privacy review, and exact results. |
 
-## Conditions That Do Not Clear A Blocker
+## Preserved Release Conditions
 
-- Removing a secret in a later commit does not make earlier public history safe.
-- A passing automated secret scan does not replace credential revocation or
-  manual privacy review.
+- Removing a secret in a later commit does not erase earlier public history.
+- A passing automated secret scan does not replace lifecycle analysis,
+  revocation where applicable, or manual privacy review.
 - A package's open-source label or permissive metadata does not replace review of
   its controlling license and notices.
 - Deterministic execution does not prove that an engineering model, constraint,
@@ -68,21 +72,19 @@ be described accurately unless their stated resolution is completed.
 - Documenting a limitation does not authorize distribution of material whose
   ownership, privacy, or license status is unresolved.
 
-## Required Human Review Order
+## Remaining Pre-Push Sequence
 
-1. Complete authorship, ownership, patent, engineering-pack, and third-party
-   license review; remove any material that is not affirmatively cleared.
-2. Confirm token/credential revocation and inspect older public documentation
-   repository history and publication surfaces.
-3. Complete final privacy, security, exclusions, and source/header review.
-4. Approve and verify a private vulnerability-reporting channel.
-5. Rebuild from the exact proposed commit; rerun evidence, non-network tests,
-   secret scan, dependency audit, lint, format, security, and wheel inspection.
-6. Review the complete commit history and final diff, then complete every item in
-   `PUBLIC_PUSH_CHECKLIST.md`.
-7. Only after those approvals, make the first human-controlled push and visibility
-   decision. Create the `0.1.0` tag and release only after the public repository is
-   independently verified.
+1. Create the single documentation-only approval commit without amending the
+   verified release-candidate commit.
+2. From that exact new commit, rerun evidence, non-network tests, secret/history
+   scans, dependency audit, lint, format, security, build, wheel inspection,
+   engineering-pack verification, and the public/private PGM boundary check.
+3. Record the exact commit, tree, parent, artifact hashes, and verification
+   results externally.
+4. Obtain a separate explicit authorization before configuring a remote,
+   pushing, changing visibility, tagging, or publishing.
+5. After a human-controlled push, verify the public repository and CI before a
+   later `v0.1.0` tag or release.
 
-Until that sequence is complete, the branch must remain local/private and no
-remote release operation is authorized.
+Until the exact record-carrying commit passes step 2 and receives separate
+remote/push authorization, the branch remains local/private.

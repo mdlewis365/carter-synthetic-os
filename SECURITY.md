@@ -17,11 +17,10 @@ Do not open a public issue for a suspected vulnerability, exposed credential, pr
 
 Preferred channel after the repository is public: use GitHub's **Report a vulnerability** action on the repository's Security page. Maintainers must enable Private Vulnerability Reporting before relying on this route.
 
-If private vulnerability reporting is not yet enabled, use:
-
-**[APPROVED PRIVATE SECURITY CONTACT TO BE ADDED BEFORE PUBLICATION]**
-
-This placeholder is intentional. It must be replaced with an approved private contact or the GitHub private-reporting feature must be confirmed before public release. No security email address has been invented.
+If private vulnerability reporting is not yet enabled, email
+[security@syntheticoslabs.com](mailto:security@syntheticoslabs.com). This
+tested, monitored private reporting address was approved by the release owner
+on July 28, 2026.
 
 Include the affected version/commit, component, prerequisites, impact, minimal reproduction, and suggested mitigation. Remove credentials and personal/private data; if a secret is essential to demonstrate impact, first ask how to transfer it securely.
 

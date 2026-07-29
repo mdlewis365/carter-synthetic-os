@@ -6,6 +6,13 @@ Carter Synthetic OS is licensed under `AGPL-3.0-only`, but it depends on separat
 
 This file is a notice and review aid, not legal advice, a complete transitive-dependency bill of materials, or a conclusion that every possible optional installation is license-compatible. Versions and licenses must be rechecked against the built release and upstream license texts before publication and for every update.
 
+On July 28, 2026, Michael D. Lewis accepted the documented technical
+dependency-license evidence for this Initial Public Research Release. This
+release-owner acceptance is not a legal opinion. No dependency source is
+bundled or vendored in the project wheel, and future dependency resolutions or
+rebuilt artifacts require a fresh license, notice, vulnerability, and
+package-content audit.
+
 ## Declared Runtime Dependencies
 
 | Dependency | Declared range | Reported upstream license | Use | Review status |

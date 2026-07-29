@@ -83,7 +83,7 @@ credentials displayed inside screenshots.
 
 | Finding | Disposition | Remaining action |
 | --- | --- | --- |
-| Three screenshots display production query authentication/session tokens. | All three images were excluded. No token value was copied into a public file or report. | Revoke the tokens or confirm expiry and audit every repository/history in which the screenshots appeared. |
+| Three screenshots display two genuine session bearer tokens. | All three images were excluded. Committed lifecycle evidence shows random, process-local, in-memory sessions with 24-hour expiration. The screenshots entered the legacy repositories on June 25, 2026, so under that implementation the sessions expired by June 26, 2026 at the latest; any restart also invalidated them. No role password or evidence of misuse was found. | Present validity is reasonably excluded without claiming misuse was impossible. Replace or remove the legacy screenshots as repository hygiene; never reproduce a token or affected URL. |
 | One screenshot displays private operational logs, provider activity, timestamps, and memory/runtime details. | Excluded. | Treat the image and any prior copies as private operational data. |
 | Two named home-page screenshots contain memory-backed output and personal context; other UI captures were not provenance-cleared. | All private UI screenshots were excluded. | Use only newly generated synthetic/mock screenshots after human visual review. |
 | `job_store/**` contains 212 JSON records and temporary artifacts totaling about 31 MB. Records include prompts, outputs, owner identifiers, reports, and a possible phone-number pattern. | Entire store excluded. Individual record names are not published because they may themselves identify private activity. | Retain and dispose of the private data under the private system's policy; do not use it as public test data. |
@@ -92,9 +92,10 @@ credentials displayed inside screenshots.
 
 No high-confidence literal provider key, private-key header, JWT,
 URL-embedded text credential, or secret assignment was found across the
-private working tree and its 39 commits. This does not neutralize the three
-tokens visible in screenshots. Those tokens must be revoked or independently
-confirmed expired outside this repository.
+private working tree and its 39 commits. The separate screenshot finding was
+resolved for this release through the documented expiration and in-memory
+lifecycle analysis above. That conclusion does not prove misuse was impossible
+and does not remove the legacy screenshots from their repositories.
 
 ## Public Repository Audit
 
@@ -260,21 +261,23 @@ passed. No runtime or test file changed during the reconciliation.
 - Added restrictive public ignores for secrets, databases, Chroma persistence,
   logs, uploads, recordings, local models, coverage, and test artifacts.
 
-## Remaining Risks And Required Human Actions
+## Remaining Risks And Required Actions
 
-1. Revoke or confirm expiry of the screenshot-exposed tokens and audit the
-   histories of older documentation repositories that may contain those
-   images.
+1. Replace or remove the credential-bearing legacy screenshots and consider
+   their repository histories as a separate hygiene task. Do not reproduce a
+   token or affected URL.
 2. Repeat detect-secrets, manual `rg` signatures, Bandit, Ruff, tests, evidence
    reproduction, and dependency auditing immediately before the first push.
 3. Repeat the complete new Git-history scan if any commit is added or amended.
    A later deletion cannot make a committed secret safe.
 4. Review every release screenshot visually; OCR/text scanners are
    insufficient.
-5. Obtain human IP, privacy, dependency-license, engineering-safety, and
-   provider-data-flow review documented in `PUBLIC_PUSH_CHECKLIST.md`.
-6. Approve a private vulnerability-reporting address to replace the explicit
-   placeholder in `SECURITY.md`.
+5. Preserve the July 28, 2026 release-owner IP, privacy,
+   dependency-license, engineering-pack, and provider-boundary decisions
+   documented in `PUBLIC_PUSH_CHECKLIST.md`.
+6. Use the tested, monitored private vulnerability-reporting address in
+   `SECURITY.md`; enable GitHub Private Vulnerability Reporting only if it is
+   separately configured and tested.
 7. Treat optional provider calls as external data disclosure. Operators remain
    responsible for provider terms, data retention, regional requirements, and
    model licenses.
@@ -284,5 +287,7 @@ passed. No runtime or test file changed during the reconciliation.
 No known active credential, private memory, user conversation, production
 authentication data, private voice identifier, or private operational record
 was copied into the public repository. This confirmation is limited to the
-audited local tree. It does not certify that excluded screenshot tokens are
-inactive, and it does not authorize a push or visibility change.
+audited local tree. The excluded screenshot sessions are reasonably determined
+inactive by their 24-hour, process-local, in-memory lifecycle and June 25, 2026
+repository-entry date; no claim is made that misuse was impossible. This audit
+does not authorize a push or visibility change.

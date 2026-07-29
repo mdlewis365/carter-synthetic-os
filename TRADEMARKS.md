@@ -20,8 +20,8 @@ You may make truthful, non-misleading references needed to describe compatibilit
 
 The canonical source link identifies where the official project source is intended to be published; linking to it does not imply endorsement of a deployment or derivative work.
 
-Questions about approved branding use require an approved contact before publication:
-
-**[APPROVED TRADEMARK CONTACT TO BE ADDED BEFORE PUBLICATION]**
+Questions about approved branding use may be sent to
+[trademarks@syntheticoslabs.com](mailto:trademarks@syntheticoslabs.com). This
+tested, monitored address was approved by the release owner on July 28, 2026.
 
 This notice is informational and is not legal advice. It does not limit rights that cannot lawfully be limited, including applicable nominative or descriptive use.

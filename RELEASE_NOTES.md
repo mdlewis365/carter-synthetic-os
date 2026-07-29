@@ -39,4 +39,10 @@ This is the first installable public version, so no package upgrade path exists.
 
 ## Before Publication
 
-These notes are a draft. No tag, GitHub release, visibility change, or remote push is authorized until the public push checklist, exact test/evidence results, dependency/license review, IP/patent review, and privacy/security audits receive human approval.
+The release-owner decisions for authorship/AGPL authority, patent-disclosure
+timing, engineering-pack provenance, technical dependency licensing, legacy
+session-token lifecycle, privacy/exclusions, and operational contacts were
+recorded on July 28, 2026. No tag, GitHub release, visibility change, remote
+configuration, or push is authorized until the documentation-only
+record-carrying commit receives exact post-commit verification and a separate
+human remote/push authorization.

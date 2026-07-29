@@ -13,9 +13,10 @@ test, and audit tool versions are recorded separately from that resolver result.
 
 This is a technical inventory and release-engineering review, not legal advice.
 Package metadata can be incomplete or inaccurate, and a reported license does
-not by itself establish compatibility for every use or distribution. A qualified
-human reviewer must examine the exact artifacts, full license texts, notices,
-linkage and distribution method before publication.
+not by itself establish compatibility for every use or distribution. Exact
+artifacts, full license texts, notices, linkage, and distribution method remain
+appropriate subjects for qualified review. The release-owner acceptance below
+is not a legal opinion.
 
 ## Method And Results
 
@@ -33,7 +34,7 @@ Compatibility status meanings:
 
 - **No conflict identified**: the detected permissive license did not present an
   identified conflict with the project's planned AGPL distribution in this
-  technical review; human legal approval remains required.
+  technical review; this status is not a legal compatibility opinion.
 - **Tool only**: used to build, test, or audit the release and not imported by the
   normal application or bundled into its wheel.
 - **Blocked**: not installed or enabled for the release because of an unresolved
@@ -92,11 +93,10 @@ The safe 63-distribution audit result above does not include ChromaDB.
 
 The 63-distribution environment includes transitive packages from Flask and the
 optional cloud SDKs. This report does not claim that their metadata alone proves
-AGPL compatibility. Before public distribution, a human reviewer must retain and
-review a complete machine-readable inventory for the final resolved environment,
-inspect all ambiguous or compound license expressions and `License-File` entries,
-and ensure that required attribution or notice files accompany any redistributed
-artifact.
+AGPL compatibility. Rebuilt or differently resolved artifacts require a
+complete machine-readable inventory, inspection of ambiguous or compound
+license expressions and `License-File` entries, and confirmation that required
+attribution or notice files accompany any redistributed artifact.
 
 The application wheel must also be inspected to confirm that it contains only
 first-party project files and intentionally packaged notices. Provider SDKs and
@@ -111,15 +111,23 @@ fonts, images, audio, and other assets do not become AGPL-licensed merely by bei
 used with the project. This release does not distribute provider SDK source,
 model weights, cloned voices, private screenshots, recordings, or datasets.
 
-The engineering packs are treated as first-party release material for technical
-preparation, but their authorship, ownership, standards-derived content, patent,
-and redistribution provenance require explicit human approval before publication.
+The engineering packs are treated as first-party release material. Their
+release-owner provenance approval is recorded in `RELEASE_BLOCKERS.md`; that
+approval is not independent professional validation.
 
 ## Compatibility Conclusion
 
 No license conflict was identified in the examined direct package set, and the
 safe environment was internally consistent and free of known vulnerabilities at
 the time of the audit. This is not a final legal compatibility determination.
-Publication remains blocked on the human IP, copyright, engineering-pack,
-transitive-license, and final-artifact reviews listed in
-`RELEASE_BLOCKERS.md` and `PUBLIC_PUSH_CHECKLIST.md`.
+
+On July 28, 2026, Michael D. Lewis accepted this documented technical
+dependency-license review for the Initial Public Research Release. This is
+release-owner acceptance of the technical evidence, not a legal opinion. No
+dependency source is bundled or vendored in the wheel. Future dependency
+resolutions and every rebuilt release artifact require a fresh license,
+vulnerability, notice, and package-content audit.
+
+The exact documentation-only commit carrying that acceptance must be verified
+after it is created. Its identity and results are recorded externally so the
+commit is not modified merely to describe its own verification.
