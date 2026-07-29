@@ -16,6 +16,40 @@ the clean public repository. It is a point-in-time release audit, not a
 guarantee that the software is free of vulnerabilities or that excluded
 credentials were never exposed elsewhere.
 
+## 2026-07-29 Public-Main Supersession Notice
+
+The dated preparation findings below are preserved, including the historical
+172-test, 32% overall coverage, and 16% MCM coverage snapshots. Their
+present-tense pre-push instructions describe the state in which they were
+recorded and are operationally superseded by this notice.
+
+The canonical repository is now public at
+`https://github.com/mdlewis365/carter-synthetic-os`. The pre-reconciliation
+public baseline, verified on July 29, 2026, was
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with tree
+`90bac4511fad02a71e6004e844e41a1230003067` and 193 tracked files.
+`docs/PGM.md` is committed and public. The initial private push, public
+visibility change, and subsequent CI verification were completed.
+
+Security remediation PRs #3 and #4 were merged with normal merge commits.
+CodeQL automatically marked alerts #1 through #7 fixed; none was dismissed.
+At the July 29 baseline verification, open CodeQL, secret-scanning, and
+Dependabot vulnerability alert counts were zero. That exact baseline passed 226
+tests with 35% branch-aware overall coverage, 20% MCM coverage, and 83%
+web-boundary coverage. Ruff, Bandit, baseline-aware detect-secrets, strict
+project dependency auditing, source and wheel builds, installed-wheel smoke,
+evidence reproduction, and GitHub workflows passed. All 18 engineering-pack
+files were present and unchanged.
+
+Release-owner decisions B-01 through B-07 were resolved or accepted. The
+documented absence of independent professional validation and optional
+provider, browser, hardware, and ChromaDB support remain research limitations,
+not unresolved publication blockers. As of this reconciliation, no `v0.1.0`
+tag or GitHub release had been created; this PR creates or authorizes neither.
+Exact verification of the eventual documentation-merge commit and rebuilt
+release artifacts remains required before separate tag and GitHub release
+authorization.
+
 ## Repository Boundary
 
 The private Carter repository was treated as read-only. Its `.git` directory,

@@ -83,7 +83,12 @@ A repeatable numeric result proves only that the included algorithm produced tha
 
 ## Engineering Packs
 
-Packs supply scoped guidance for a mode or domain. They are selected as context, not executed as code and not treated as adopted standards. Inclusion does not imply endorsement by a standards body or completeness for a discipline. Before public release, a human must confirm the authorship and provenance of every included pack.
+Packs supply scoped guidance for a mode or domain. They are selected as context,
+not executed as code and not treated as adopted standards. Inclusion does not
+imply endorsement by a standards body or completeness for a discipline.
+Michael D. Lewis recorded the release-owner authorship and provenance decision
+for all 18 included pack files on July 28, 2026. That decision does not make the
+packs adopted standards or independently professionally validated.
 
 ## EDR And Governance
 

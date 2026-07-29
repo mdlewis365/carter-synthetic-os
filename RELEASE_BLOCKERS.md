@@ -7,11 +7,16 @@ Release: `0.1.0` (Initial Public Research Release)
 
 Status date: 2026-07-28
 
-**Publication status: release-owner decisions for B-01 through B-07 are
-recorded.** The documentation-only commit carrying this record must receive
-exact post-commit verification before a separate human authorization may
-configure a remote or push. This document does not authorize a GitHub push,
-visibility change, tag, or public release.
+Reconciliation update date: 2026-07-29
+
+**Publication status: release-owner decisions B-01 through B-07 are resolved
+or accepted, and the canonical source repository is public.** The
+pre-reconciliation public baseline, verified on July 29, 2026, was
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
+B-08 technical verification is satisfied for that baseline and must be
+repeated for the eventual documentation-merge commit and rebuilt release
+artifacts. As of this reconciliation, no `v0.1.0` tag or GitHub release had
+been created; this document creates or authorizes neither.
 
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
@@ -34,6 +39,15 @@ documentation-only successor that contains this approval record must be
 verified after creation, with its SHA and results recorded externally rather
 than inserted into the commit itself.
 
+That successor verification, the initial private push, public visibility
+change, and subsequent CI verification were completed. Security remediation
+PRs #3 and #4 were then merged normally. At the July 29 pre-reconciliation
+baseline verification, CodeQL alerts #1 through #7 were automatically fixed
+rather than dismissed; open CodeQL, secret-scanning, and Dependabot
+vulnerability alert counts were zero. That baseline passed 226 tests with 35%
+branch-aware overall coverage, 20% MCM coverage, and 83% web-boundary
+coverage. All 18 engineering-pack files were present and unchanged.
+
 ## Publication-Gate Disposition
 
 | ID | July 28, 2026 disposition | Preserved qualification | Status |
@@ -43,9 +57,9 @@ than inserted into the commit itself.
 | B-03 | Michael recorded that all 18 engineering packs were produced through his AI-assisted development process, reviewed and approved by him, and were not knowingly copied or adapted from paid standards, proprietary manuals, employer/customer procedures, protected tables, controlled-source examples, or other unauthorized third-party material. | The packs remain research guidance, not standards or independent professional validation. | Owner gate resolved. |
 | B-04 | Michael accepted the documented technical dependency-license review for this Initial Public Research Release. | This is owner acceptance of technical evidence, not a legal opinion. No dependency source is bundled or vendored in the wheel. Future resolutions and rebuilt artifacts must be re-audited. | Owner gate resolved. |
 | B-05 | Offline source and lifecycle review established that the three legacy screenshots exposed two genuine random session bearer tokens. The in-memory, process-local sessions expired after 24 hours; the screenshots entered the legacy repositories on June 25, 2026, so under the committed implementation the sessions expired by June 26, 2026 at the latest. Any server restart also invalidated them. | No role password was exposed, and no evidence of unauthorized use was found; misuse is not claimed to have been mathematically impossible. Present validity is reasonably excluded by the documented expiration and in-memory lifecycle. Screenshot replacement/removal remains repository hygiene, not a blocker for this candidate. | Owner gate resolved. |
-| B-06 | Tested, monitored security, privacy, and trademark/branding contacts were approved and placed in their respective policy files. | GitHub Private Vulnerability Reporting remains optional until separately enabled and tested. | Owner gate resolved. |
+| B-06 | Tested, monitored security, privacy, and trademark/branding contacts were approved and placed in their respective policy files. | GitHub Private Vulnerability Reporting was verified enabled on July 29, 2026; the monitored security email remains the fallback. | Owner gate resolved. |
 | B-07 | Michael approved `docs/PGM.md`, the privacy and exclusion findings, and intentional publication of his name, business identity, and Git author email. He also accepted the disclosed coverage, independent-validation, disabled-ChromaDB, and optional-integration limitations. | Automated scans do not replace future review of changed files or artifacts. No private prompt or private operational material is approved for release. | Owner gate resolved. |
-| B-08 | The technical record for `7acd4c4` was completed and accepted. | The documentation-only commit carrying this record must receive exact post-commit tests, scans, build, wheel, pack, and PGM-boundary verification. Record its SHA/results externally without modifying it. | Pending exact verification of the record-carrying commit. |
+| B-08 | The technical record for the release candidate and its documentation successors was completed through the pre-reconciliation public baseline `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, verified on July 29, 2026. | The eventual merge commit from the current documentation reconciliation and rebuilt release artifacts must receive exact post-merge tests, scans, build, wheel, pack, and PGM-boundary verification. Record the SHA, tree, artifact hashes, and results externally without modifying that commit. | Satisfied for the pre-reconciliation baseline; repeat required before tag/release if the documentation PR is merged. |
 
 ## Capability-Specific Blocks And Validation Gaps
 
@@ -72,19 +86,18 @@ be described accurately unless their stated resolution is completed.
 - Documenting a limitation does not authorize distribution of material whose
   ownership, privacy, or license status is unresolved.
 
-## Remaining Pre-Push Sequence
+## Remaining Pre-Tag And Release Sequence
 
-1. Create the single documentation-only approval commit without amending the
-   verified release-candidate commit.
-2. From that exact new commit, rerun evidence, non-network tests, secret/history
-   scans, dependency audit, lint, format, security, build, wheel inspection,
-   engineering-pack verification, and the public/private PGM boundary check.
-3. Record the exact commit, tree, parent, artifact hashes, and verification
-   results externally.
-4. Obtain a separate explicit authorization before configuring a remote,
-   pushing, changing visibility, tagging, or publishing.
-5. After a human-controlled push, verify the public repository and CI before a
-   later `v0.1.0` tag or release.
+1. Merge the documentation reconciliation only under separate authorization.
+2. From that exact merge commit, rerun evidence, non-network tests,
+   secret/history scans, dependency audit, lint, format, security, source and
+   wheel builds, installed-wheel smoke, engineering-pack verification, and the
+   public/private PGM boundary check.
+3. Rebuild release artifacts in a controlled environment and record the exact
+   commit, tree, parent, artifact hashes, and verification results externally.
+4. Confirm GitHub workflows and security scans on that exact public commit.
+5. Obtain separate explicit authorization before creating `v0.1.0` or a
+   GitHub release.
 
-Until the exact record-carrying commit passes step 2 and receives separate
-remote/push authorization, the branch remains local/private.
+The public source repository and its CI are operational. Formal `0.1.0`
+tagging and release remain pending the steps above.

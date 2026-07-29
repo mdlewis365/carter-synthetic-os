@@ -7,11 +7,19 @@ Release: `0.1.0` - Initial Public Research Release
 
 Preparation date: 2026-07-28
 
-Branch: `release/carter-agpl-public`
+Reconciliation update date: 2026-07-29
 
-Publication status: **release-owner decisions B-01 through B-07 are recorded;
-the documentation-only commit carrying those decisions requires exact
-post-commit verification and separate remote/push authorization.**
+Historical preparation branch: `release/carter-agpl-public`
+
+Public branch: `main`
+
+Pre-reconciliation public baseline, verified 2026-07-29:
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`
+
+Publication status: **the canonical source repository is public and
+release-owner decisions B-01 through B-07 are resolved or accepted. Version
+`0.1.0` had not been tagged or released as of this reconciliation, which
+creates or authorizes neither action.**
 
 > **Current-documentation note:** The candidate was prepared on 2026-07-13,
 > technically reverified on 2026-07-25, reconciled and retested against the new
@@ -20,6 +28,8 @@ post-commit verification and separate remote/push authorization.**
 > candidate, not a current private-source inventory. The bounded comparison uses
 > private commit `df0230b`; see `docs/PGM.md` and
 > `PROVENANCE_AND_ARCHITECTURE_REVIEW.md` for the implementation findings.
+> Dated preparation evidence is retained below. The reconciliation snapshot is
+> stated explicitly rather than rewriting that earlier evidence.
 
 ## Systems Released
 
@@ -58,18 +68,20 @@ claim.
 
 ## Migration And File Scope
 
-The current working tree contains 192 tracked files plus the proposed
-`docs/PGM.md`. If that document is reviewed and added, the proposed release
-tree will contain 193 files. It includes 93 files under `src`, 16 public test
-modules, 23 example/evidence files, 16 subsystem/operations documents, six
-setup/run/test scripts, and eight GitHub community/automation files.
+The verified public tree contains 193 tracked files. `docs/PGM.md` is committed
+and public, not proposed or untracked. The tree includes 93 files under `src`,
+16 public test modules, 23 example/evidence files, 16 subsystem/operations
+documents, six setup/run/test scripts, and eight GitHub
+community/automation files.
 
 Cleared first-party implementation migrated or adapted into the monorepository
 includes the large directly derived or adapted deterministic MCM kernel,
 Engineering Decision Record helpers, EAS governance gate, 18 included
 engineering-pack Markdown files (including their pack README), cleared SIS
-schema/evaluator modules, and public SOS contracts. Final ownership and
-standards-derived-content review of those materials remains a human gate.
+schema/evaluator modules, and public SOS contracts. Release-owner authorship,
+ownership, and engineering-pack provenance decisions were recorded on July 28,
+2026. This owner disposition is not a legal opinion or independent
+professional validation.
 Security- or privacy-sensitive monolithic Carter, SOS memory, provider, UI, and
 CSC behavior was reimplemented as modular public code rather than copied byte
 for byte.
@@ -139,7 +151,7 @@ Authoritative non-network command:
 python -m pytest -m "not local_model and not cloud_provider"
 ```
 
-Authoritative result on Windows, Python 3.12.4, pytest 8.3.4,
+Historical 2026-07-25 result on Windows, Python 3.12.4, pytest 8.3.4,
 pytest-cov 6.3.0:
 
 | Metric | Result |
@@ -163,7 +175,27 @@ was rerun: all 172 tests passed again with no failures or skips. Runtime and
 test files were unchanged by that reconciliation; the coverage figures above
 remain from the 2026-07-25 branch-aware run.
 
-Additional verification completed:
+Pre-reconciliation public-baseline verification on 2026-07-29 supersedes those
+counts without erasing them:
+
+| Metric | July 29 baseline result |
+| --- | ---: |
+| Tests collected | 226 |
+| Passed | 226 |
+| Failed | 0 |
+| Overall branch-aware coverage | 35% |
+| MCM coverage | 20% |
+| Web-boundary coverage | 83% |
+
+Security remediation PRs #3 and #4 were merged normally. CodeQL automatically
+marked alerts #1 through #7 fixed; none was dismissed. Full Python SARIF for
+that baseline contained zero results. At that verification point, open CodeQL,
+secret-scanning, and Dependabot vulnerability alert counts were zero. The two
+routine Dependabot PRs remained outside `main` and were not release blockers
+absent new evidence.
+
+Additional verification completed for the candidate and reverified for the
+July 29 public baseline where applicable:
 
 - `ruff check --no-cache .`: passed with Ruff 0.15.21;
 - `ruff format --check --no-cache .`: 91 files already formatted;
@@ -180,6 +212,11 @@ Additional verification completed:
   ChromaDB requirement is declared;
 - project-scoped `pip-audit` resolution: no known vulnerabilities in the
   dependencies declared by the local project;
+- baseline-aware detect-secrets, direct credential/path/artifact searches,
+  Ruff, both Bandit scans, strict project dependency auditing, source and wheel
+  builds, installed-wheel smoke, evidence reproduction, and all GitHub
+  workflows passed on the verified pre-reconciliation baseline;
+- all 18 engineering-pack files remain present and unchanged;
 - staged-candidate verification: before creation of the release-candidate
   commit, verification was completed for 40 changed paths in a 193-file indexed
   tree; its complete cached diff was inspected; the baseline-aware
@@ -274,7 +311,9 @@ He approved `docs/PGM.md`, the privacy and exclusion findings, intentional
 publication of his name, business identity, and Git author email, the 32%
 overall and 16% MCM coverage values, the lack of independent professional
 validation, disabled ChromaDB, optional integration limitations, and exact
-verification evidence for `7acd4c4`.
+verification evidence for `7acd4c4`. Those coverage values remain the
+historical snapshot he accepted; the July 29 baseline verification recorded
+35% overall, 20% MCM, and 83% for the web boundary.
 
 ## Known Limitations And Remaining Gate
 
@@ -290,15 +329,17 @@ verification evidence for `7acd4c4`.
   replacement/removal remains separate repository hygiene.
 - Tested, monitored security, privacy, and trademark/branding contacts are now
   published in the applicable policy files.
-- The documentation-only commit carrying these decisions must receive exact
-  post-commit verification. Its SHA and results are recorded externally rather
-  than inserted into the commit itself.
+- The approval-record commits and the pre-reconciliation public baseline
+  received exact verification. The eventual merge commit for this documentation
+  reconciliation and rebuilt release artifacts must be verified in the same
+  manner before a tag or GitHub release.
 - Chroma-backed persistence is unavailable pending an audited fixed release.
 - The mock provider proves pipeline behavior only; it is not a language model
   or quality benchmark.
 - EAS/MCM and packs are not professionally, regulatorily, or production
-  validated. The MCM receives only 16% line coverage in the public suite.
-  Every result requires qualified independent review.
+  validated. MCM coverage was 16% in the July 25 snapshot and is 20% in the
+  July 29 pre-reconciliation baseline suite. Every result requires qualified
+  independent review.
 - SIS cannot establish novelty, patentability, feasibility, safety, or
   experimental validity.
 - CSC camera support is local preview only; durable sensory retention is not
@@ -318,15 +359,17 @@ The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 
 ## Remaining Release Sequence
 
-1. Create the single documentation-only approval commit.
-2. From that exact commit, rerun tests, coverage, evidence, Ruff, Bandit,
-   detect-secrets, history/path/artifact searches, dependency audit, build,
-   wheel inspection/smoke, pack verification, and the public/private PGM
-   boundary check.
-3. Record the exact commit, tree, parent, artifact hashes, and results
-   externally without modifying the verified commit.
-4. Obtain separate authorization before configuring a remote or pushing.
-5. Verify the public repository and CI before any later `v0.1.0` tag or release.
+1. Merge the documentation reconciliation only under separate authorization.
+2. From that exact merge commit, rerun tests, coverage, evidence, Ruff, Bandit,
+   detect-secrets, history/path/artifact searches, dependency audit, source and
+   wheel builds, installed-wheel smoke, pack verification, and the
+   public/private PGM boundary check.
+3. Rebuild controlled release artifacts and record the exact commit, tree,
+   parents, artifact hashes, and results externally without modifying the
+   verified commit.
+4. Verify GitHub workflows and security scans on that exact public commit.
+5. Obtain separate authorization before creating `v0.1.0` or a GitHub release.
 
-No remote was configured and no remote push, visibility change, tag, or release
-was performed during this preparation.
+The canonical source repository, public visibility, initial push, and baseline
+CI verification are complete. As of this reconciliation, no `v0.1.0` tag or
+GitHub release had been created; this PR creates or authorizes neither.

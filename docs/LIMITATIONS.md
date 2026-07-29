@@ -71,4 +71,12 @@ Carter Synthetic OS `0.1.0` is an initial public research release. Its implement
 
 ## Legal And Research
 
-The software provides no legal, patent, export-control, privacy, security, medical, or regulatory advice. The initial public release remains blocked from publication until the human checks in `PUBLIC_PUSH_CHECKLIST.md` and the release reports are resolved.
+The software provides no legal, patent, export-control, privacy, security,
+medical, or regulatory advice. The canonical source repository is public and
+the release-owner publication decisions are recorded as resolved or accepted.
+The research limitations above are not themselves blockers to that public
+source repository. Formal `0.1.0` tagging and release require exact verification
+of the eventual documentation-merge commit and rebuilt release artifacts,
+followed by separate tag and GitHub release authorization. As of this
+reconciliation, no `v0.1.0` tag or GitHub release had been created; this PR
+creates or authorizes neither.

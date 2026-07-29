@@ -69,7 +69,11 @@ Operators must review model cards/licenses and provider data terms before use. I
 
 No private screenshots, audio, cloned voice, production recording, third-party font, model, or raster asset from the audited private repository is included. Mermaid source in the Markdown documentation is first-party text; rendering services supplied by a documentation host are not bundled with this repository.
 
-Engineering packs are treated as first-party release material but remain blocked on human provenance/IP review. They must not be assumed to reproduce or replace any protected engineering standard.
+Engineering packs are treated as first-party release material. Michael D.
+Lewis recorded the release-owner provenance/IP decision for all 18 included
+pack files on July 28, 2026. They must not be assumed to reproduce or replace
+any protected engineering standard, and that owner decision is not a legal
+opinion or independent professional validation.
 
 ## Full License Texts
 
