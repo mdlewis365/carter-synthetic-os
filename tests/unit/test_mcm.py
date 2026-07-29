@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import pytest
 
+from sos.computation import mcm
 from sos.computation.mcm import process
 
 pytestmark = pytest.mark.unit
@@ -128,3 +129,130 @@ def test_mcm_missing_required_input_needs_review() -> None:
     )
     assert result["status"] == "needs_human_review"
     assert result["mcm_run_health"]["mcm_computed_ok"] is False
+
+
+@pytest.mark.parametrize(
+    "label",
+    ["a", "1", "p12", "12in", "12inches", "12amps", "１２in"],
+)
+def test_mcm_candidate_labels_preserve_supported_forms(label: str) -> None:
+    assert mcm._looks_like_candidate_label_token(label) is True
+
+
+@pytest.mark.parametrize("label", ["", "ab", "px", "12volt", "12in-extra"])
+def test_mcm_candidate_labels_reject_unsupported_forms(label: str) -> None:
+    assert mcm._looks_like_candidate_label_token(label) is False
+
+
+def test_mcm_candidate_label_parser_handles_long_adversarial_input() -> None:
+    digits = "9" * 50_000
+
+    assert mcm._looks_like_candidate_label_token(digits + "in") is True
+    assert mcm._looks_like_candidate_label_token(digits + "x") is False
+
+
+@pytest.mark.parametrize(
+    ("name", "unit"),
+    [
+        ("clearance_12in", "in"),
+        ("run_12.5ft", "ft"),
+        ("run_12..5in", "in"),
+        ("clearance_in", "in"),
+    ],
+)
+def test_mcm_dimensional_name_suffixes_preserve_supported_forms(
+    name: str,
+    unit: str,
+) -> None:
+    assert mcm._unit_from_name_suffix(name) == unit
+
+
+@pytest.mark.parametrize("name", ["run_12.ft", "clearance_numeric", "999x"])
+def test_mcm_dimensional_name_suffixes_reject_unsupported_forms(name: str) -> None:
+    assert mcm._unit_from_name_suffix(name) is None
+
+
+def test_mcm_dimensional_suffix_parser_handles_long_adversarial_input() -> None:
+    digits = "9" * 50_000
+
+    assert mcm._unit_from_name_suffix("length_" + digits + "in") == "in"
+    assert mcm._unit_from_name_suffix(digits + "x") is None
+
+
+@pytest.mark.parametrize(
+    ("raw", "normalized"),
+    [
+        ("list[N]", "list[N]"),
+        (" array ( kg ) ", "list[kg]"),
+        ("vector[text]", "list[string]"),
+        ("list( N ]", "list[N]"),
+        ("list( )", "list[dimensionless]"),
+    ],
+)
+def test_mcm_list_units_preserve_supported_forms(raw: str, normalized: str) -> None:
+    assert mcm.normalize_unit(raw) == normalized
+
+
+@pytest.mark.parametrize("raw", ["lists[N]", "list[N]junk"])
+def test_mcm_list_units_reject_unsupported_wrappers(raw: str) -> None:
+    assert mcm.normalize_unit(raw) == raw
+
+
+def test_mcm_list_unit_parser_handles_long_adversarial_input() -> None:
+    spaces = " " * 50_000
+    invalid = "list(" + spaces + "x"
+
+    assert mcm.normalize_unit("list[" + spaces + "N]") == "list[N]"
+    assert mcm.normalize_unit(invalid) == invalid
+
+
+@pytest.mark.parametrize(
+    ("inner", "normalized", "changed"),
+    [
+        ("x, else=0", "x, 0", True),
+        ("x, ELSE = y + 1", "x, y + 1", True),
+        ("x, else =   ", "x, ", True),
+        ("else=", "else=", False),
+        ("x, otherwise=0", "x, otherwise=0", False),
+    ],
+)
+def test_mcm_piecewise_default_argument_preserves_supported_forms(
+    inner: str,
+    normalized: str,
+    changed: bool,
+) -> None:
+    assert mcm._normalize_piecewise_inner_default_argument(inner) == (
+        normalized,
+        changed,
+    )
+
+
+def test_mcm_piecewise_parser_handles_long_adversarial_input() -> None:
+    spaces = " " * 50_000
+
+    assert mcm._normalize_piecewise_inner_default_argument("x, else=" + spaces + "0") == (
+        "x, 0",
+        True,
+    )
+    unchanged = "x, else" + spaces + "not-an-assignment"
+    assert mcm._normalize_piecewise_inner_default_argument(unchanged) == (
+        unchanged,
+        False,
+    )
+
+
+def test_mcm_internal_exception_details_are_not_returned(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    exception_detail = "UNIQUE-MCM-SENTINEL C:\\private\\provider\\sentinel.txt"
+
+    def fail(_request: dict) -> str:
+        raise RuntimeError(exception_detail)
+
+    monkeypatch.setattr(mcm, "_select_expression", fail)
+    result = mcm.process({"expression": "1 + 1"})
+
+    assert result["status"] == "error"
+    assert result["message"] == "MCM processing failed."
+    assert "UNIQUE-MCM-SENTINEL" not in repr(result)
+    assert "C:\\private\\provider\\sentinel.txt" not in repr(result)

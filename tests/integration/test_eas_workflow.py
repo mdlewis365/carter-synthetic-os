@@ -68,7 +68,7 @@ def test_eas_provider_failure_is_structured_and_never_runs_invalid_plan() -> Non
     assert result["status"] == "needs_input"
     assert result["schema_validation"]["valid"] is True
     assert result["mcm"]["result"]["status"] == "not_required"
-    assert result["errors"] == ["Planning provider failed (RuntimeError)."]
+    assert result["errors"] == ["Planning provider failed."]
     assert "synthetic provider failure" not in json.dumps(result)
     assert result["human_review_required"] is True
 

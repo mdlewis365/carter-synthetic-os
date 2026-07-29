@@ -368,3 +368,48 @@ def test_provider_failure_is_sanitized() -> None:
         "provider": "failing-test-provider",
         "retryable": False,
     }
+
+
+@pytest.mark.parametrize(
+    ("route", "workflow_module_name", "patched_name", "payload", "expected_error"),
+    [
+        (
+            "/api/eas/run",
+            "eas.workflow",
+            "normalize_request",
+            {"mode": "review-design", "problem_statement": "Synthetic request."},
+            "Engineering mode is not supported.",
+        ),
+        (
+            "/api/sis/run",
+            "sis.workflow",
+            "normalize_mode",
+            {"mode": "system-architecture", "problem_statement": "Synthetic request."},
+            "Invention mode is not supported.",
+        ),
+    ],
+)
+def test_workflow_responses_do_not_expose_exception_details(
+    client,
+    monkeypatch: pytest.MonkeyPatch,
+    route: str,
+    workflow_module_name: str,
+    patched_name: str,
+    payload: dict,
+    expected_error: str,
+) -> None:
+    exception_detail = "UNIQUE-WEB-SENTINEL C:\\private\\provider\\sentinel.txt"
+
+    def fail(*_args, **_kwargs):
+        raise ValueError(exception_detail)
+
+    workflow_module = __import__(workflow_module_name, fromlist=[patched_name])
+    monkeypatch.setattr(workflow_module, patched_name, fail)
+    headers, _ = authorize(client)
+    response = client.post(route, json=payload, headers=headers)
+    response_text = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert response.get_json()["errors"] == [expected_error]
+    assert "UNIQUE-WEB-SENTINEL" not in response_text
+    assert "C:\\private\\provider\\sentinel.txt" not in response_text

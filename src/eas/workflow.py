@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 from collections.abc import Mapping
 from copy import deepcopy
 from dataclasses import asdict, is_dataclass
@@ -28,6 +29,8 @@ from .schemas import (
     normalize_request,
     validate_stage_one_plan,
 )
+
+logger = logging.getLogger(__name__)
 
 WORKFLOW_SCHEMA = "eas.workflow_result.v1"
 MAX_PROVIDER_PACK_CONTEXT_CHARS = 24_000
@@ -57,12 +60,22 @@ class EngineeringWorkflow:
 
         try:
             request = normalize_request(payload)
-        except (TypeError, ValueError) as exc:
+        except TypeError:
             return _json_safe(
                 {
                     "schema": WORKFLOW_SCHEMA,
                     "status": "invalid_request",
-                    "errors": [str(exc)],
+                    "errors": ["EAS payload must be a mapping."],
+                    "human_review_required": True,
+                    "advisory": _invalid_advisory(),
+                }
+            )
+        except ValueError:
+            return _json_safe(
+                {
+                    "schema": WORKFLOW_SCHEMA,
+                    "status": "invalid_request",
+                    "errors": ["Engineering mode is not supported."],
                     "human_review_required": True,
                     "advisory": _invalid_advisory(),
                 }
@@ -77,7 +90,7 @@ class EngineeringWorkflow:
         pack_dicts = [pack.public_dict() for pack in packs]
         pack_ids = [pack.pack_id for pack in packs]
 
-        provider_error: str | None = None
+        provider_failed = False
         if provider is None:
             plan = build_deterministic_plan(request, pack_ids)
             backend = plan["planning_backend"]
@@ -86,8 +99,9 @@ class EngineeringWorkflow:
             try:
                 raw_plan = _invoke_provider(provider, request, packs, self.pack_root)
                 plan = coerce_provider_plan(raw_plan, request, pack_ids, backend_name)
-            except Exception as exc:  # Provider failures are an explicit boundary.
-                provider_error = type(exc).__name__
+            except Exception:  # Provider failures are an explicit boundary.
+                logger.exception("EAS planning provider failed.")
+                provider_failed = True
                 plan = coerce_provider_plan({}, request, pack_ids, backend_name)
             backend = plan["planning_backend"]
 
@@ -142,13 +156,13 @@ class EngineeringWorkflow:
         record_validation = validate_engineering_decision_record(record)
 
         errors = list(validation.errors)
-        if provider_error:
-            errors.append(f"Planning provider failed ({provider_error}).")
+        if provider_failed:
+            errors.append("Planning provider failed.")
         if not record_validation["valid"]:
             errors.extend(record_validation["errors"])
 
         status = "advisory_ready"
-        if not validation.valid or provider_error:
+        if not validation.valid or provider_failed:
             status = "needs_input"
         if mcm_result.get("status") in {"error", "unsupported", "needs_human_review"}:
             status = "needs_human_review"
