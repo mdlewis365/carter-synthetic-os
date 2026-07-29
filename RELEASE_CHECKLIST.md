@@ -32,7 +32,7 @@ unchecked until their results are recorded externally.
 - [x] Manual review covers images, audio, databases, logs, prompts, memories, and identity data.
 - [x] No real `.env`, credential, token, voice ID, account ID, user record, or private URL is present.
 - [x] Session ownership, route authorization, SSE, provider failure, and CSC isolation tests pass.
-- [x] Approved security, privacy, and trademark/branding contacts replace all publication placeholders.
+- [x] Approved security, privacy, trademark/branding, and private moderation contacts replace all publication placeholders.
 
 ## Legal And Provenance
 

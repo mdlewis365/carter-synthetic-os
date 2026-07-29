@@ -23,9 +23,9 @@ This policy applies in repository discussions, issue trackers, pull requests, pr
 
 Do not report sensitive conduct details in a public issue. Use the approved private moderation channel:
 
-**[PRIVATE MODERATION CONTACT TO BE APPROVED BEFORE PUBLICATION]**
+**[conduct@syntheticoslabs.com](mailto:conduct@syntheticoslabs.com)**
 
-Until that contact is approved, repository maintainers must configure a private reporting route before enabling public community participation. Security vulnerabilities should follow [SECURITY.md](SECURITY.md).
+This address is established, monitored, and approved for private Code of Conduct and moderation reports. Security vulnerabilities should follow [SECURITY.md](SECURITY.md).
 
 Reports should contain only the information needed to investigate. Maintainers will seek to limit disclosure, conflicts of interest, and retaliation, but cannot promise absolute confidentiality or a fixed response time.
 
