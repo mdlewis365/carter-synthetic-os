@@ -7,14 +7,16 @@ Release: `0.1.0` (Initial Public Research Release)
 
 Status date: 2026-07-28
 
-Current-state update: 2026-07-29
+Reconciliation update date: 2026-07-29
 
 **Publication status: release-owner decisions B-01 through B-07 are resolved
-or accepted, and the canonical source repository is public.** Verified public
-`main` is `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked
-files. B-08 technical verification is satisfied for that source commit. No
-`v0.1.0` tag or GitHub release exists, and this document does not authorize
-one.
+or accepted, and the canonical source repository is public.** The
+pre-reconciliation public baseline, verified on July 29, 2026, was
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
+B-08 technical verification is satisfied for that baseline and must be
+repeated for the eventual documentation-merge commit and rebuilt release
+artifacts. As of this reconciliation, no `v0.1.0` tag or GitHub release had
+been created; this document creates or authorizes neither.
 
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
@@ -39,12 +41,12 @@ than inserted into the commit itself.
 
 That successor verification, the initial private push, public visibility
 change, and subsequent CI verification were completed. Security remediation
-PRs #3 and #4 were then merged normally. On current public `main`, CodeQL
-alerts #1 through #7 are automatically fixed rather than dismissed; open
-CodeQL, secret-scanning, and Dependabot vulnerability alert counts are zero.
-The current suite passes 226 tests with 35% branch-aware overall coverage, 20%
-MCM coverage, and 83% web-boundary coverage. All 18 engineering-pack files
-remain present and unchanged.
+PRs #3 and #4 were then merged normally. At the July 29 pre-reconciliation
+baseline verification, CodeQL alerts #1 through #7 were automatically fixed
+rather than dismissed; open CodeQL, secret-scanning, and Dependabot
+vulnerability alert counts were zero. That baseline passed 226 tests with 35%
+branch-aware overall coverage, 20% MCM coverage, and 83% web-boundary
+coverage. All 18 engineering-pack files were present and unchanged.
 
 ## Publication-Gate Disposition
 
@@ -57,7 +59,7 @@ remain present and unchanged.
 | B-05 | Offline source and lifecycle review established that the three legacy screenshots exposed two genuine random session bearer tokens. The in-memory, process-local sessions expired after 24 hours; the screenshots entered the legacy repositories on June 25, 2026, so under the committed implementation the sessions expired by June 26, 2026 at the latest. Any server restart also invalidated them. | No role password was exposed, and no evidence of unauthorized use was found; misuse is not claimed to have been mathematically impossible. Present validity is reasonably excluded by the documented expiration and in-memory lifecycle. Screenshot replacement/removal remains repository hygiene, not a blocker for this candidate. | Owner gate resolved. |
 | B-06 | Tested, monitored security, privacy, and trademark/branding contacts were approved and placed in their respective policy files. | GitHub Private Vulnerability Reporting was verified enabled on July 29, 2026; the monitored security email remains the fallback. | Owner gate resolved. |
 | B-07 | Michael approved `docs/PGM.md`, the privacy and exclusion findings, and intentional publication of his name, business identity, and Git author email. He also accepted the disclosed coverage, independent-validation, disabled-ChromaDB, and optional-integration limitations. | Automated scans do not replace future review of changed files or artifacts. No private prompt or private operational material is approved for release. | Owner gate resolved. |
-| B-08 | The technical record for the release candidate and its documentation successors was completed, culminating in verified public `main` at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`. | The eventual merge commit from the current documentation reconciliation and rebuilt release artifacts must receive exact post-merge tests, scans, build, wheel, pack, and PGM-boundary verification. Record the SHA, tree, artifact hashes, and results externally without modifying that commit. | Satisfied for current public source; repeat required before tag/release if the documentation PR is merged. |
+| B-08 | The technical record for the release candidate and its documentation successors was completed through the pre-reconciliation public baseline `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, verified on July 29, 2026. | The eventual merge commit from the current documentation reconciliation and rebuilt release artifacts must receive exact post-merge tests, scans, build, wheel, pack, and PGM-boundary verification. Record the SHA, tree, artifact hashes, and results externally without modifying that commit. | Satisfied for the pre-reconciliation baseline; repeat required before tag/release if the documentation PR is merged. |
 
 ## Capability-Specific Blocks And Validation Gaps
 

@@ -39,24 +39,26 @@ DIM and SAL are new bounded public `0.1.0` interfaces. No active private DIM/SAL
 
 This is the first installable public version, so no package upgrade path exists. Readers of the older documentation-only repositories should use [MIGRATION.md](MIGRATION.md). Existing BSD-3-Clause grants for those historical versions remain effective.
 
-## Current Publication And Verification State
+## Publication And Verification Snapshot: July 29, 2026
 
 The release-owner decisions for authorship/AGPL authority, patent-disclosure
 timing, engineering-pack provenance, technical dependency licensing, legacy
 session-token lifecycle, privacy/exclusions, and operational contacts were
 recorded on July 28, 2026. The canonical repository is public at
-`https://github.com/mdlewis365/carter-synthetic-os`; its verified `main` commit
-is `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
+`https://github.com/mdlewis365/carter-synthetic-os`. Its pre-reconciliation
+public baseline, verified on July 29, 2026, was
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
 `docs/PGM.md` is committed and public.
 
 Security remediation PRs #3 and #4 were merged normally. CodeQL automatically
-marked alerts #1 through #7 fixed without dismissal, and open CodeQL,
-secret-scanning, and Dependabot vulnerability alert counts are zero. The
-current offline suite passes 226 tests with 35% branch-aware overall coverage,
-20% MCM coverage, and 83% web-boundary coverage. Ruff, Bandit,
+marked alerts #1 through #7 fixed without dismissal. At the July 29 baseline
+verification, open CodeQL, secret-scanning, and Dependabot vulnerability alert
+counts were zero. That baseline passed 226 tests with 35% branch-aware overall
+coverage, 20% MCM coverage, and 83% web-boundary coverage. Ruff, Bandit,
 baseline-aware detect-secrets, dependency auditing, builds, installed-wheel
-smoke, evidence reproduction, and GitHub workflows pass.
+smoke, evidence reproduction, and GitHub workflows passed.
 
-No `v0.1.0` tag or GitHub release exists. The eventual documentation-merge
-commit and rebuilt release artifacts require exact verification before a
-separate tag and GitHub release authorization.
+As of this reconciliation, no `v0.1.0` tag or GitHub release had been created;
+this PR creates or authorizes neither. The eventual documentation-merge commit
+and rebuilt release artifacts require exact verification before separate tag
+and GitHub release authorization.

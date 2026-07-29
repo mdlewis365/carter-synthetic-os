@@ -10,11 +10,11 @@ item here does not authorize a merge, tag, or release.
 Automated working-tree status was updated on 2026-07-25, the committed private
 reference was reconciled and the full public offline suite rerun on 2026-07-27,
 and release-owner decisions B-01 through B-07 were recorded on 2026-07-28.
-The canonical repository is public, and current `main`
-(`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`) has passed CI and exact-tree
-verification. The eventual documentation-merge commit and rebuilt release
-artifacts remain subject to exact verification before `v0.1.0` is tagged or
-released.
+The canonical repository is public. Its pre-reconciliation baseline
+(`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`) passed CI and exact-tree
+verification on July 29, 2026. The eventual documentation-merge commit and
+rebuilt release artifacts remain subject to exact verification before
+`v0.1.0` is tagged or released.
 
 ## Repository
 
@@ -37,7 +37,8 @@ released.
 ## Security And Privacy
 
 - [x] Text, history, dependency, archive, and generated-artifact secret scans
-  are clean or explained; open GitHub secret-scanning alerts are zero.
+  were clean or explained for the July 29 baseline; open GitHub
+  secret-scanning alerts were zero at that verification point.
 - [x] Manual review covers images, audio, databases, logs, prompts, memories, and identity data.
 - [x] No real `.env`, credential, token, voice ID, account ID, user record, or private URL is present.
 - [x] Session ownership, route authorization, SSE, provider failure, and CSC isolation tests pass.
@@ -54,17 +55,19 @@ released.
 ## Verification
 
 - [x] Fresh-environment install, source build, wheel build, inspection, and
-  installed-wheel smoke succeed for the current public source tree.
+  installed-wheel smoke succeeded for the July 29 pre-reconciliation baseline.
 - [x] Complete non-network test results and coverage are recorded exactly.
 - [x] Evidence artifacts reproduce with `python -m examples.evidence.run_case --check` and hashes match.
 - [x] Ruff lint/format, Bandit, CodeQL, dependency audit, and baseline-aware
-  secret scanning are recorded and pass for current public `main`.
+  secret scanning are recorded and passed for the July 29 pre-reconciliation
+  baseline.
 - [x] Documentation commands, links, configuration, diagrams, and limitations match code.
 
 ## Stop Point
 
 - [x] The initial private push, public visibility change, and public `main`
   verification were completed.
-- [x] No public tag or release was created.
+- [x] As of this reconciliation, no public tag or release had been created;
+  this PR creates or authorizes neither.
 - [x] Repository visibility is public and the default branch is `main`.
 - [x] The release owner reviewed the audit reports and `PUBLIC_PUSH_CHECKLIST.md`.

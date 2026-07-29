@@ -75,6 +75,8 @@ The software provides no legal, patent, export-control, privacy, security,
 medical, or regulatory advice. The canonical source repository is public and
 the release-owner publication decisions are recorded as resolved or accepted.
 The research limitations above are not themselves blockers to that public
-source repository. Version `0.1.0` remains untagged and unreleased pending exact
-verification of the eventual documentation-merge commit and rebuilt release
-artifacts, followed by separate tag and GitHub release authorization.
+source repository. Formal `0.1.0` tagging and release require exact verification
+of the eventual documentation-merge commit and rebuilt release artifacts,
+followed by separate tag and GitHub release authorization. As of this
+reconciliation, no `v0.1.0` tag or GitHub release had been created; this PR
+creates or authorizes neither.

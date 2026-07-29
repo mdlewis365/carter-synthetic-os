@@ -7,17 +7,19 @@ Release: `0.1.0` - Initial Public Research Release
 
 Preparation date: 2026-07-28
 
-Current-state update: 2026-07-29
+Reconciliation update date: 2026-07-29
 
 Historical preparation branch: `release/carter-agpl-public`
 
-Current public branch: `main`
+Public branch: `main`
 
-Current public commit: `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`
+Pre-reconciliation public baseline, verified 2026-07-29:
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`
 
 Publication status: **the canonical source repository is public and
 release-owner decisions B-01 through B-07 are resolved or accepted. Version
-`0.1.0` remains untagged and has no GitHub release.**
+`0.1.0` had not been tagged or released as of this reconciliation, which
+creates or authorizes neither action.**
 
 > **Current-documentation note:** The candidate was prepared on 2026-07-13,
 > technically reverified on 2026-07-25, reconciled and retested against the new
@@ -26,8 +28,8 @@ release-owner decisions B-01 through B-07 are resolved or accepted. Version
 > candidate, not a current private-source inventory. The bounded comparison uses
 > private commit `df0230b`; see `docs/PGM.md` and
 > `PROVENANCE_AND_ARCHITECTURE_REVIEW.md` for the implementation findings.
-> Dated preparation evidence is retained below. Current operational status is
-> stated explicitly rather than rewriting those earlier snapshots.
+> Dated preparation evidence is retained below. The reconciliation snapshot is
+> stated explicitly rather than rewriting that earlier evidence.
 
 ## Systems Released
 
@@ -173,10 +175,10 @@ was rerun: all 172 tests passed again with no failures or skips. Runtime and
 test files were unchanged by that reconciliation; the coverage figures above
 remain from the 2026-07-25 branch-aware run.
 
-Current public-main verification on 2026-07-29 supersedes those counts without
-erasing them:
+Pre-reconciliation public-baseline verification on 2026-07-29 supersedes those
+counts without erasing them:
 
-| Metric | Current result |
+| Metric | July 29 baseline result |
 | --- | ---: |
 | Tests collected | 226 |
 | Passed | 226 |
@@ -187,12 +189,13 @@ erasing them:
 
 Security remediation PRs #3 and #4 were merged normally. CodeQL automatically
 marked alerts #1 through #7 fixed; none was dismissed. Full Python SARIF for
-current public `main` contains zero results, and open CodeQL, secret-scanning,
-and Dependabot vulnerability alert counts are zero. The two routine Dependabot
-PRs remain outside `main` and are not release blockers absent new evidence.
+that baseline contained zero results. At that verification point, open CodeQL,
+secret-scanning, and Dependabot vulnerability alert counts were zero. The two
+routine Dependabot PRs remained outside `main` and were not release blockers
+absent new evidence.
 
-Additional verification completed for the candidate and reverified for current
-public source where applicable:
+Additional verification completed for the candidate and reverified for the
+July 29 public baseline where applicable:
 
 - `ruff check --no-cache .`: passed with Ruff 0.15.21;
 - `ruff format --check --no-cache .`: 91 files already formatted;
@@ -212,7 +215,7 @@ public source where applicable:
 - baseline-aware detect-secrets, direct credential/path/artifact searches,
   Ruff, both Bandit scans, strict project dependency auditing, source and wheel
   builds, installed-wheel smoke, evidence reproduction, and all GitHub
-  workflows pass on the verified current source;
+  workflows passed on the verified pre-reconciliation baseline;
 - all 18 engineering-pack files remain present and unchanged;
 - staged-candidate verification: before creation of the release-candidate
   commit, verification was completed for 40 changed paths in a 193-file indexed
@@ -309,8 +312,8 @@ publication of his name, business identity, and Git author email, the 32%
 overall and 16% MCM coverage values, the lack of independent professional
 validation, disabled ChromaDB, optional integration limitations, and exact
 verification evidence for `7acd4c4`. Those coverage values remain the
-historical snapshot he accepted; current verification reports 35% overall,
-20% MCM, and 83% for the web boundary.
+historical snapshot he accepted; the July 29 baseline verification recorded
+35% overall, 20% MCM, and 83% for the web boundary.
 
 ## Known Limitations And Remaining Gate
 
@@ -326,8 +329,8 @@ historical snapshot he accepted; current verification reports 35% overall,
   replacement/removal remains separate repository hygiene.
 - Tested, monitored security, privacy, and trademark/branding contacts are now
   published in the applicable policy files.
-- The approval-record commits and current public source received exact
-  verification. The eventual merge commit for this documentation
+- The approval-record commits and the pre-reconciliation public baseline
+  received exact verification. The eventual merge commit for this documentation
   reconciliation and rebuilt release artifacts must be verified in the same
   manner before a tag or GitHub release.
 - Chroma-backed persistence is unavailable pending an audited fixed release.
@@ -335,7 +338,8 @@ historical snapshot he accepted; current verification reports 35% overall,
   or quality benchmark.
 - EAS/MCM and packs are not professionally, regulatorily, or production
   validated. MCM coverage was 16% in the July 25 snapshot and is 20% in the
-  current suite. Every result requires qualified independent review.
+  July 29 pre-reconciliation baseline suite. Every result requires qualified
+  independent review.
 - SIS cannot establish novelty, patentability, feasibility, safety, or
   experimental validity.
 - CSC camera support is local preview only; durable sensory retention is not
@@ -366,5 +370,6 @@ The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 4. Verify GitHub workflows and security scans on that exact public commit.
 5. Obtain separate authorization before creating `v0.1.0` or a GitHub release.
 
-The canonical source repository, public visibility, push, and CI verification
-are complete. No `v0.1.0` tag or GitHub release has been created.
+The canonical source repository, public visibility, initial push, and baseline
+CI verification are complete. As of this reconciliation, no `v0.1.0` tag or
+GitHub release had been created; this PR creates or authorizes neither.

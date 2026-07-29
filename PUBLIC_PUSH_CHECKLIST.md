@@ -14,9 +14,10 @@ not approval for a later action.
 The 2026-07-25 technical checks, 2026-07-27 private-reference reconciliation,
 and exact verification of release-candidate commit `7acd4c4` are summarized in
 `PUBLIC_RELEASE_REPORT.md` and `SECURITY_RELEASE_AUDIT.md`. Michael D. Lewis
-recorded the release-owner decisions below on July 28, 2026. Current public
-`main` is `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked
-files. `docs/PGM.md` is committed and public. The initial private push, public
+recorded the release-owner decisions below on July 28, 2026. The
+pre-reconciliation public baseline, verified on July 29, 2026, was
+`396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
+`docs/PGM.md` is committed and public. The initial private push, public
 visibility change, and subsequent CI verification are complete.
 
 ## Intellectual Property And Legal
@@ -55,9 +56,9 @@ visibility change, and subsequent CI verification are complete.
   replacement/removal remains repository hygiene.
 - [x] **Secret scan:** baseline-aware detect-secrets,
   credential-signature/path/artifact searches, public-history review, and
-  GitHub secret scanning pass for current public `main`; open secret-scanning
-  alerts are zero. Repeat them for the eventual documentation-merge commit and
-  rebuilt release artifacts.
+  GitHub secret scanning passed for the July 29 pre-reconciliation baseline; at
+  that verification point, open secret-scanning alerts were zero. Repeat them
+  for the eventual documentation-merge commit and rebuilt release artifacts.
 - [x] **Privacy review:** no private memory, conversation, OpRep, account,
   email list, job payload, recording, image, voice identifier, database,
   Chroma store, log, or unapproved personal identifier is present in files or
@@ -71,19 +72,20 @@ visibility change, and subsequent CI verification are complete.
   threat-model wording and confirmed that it is accurate without exposing
   operative prompt language or unnecessary private authentication/session
   mechanics.
-- [x] **Dependency security:** strict project dependency auditing passes for
-  current public `main`; open Dependabot vulnerability alerts are zero.
-  ChromaDB remains absent while its affected dependency line has no approved
-  fixed release. Re-audit future resolutions and rebuilt artifacts.
+- [x] **Dependency security:** strict project dependency auditing passed for
+  the July 29 pre-reconciliation baseline; at that verification point, open
+  Dependabot vulnerability alerts were zero. ChromaDB remains absent while its
+  affected dependency line has no approved fixed release. Re-audit future
+  resolutions and rebuilt artifacts.
 - [x] **Security contact:** `SECURITY.md` contains the tested, monitored private
   reporting address approved by the release owner.
 
 ## Functionality And Evidence
 
-- [x] **Test results:** the current suite passes 226 offline tests with 35%
-  branch-aware overall coverage, 20% MCM coverage, and 83% web-boundary
-  coverage. Supported-version GitHub jobs pass and no standard test performs a
-  paid or external API call.
+- [x] **Test results:** the July 29 pre-reconciliation baseline passed 226
+  offline tests with 35% branch-aware overall coverage, 20% MCM coverage, and
+  83% web-boundary coverage. Supported-version GitHub jobs passed and no
+  standard test performed a paid or external API call.
 - [x] **Evidence reproduction:**
   `python -m examples.evidence.run_case --check` passes and checked-in evidence
   is self-consistent and semantically reproducible.
@@ -117,8 +119,9 @@ visibility change, and subsequent CI verification are complete.
   configured canonical GitHub remote is intentional.
 - [x] **Release-owner gates:** B-01 through B-07 in `RELEASE_BLOCKERS.md` are
   resolved or explicitly accepted by Michael D. Lewis with written rationale.
-  B-08 is satisfied for current public `main` and must be repeated for the
-  eventual documentation-merge commit and rebuilt release artifacts.
+  B-08 is satisfied for the July 29 pre-reconciliation public baseline and must
+  be repeated for the eventual documentation-merge commit and rebuilt release
+  artifacts.
 - [x] **Repository visibility:** the canonical repository under
   `mdlewis365/carter-synthetic-os` is public and its default branch is `main`.
 - [x] **First public commit:** the reviewed source history is on public `main`;
@@ -142,7 +145,7 @@ visibility change, and subsequent CI verification are complete.
 | Security/privacy reviewer | Michael D. Lewis | 2026-07-28 | Approved privacy/exclusions, public identity, token-lifecycle disposition, and tested security/privacy contacts. |
 | IP/license decision | Michael D. Lewis | 2026-07-28 | Authorized `AGPL-3.0-only` distribution and accepted the documented technical dependency-license evidence; not a legal opinion. |
 | Engineering-domain decision | Michael D. Lewis | 2026-07-28 | Approved the 18-pack provenance record and accepted the disclosed lack of independent professional validation. |
-| Public source verification | Automated and human-directed review | 2026-07-29 | Verified public `main` at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`; PRs #3 and #4 merged normally; CodeQL alerts #1 through #7 fixed without dismissal; open CodeQL, secret-scanning, and Dependabot vulnerability alerts zero. |
+| Public source verification | Automated and human-directed review | 2026-07-29 | Verified the pre-reconciliation public baseline at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`; PRs #3 and #4 had merged normally; CodeQL alerts #1 through #7 were fixed without dismissal; open CodeQL, secret-scanning, and Dependabot vulnerability alert counts were zero at that verification point. |
 
 Publication authorization: **NOT GRANTED by this checklist alone.** Exact
 verification of the eventual documentation-merge commit and rebuilt release

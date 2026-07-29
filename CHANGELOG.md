@@ -7,14 +7,17 @@ All notable public changes will be recorded here. The project follows semantic v
 ## [Unreleased]
 
 - Published the canonical source repository at
-  `https://github.com/mdlewis365/carter-synthetic-os`; public `main` is
-  verified at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`. Version `0.1.0`
-  remains unreleased: no `v0.1.0` tag or GitHub release has been created.
+  `https://github.com/mdlewis365/carter-synthetic-os`. The pre-reconciliation
+  public baseline, verified on July 29, 2026, was
+  `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`. At that point, version
+  `0.1.0` was unreleased and no `v0.1.0` tag or GitHub release had been
+  created; this documentation reconciliation creates neither.
 - Merged security remediation PRs #3 and #4 with normal merge commits. CodeQL
-  automatically marked alerts #1 through #7 fixed without dismissal; current
-  CodeQL, secret-scanning, and Dependabot vulnerability alert counts are zero.
-- Reverified 226 offline tests with 35% branch-aware overall coverage, 20% MCM
-  coverage, and 83% web-boundary coverage.
+  automatically marked alerts #1 through #7 fixed without dismissal. At the
+  July 29 baseline verification, open CodeQL, secret-scanning, and Dependabot
+  vulnerability alert counts were zero.
+- The July 29 baseline passed 226 offline tests with 35% branch-aware overall
+  coverage, 20% MCM coverage, and 83% web-boundary coverage.
 - Reconciled maintained documentation through private commit `df0230b` without
   copying private prompt or account data.
 - Documented the public-safe architectural boundary for the revised private
