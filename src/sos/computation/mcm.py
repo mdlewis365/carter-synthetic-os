@@ -3883,13 +3883,14 @@ def _process_equation_plan(mcm_request, inputs, router_diagnostics=None):
 
         try:
             result = _safe_eval(rhs, env, declared_variables)
-        except KeyError as e:
-            missing = str(e.args[0])
-            missing_variables.add(missing)
+        except KeyError:
+            missing = sorted(_collect_names(rhs).difference(env))
+            missing_variables.update(missing)
+            missing_label = ", ".join(missing) if missing else "an unresolved variable"
             skipped.append({
                 "equation": name,
                 "expression": expression,
-                "reason": f"Missing numeric variable: {missing}",
+                "reason": f"Missing numeric variable: {missing_label}",
             })
             continue
         except Exception:
@@ -7278,19 +7279,20 @@ def infer_rhs_unit(rhs_expression: str, variable_units: dict, names: dict | None
         if pump_power_result:
             return pump_power_result
         return _infer_unit_node(tree.body, variable_units, names=names)
-    except KeyError as e:
+    except KeyError:
         return _unit_result(
             None,
             "unknown",
             "warning",
-            f"Unit validation could not find unit for variable: {e.args[0]}",
+            "Unit validation could not find a required variable unit.",
         )
-    except Exception as e:
+    except Exception:
+        logger.exception("MCM unit compatibility inference failed.")
         return _unit_result(
             None,
             "unknown",
             "info",
-            f"Unit compatibility was not validated for this expression: {e}",
+            "Unit compatibility was not validated for this expression.",
         )
 
 
@@ -7307,12 +7309,12 @@ def _evaluate_units_rhs(rhs_expression, variable_units):
 
     try:
         unit_result = _infer_dimensional_unit_node(node.args[0], variable_units)
-    except KeyError as e:
+    except KeyError:
         unit_result = _unit_result(
             None,
             "unknown",
             "warning",
-            f"Unit extraction could not find unit for variable: {e.args[0]}",
+            "Unit extraction could not find a required variable unit.",
         )
 
     inferred_unit = unit_result.get("unit")
@@ -7392,12 +7394,12 @@ def _evaluate_dimensional_check_rhs(rhs_expression, variable_units):
     inner_node = dim_call.args[0]
     try:
         inner_unit_result = _infer_dimensional_unit_node(inner_node, variable_units)
-    except KeyError as e:
+    except KeyError:
         inner_unit_result = _unit_result(
             None,
             "unknown",
             "warning",
-            f"Dimensional check could not find unit for variable: {e.args[0]}",
+            "Dimensional check could not find a required variable unit.",
         )
     inner_unit = inner_unit_result.get("unit")
 
@@ -7441,12 +7443,12 @@ def _dimensional_unit_from_node(node, variable_units):
     if _is_dim_call(node):
         try:
             return _infer_dimensional_unit_node(node.args[0], variable_units)
-        except KeyError as e:
+        except KeyError:
             return _unit_result(
                 None,
                 "unknown",
                 "warning",
-                f"Dimensional check could not find unit for variable: {e.args[0]}",
+                "Dimensional check could not find a required variable unit.",
             )
 
     expected_unit = _unit_symbol_from_node(node)
@@ -11929,8 +11931,8 @@ def _equation_lhs_candidate(equation):
 def _safe_rhs_expression_error(expression):
     try:
         tree = ast.parse(_normalize_boolean_operators(expression), mode="eval")
-    except SyntaxError as exc:
-        return f"syntax error: {exc.msg}"
+    except SyntaxError:
+        return "syntax error"
 
     return _safe_rhs_node_error(tree.body)
 
@@ -12308,19 +12310,22 @@ def _process_expression(mcm_request, expression, inputs):
 
     try:
         value = _safe_eval(expression, inputs)
-    except KeyError as e:
+    except KeyError:
+        missing = sorted(_collect_names(expression).difference(inputs))
+        missing_label = ", ".join(missing) if missing else "an unresolved variable"
         return _base_result(
             mcm_request,
             status="needs_human_review",
             message="Expression references variables with no numeric value.",
             outputs={},
-            diagnostics=[f"Missing numeric value for variable: {e.args[0]}"],
+            diagnostics=[f"Missing numeric value for variable: {missing_label}"],
         )
-    except Exception as e:
+    except Exception:
+        logger.exception("MCM expression evaluation failed.")
         return _base_result(
             mcm_request,
             status="unsupported",
-            message=f"Expression could not be evaluated safely: {e}",
+            message="Expression could not be evaluated safely.",
             outputs={},
             diagnostics=["Only arithmetic over numeric inputs and whitelisted math functions is supported."],
         )
@@ -12370,22 +12375,24 @@ def _process_operation(mcm_request, operation, inputs):
                 outputs={},
                 diagnostics=["Supported operations: add, sum, multiply, product, difference, ratio, average, min, max."],
             )
-    except Exception as e:
+    except Exception:
+        logger.exception("MCM operation evaluation failed.")
         return _base_result(
             mcm_request,
             status="error",
-            message=f"Operation failed: {e}",
+            message="Operation could not be completed.",
             outputs={},
             diagnostics=["MCM operation failed with numeric inputs."],
         )
 
     try:
         value = _validate_evaluated_value(value)
-    except ValueError as e:
+    except ValueError:
+        logger.exception("MCM operation result validation failed.")
         return _base_result(
             mcm_request,
             status="unsupported",
-            message=f"Operation result was rejected safely: {e}",
+            message="Operation result was rejected by the public evaluator.",
             outputs={},
             diagnostics=["MCM rejected an unbounded or non-finite operation result."],
         )
@@ -13834,8 +13841,9 @@ def _evaluate_constraint_spec(spec, env, units):
 
     try:
         passes = evaluate_constraint(lhs_value, comparator, rhs_value)
-    except Exception as e:
-        return _unknown_constraint(spec, f"Constraint could not be evaluated: {e}")
+    except Exception:
+        logger.exception("MCM constraint evaluation failed.")
+        return _unknown_constraint(spec, "Constraint could not be evaluated.")
 
     margin_data = compute_constraint_margin(lhs_value, comparator, rhs_value)
     margin = margin_data.get("margin")
@@ -17062,9 +17070,10 @@ def _base_result(mcm_request, status, message, outputs, diagnostics, inputs_used
     if status == "computed":
         try:
             _validate_evaluated_value(outputs)
-        except ValueError as error:
+        except ValueError:
+            logger.exception("MCM public output validation failed.")
             status = "unsupported"
-            message = f"MCM rejected an unbounded or non-finite result: {error}"
+            message = "MCM rejected an unbounded or non-finite result."
             outputs = {}
             diagnostics = list(diagnostics) + [
                 "Computed output failed the public evaluator bounds."

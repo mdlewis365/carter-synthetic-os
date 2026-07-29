@@ -6,8 +6,9 @@
 from __future__ import annotations
 
 import json
+import logging
 import secrets
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from functools import wraps
 from pathlib import Path
 from typing import Any
@@ -41,6 +42,65 @@ from .runtime import CarterRuntime
 SOURCE_URL = "https://github.com/mdlewis365/carter-synthetic-os"
 PACKAGED_LICENSE = Path(__file__).resolve().parent / "legal" / "LICENSE"
 PACKAGED_EVIDENCE_MANIFEST = Path(__file__).resolve().parent / "evidence" / "manifest.json"
+logger = logging.getLogger(__name__)
+
+
+class _PublicResponseBoundaryError(TypeError):
+    """Raised when a workflow result is not safe for a public JSON response."""
+
+
+def _public_value_error_code(exc: ValueError) -> str | None:
+    match str(exc):
+        case "active_must_be_boolean":
+            return "active_must_be_boolean"
+        case "application_json_required":
+            return "application_json_required"
+        case "audio_body_required":
+            return "audio_body_required"
+        case "audio_too_large":
+            return "audio_too_large"
+        case "audio_too_long":
+            return "audio_too_long"
+        case "audio_wav_body_required":
+            return "audio_wav_body_required"
+        case "camera_is_local_preview_only":
+            return "camera_is_local_preview_only"
+        case "empty_audio":
+            return "empty_audio"
+        case "invalid_wav":
+            return "invalid_wav"
+        case "invalid_wav_header":
+            return "invalid_wav_header"
+        case "json_object_required":
+            return "json_object_required"
+        case "json_payload_too_large":
+            return "json_payload_too_large"
+        case "pcm16_required":
+            return "pcm16_required"
+        case "prompt_is_required":
+            return "prompt_is_required"
+        case "unsupported_channel_count":
+            return "unsupported_channel_count"
+        case "unsupported_sample_rate":
+            return "unsupported_sample_rate"
+        case _:
+            return None
+
+
+def _public_workflow_result(value: Any, *, depth: int = 0) -> Any:
+    if depth > 30:
+        raise _PublicResponseBoundaryError("public response nesting limit exceeded")
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, BaseException):
+        raise _PublicResponseBoundaryError("exception value reached public response boundary")
+    if isinstance(value, Mapping):
+        if not all(isinstance(key, str) for key in value):
+            raise _PublicResponseBoundaryError("non-string public response key")
+        return {key: _public_workflow_result(item, depth=depth + 1) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_public_workflow_result(item, depth=depth + 1) for item in value]
+    raise _PublicResponseBoundaryError("unsupported public response value")
 
 
 def _session_context() -> tuple[str, str]:
@@ -140,13 +200,13 @@ def create_app(
         return jsonify({"error": "request_too_large"}), 413
 
     @app.errorhandler(ProviderError)
-    def provider_failure(exc: ProviderError) -> tuple[Response, int]:
+    def provider_failure(_: ProviderError) -> tuple[Response, int]:
+        logger.exception("Configured model provider request failed.")
         return (
             jsonify(
                 {
-                    "error": exc.code,
-                    "provider": exc.provider,
-                    "retryable": exc.retryable,
+                    "error": "provider_unavailable",
+                    "message": "The configured model provider is temporarily unavailable.",
                 }
             ),
             503,
@@ -155,7 +215,11 @@ def create_app(
     @app.errorhandler(ValueError)
     def invalid_request(exc: ValueError) -> tuple[Response, int]:
         if request.path.startswith("/api/"):
-            return jsonify({"error": str(exc)}), 400
+            public_code = _public_value_error_code(exc)
+            if public_code is not None:
+                return jsonify({"error": public_code}), 400
+            logger.exception("Unexpected API value error.")
+            return jsonify({"error": "invalid_request"}), 400
         raise exc
 
     @app.get("/")
@@ -267,11 +331,25 @@ def create_app(
     def eas_run() -> Response:
         session_id, _ = _session_context()
         body = _json_body()
-        job = jobs.create(session_id, "eas")
-        jobs.append_event(session_id, job.job_id, stage="stage_one", status="running")
-        result = engineering.run(body, provider=runtime.workflow_provider)
-        result["job_id"] = job.job_id
-        jobs.complete(session_id, job.job_id, result)
+        try:
+            job = jobs.create(session_id, "eas")
+            jobs.append_event(session_id, job.job_id, stage="stage_one", status="running")
+            result = _public_workflow_result(
+                engineering.run(body, provider=runtime.workflow_provider)
+            )
+            result["job_id"] = job.job_id
+            jobs.complete(session_id, job.job_id, result)
+        except Exception:
+            logger.exception("EAS workflow failed at the public response boundary.")
+            return (
+                jsonify(
+                    {
+                        "error": "eas_execution_failed",
+                        "message": "The engineering workflow could not be completed.",
+                    }
+                ),
+                500,
+            )
         return jsonify(result)
 
     @app.post("/api/sis/run")
@@ -279,11 +357,23 @@ def create_app(
     def sis_run() -> Response:
         session_id, _ = _session_context()
         body = _json_body()
-        job = jobs.create(session_id, "sis")
-        jobs.append_event(session_id, job.job_id, stage="candidate", status="running")
-        result = ideation.run(body, provider=runtime.workflow_provider)
-        result["job_id"] = job.job_id
-        jobs.complete(session_id, job.job_id, result)
+        try:
+            job = jobs.create(session_id, "sis")
+            jobs.append_event(session_id, job.job_id, stage="candidate", status="running")
+            result = _public_workflow_result(ideation.run(body, provider=runtime.workflow_provider))
+            result["job_id"] = job.job_id
+            jobs.complete(session_id, job.job_id, result)
+        except Exception:
+            logger.exception("SIS workflow failed at the public response boundary.")
+            return (
+                jsonify(
+                    {
+                        "error": "sis_execution_failed",
+                        "message": "The ideation workflow could not be completed.",
+                    }
+                ),
+                500,
+            )
         return jsonify(result)
 
     @app.get("/api/jobs/<job_id>")

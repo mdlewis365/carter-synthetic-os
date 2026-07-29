@@ -347,7 +347,7 @@ class FailingProvider:
         yield ""
 
 
-def test_provider_failure_is_sanitized() -> None:
+def test_provider_failure_is_sanitized(caplog: pytest.LogCaptureFixture) -> None:
     app = create_app(
         load_settings({"CARTER_DEFAULT_MODEL": "synthetic-test-model"}),
         provider=FailingProvider(),
@@ -364,10 +364,12 @@ def test_provider_failure_is_sanitized() -> None:
 
     assert response.status_code == 503
     assert response.get_json() == {
-        "error": "synthetic_failure",
-        "provider": "failing-test-provider",
-        "retryable": False,
+        "error": "provider_unavailable",
+        "message": "The configured model provider is temporarily unavailable.",
     }
+    assert "synthetic provider failure" in caplog.text
+    assert "failing-test-provider" not in response.get_data(as_text=True)
+    assert "synthetic_failure" not in response.get_data(as_text=True)
 
 
 @pytest.mark.parametrize(
@@ -413,3 +415,188 @@ def test_workflow_responses_do_not_expose_exception_details(
     assert response.get_json()["errors"] == [expected_error]
     assert "UNIQUE-WEB-SENTINEL" not in response_text
     assert "C:\\private\\provider\\sentinel.txt" not in response_text
+
+
+class SensitiveBoundaryError(ValueError):
+    pass
+
+
+_EXCEPTION_DETAIL = (
+    "UNIQUE-EXCEPTION-SENTINEL Traceback SensitiveBoundaryError "
+    "C:\\private\\provider\\sentinel.txt internal-provider-detail"
+)
+
+
+def _assert_exception_detail_is_private(response_text: str) -> None:
+    for marker in (
+        "UNIQUE-EXCEPTION-SENTINEL",
+        "Traceback",
+        "SensitiveBoundaryError",
+        "C:\\private\\provider\\sentinel.txt",
+        "internal-provider-detail",
+    ):
+        assert marker not in response_text
+
+
+@pytest.mark.parametrize(
+    (
+        "route",
+        "workflow_module",
+        "workflow_name",
+        "payload",
+        "expected_error",
+        "expected_message",
+    ),
+    [
+        (
+            "/api/eas/run",
+            "eas.workflow",
+            "EngineeringWorkflow",
+            {"mode": "review-design", "problem_statement": "Synthetic request."},
+            "eas_execution_failed",
+            "The engineering workflow could not be completed.",
+        ),
+        (
+            "/api/sis/run",
+            "sis.workflow",
+            "IdeationWorkflow",
+            {"mode": "system-architecture", "problem_statement": "Synthetic request."},
+            "sis_execution_failed",
+            "The ideation workflow could not be completed.",
+        ),
+    ],
+)
+def test_workflow_exception_is_logged_but_public_response_is_fixed(
+    client,
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+    route: str,
+    workflow_module: str,
+    workflow_name: str,
+    payload: dict,
+    expected_error: str,
+    expected_message: str,
+) -> None:
+    def fail(*_args, **_kwargs):
+        raise SensitiveBoundaryError(_EXCEPTION_DETAIL)
+
+    workflow_type = getattr(
+        __import__(workflow_module, fromlist=[workflow_name]),
+        workflow_name,
+    )
+    monkeypatch.setattr(workflow_type, "run", fail)
+    headers, _ = authorize(client)
+    response = client.post(route, json=payload, headers=headers)
+
+    assert response.status_code == 500
+    assert response.get_json() == {
+        "error": expected_error,
+        "message": expected_message,
+    }
+    _assert_exception_detail_is_private(response.get_data(as_text=True))
+    assert "UNIQUE-EXCEPTION-SENTINEL" in caplog.text
+
+
+@pytest.mark.parametrize(
+    ("route", "workflow_module", "workflow_name", "payload", "expected_error"),
+    [
+        (
+            "/api/eas/run",
+            "eas.workflow",
+            "EngineeringWorkflow",
+            {"mode": "review-design", "problem_statement": "Synthetic request."},
+            "eas_execution_failed",
+        ),
+        (
+            "/api/sis/run",
+            "sis.workflow",
+            "IdeationWorkflow",
+            {"mode": "system-architecture", "problem_statement": "Synthetic request."},
+            "sis_execution_failed",
+        ),
+    ],
+)
+def test_exception_object_cannot_cross_public_workflow_response_boundary(
+    client,
+    monkeypatch: pytest.MonkeyPatch,
+    route: str,
+    workflow_module: str,
+    workflow_name: str,
+    payload: dict,
+    expected_error: str,
+) -> None:
+    def unsafe_result(*_args, **_kwargs):
+        return {
+            "schema": "synthetic.test.v1",
+            "message": SensitiveBoundaryError(_EXCEPTION_DETAIL),
+        }
+
+    workflow_type = getattr(
+        __import__(workflow_module, fromlist=[workflow_name]),
+        workflow_name,
+    )
+    monkeypatch.setattr(workflow_type, "run", unsafe_result)
+    headers, _ = authorize(client)
+    response = client.post(route, json=payload, headers=headers)
+
+    assert response.status_code == 500
+    assert response.get_json()["error"] == expected_error
+    _assert_exception_detail_is_private(response.get_data(as_text=True))
+
+
+@pytest.mark.parametrize("workflow_module", ["eas.workflow", "sis.workflow"])
+def test_workflow_json_safety_never_stringifies_private_objects(workflow_module: str) -> None:
+    from pathlib import Path
+
+    class PrivateObject:
+        def __str__(self) -> str:
+            return _EXCEPTION_DETAIL
+
+    workflow = __import__(workflow_module, fromlist=["_json_safe"])
+    json_safe = workflow._json_safe
+    result = json_safe(
+        {
+            "exception": SensitiveBoundaryError(_EXCEPTION_DETAIL),
+            "path": Path("C:/private/provider/sentinel.txt"),
+            "object": PrivateObject(),
+        }
+    )
+
+    assert result == {
+        "exception": "<internal-detail-redacted>",
+        "path": "<path-redacted>",
+        "object": "<unsupported-value>",
+    }
+    _assert_exception_detail_is_private(repr(result))
+
+
+def test_unexpected_api_value_error_uses_generic_public_code(
+    client,
+    monkeypatch: pytest.MonkeyPatch,
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    runtime = client.application.extensions["carter_runtime"]
+
+    def fail(*_args, **_kwargs):
+        raise SensitiveBoundaryError(_EXCEPTION_DETAIL)
+
+    monkeypatch.setattr(runtime, "respond", fail)
+    headers, _ = authorize(client)
+    response = client.post(
+        "/api/chat",
+        json={"prompt": "Synthetic request."},
+        headers=headers,
+    )
+
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "invalid_request"}
+    _assert_exception_detail_is_private(response.get_data(as_text=True))
+    assert "UNIQUE-EXCEPTION-SENTINEL" in caplog.text
+
+
+def test_known_api_validation_error_remains_stable(client) -> None:
+    headers, _ = authorize(client)
+    response = client.post("/api/chat", json={"prompt": ""}, headers=headers)
+
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "prompt_is_required"}

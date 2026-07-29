@@ -258,18 +258,24 @@ def _string_list(value: Any) -> list[str]:
 def _json_safe(value: Any, depth: int = 0) -> Any:
     if depth > 30:
         return "<maximum-depth>"
+    if isinstance(value, BaseException):
+        return "<internal-detail-redacted>"
     if value is None or isinstance(value, (str, int, float, bool)):
         return value
     if isinstance(value, Decimal):
         return float(value)
     if isinstance(value, Enum):
-        return value.value
+        return _json_safe(value.value, depth + 1)
     if isinstance(value, Path):
-        return value.as_posix()
+        return "<path-redacted>"
     if is_dataclass(value):
         return _json_safe(asdict(value), depth + 1)
     if isinstance(value, Mapping):
-        return {str(key): _json_safe(item, depth + 1) for key, item in value.items()}
+        return {
+            str(key): _json_safe(item, depth + 1)
+            for key, item in value.items()
+            if isinstance(key, (str, int))
+        }
     if isinstance(value, (list, tuple, set)):
         return [_json_safe(item, depth + 1) for item in value]
-    return str(value)
+    return "<unsupported-value>"
