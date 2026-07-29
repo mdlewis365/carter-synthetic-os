@@ -16,10 +16,15 @@ Public branch: `main`
 Pre-reconciliation public baseline, verified 2026-07-29:
 `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`
 
+Documentation reconciliation PR #5 was merged normally as commit
+`3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+`3dc04c43cc76964f5ed061b97c52c3d71a718842`. It changed only 14 Markdown
+files.
+
 Publication status: **the canonical source repository is public and
 release-owner decisions B-01 through B-07 are resolved or accepted. Version
-`0.1.0` had not been tagged or released as of this reconciliation, which
-creates or authorizes neither action.**
+`0.1.0` had not been tagged or released as of the July 29, 2026 reconciliation
+snapshot. PR #5 created or authorized neither action.**
 
 > **Current-documentation note:** The candidate was prepared on 2026-07-13,
 > technically reverified on 2026-07-25, reconciled and retested against the new
@@ -330,9 +335,10 @@ historical snapshot he accepted; the July 29 baseline verification recorded
 - Tested, monitored security, privacy, and trademark/branding contacts are now
   published in the applicable policy files.
 - The approval-record commits and the pre-reconciliation public baseline
-  received exact verification. The eventual merge commit for this documentation
-  reconciliation and rebuilt release artifacts must be verified in the same
-  manner before a tag or GitHub release.
+  received exact verification. PR #5 completed the publication-state
+  documentation reconciliation. Release policy requires the exact commit
+  selected for a version tag and artifacts rebuilt from it to receive the same
+  verification before tag and GitHub release authorization.
 - Chroma-backed persistence is unavailable pending an audited fixed release.
 - The mock provider proves pipeline behavior only; it is not a language model
   or quality benchmark.
@@ -359,17 +365,17 @@ The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 
 ## Remaining Release Sequence
 
-1. Merge the documentation reconciliation only under separate authorization.
-2. From that exact merge commit, rerun tests, coverage, evidence, Ruff, Bandit,
-   detect-secrets, history/path/artifact searches, dependency audit, source and
-   wheel builds, installed-wheel smoke, pack verification, and the
-   public/private PGM boundary check.
-3. Rebuild controlled release artifacts and record the exact commit, tree,
-   parents, artifact hashes, and results externally without modifying the
-   verified commit.
-4. Verify GitHub workflows and security scans on that exact public commit.
-5. Obtain separate authorization before creating `v0.1.0` or a GitHub release.
+1. Select the exact commit proposed as the `v0.1.0` tag target.
+2. Run the complete exact-commit verification suite.
+3. Rebuild and verify the source and wheel artifacts from that commit.
+4. Record the commit, tree, parents, artifact hashes, CI, CodeQL,
+   secret-scanning, and dependency results externally in the final verification
+   report and GitHub release metadata rather than embedding self-referential
+   results in the commit being verified.
+5. Obtain separate authorization for the release-metadata update, `v0.1.0` tag,
+   and GitHub release.
 
 The canonical source repository, public visibility, initial push, and baseline
-CI verification are complete. As of this reconciliation, no `v0.1.0` tag or
-GitHub release had been created; this PR creates or authorizes neither.
+CI verification are complete. As of the July 29, 2026 reconciliation snapshot,
+no `v0.1.0` tag or GitHub release had been created. PR #5 created or authorized
+neither.

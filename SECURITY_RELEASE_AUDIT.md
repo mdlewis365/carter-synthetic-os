@@ -44,11 +44,18 @@ files were present and unchanged.
 Release-owner decisions B-01 through B-07 were resolved or accepted. The
 documented absence of independent professional validation and optional
 provider, browser, hardware, and ChromaDB support remain research limitations,
-not unresolved publication blockers. As of this reconciliation, no `v0.1.0`
-tag or GitHub release had been created; this PR creates or authorizes neither.
-Exact verification of the eventual documentation-merge commit and rebuilt
-release artifacts remains required before separate tag and GitHub release
-authorization.
+not unresolved publication blockers. As of the July 29, 2026 reconciliation
+snapshot, no `v0.1.0` tag or GitHub release had been created. Documentation
+reconciliation PR #5 was subsequently merged normally as commit
+`3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+`3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
+files and created or authorized neither a tag nor a GitHub release. Release
+policy requires the exact commit selected for a version tag and artifacts
+rebuilt from it to pass the complete verification suite before separate tag and
+GitHub release authorization. Record the exact commit identity, artifact
+hashes, workflow results, and security results externally in the final
+verification report and GitHub release metadata rather than self-referentially
+in the commit being verified.
 
 ## Repository Boundary
 

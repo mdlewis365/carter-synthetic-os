@@ -19,10 +19,13 @@ License target: GNU Affero General Public License v3.0 only (AGPL-3.0-only)
 > repository became public. The pre-reconciliation public baseline, verified
 > on July 29, 2026, was
 > `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941` with 193 tracked files. As
-> of this reconciliation, no `v0.1.0` tag or GitHub release had been created;
-> this PR creates or authorizes neither. The eventual documentation-merge
-> commit and rebuilt release artifacts still require exact verification before
-> separate tag and release authorization. Maintained dispositions are in
+> of the July 29 reconciliation snapshot, no `v0.1.0` tag or GitHub release had
+> been created. Documentation reconciliation PR #5 was subsequently merged
+> normally as commit `3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+> `3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
+> files and did not create or authorize a tag or GitHub release. Release policy
+> requires exact verification of whichever commit is selected as a version-tag
+> target and of artifacts rebuilt from it. Maintained dispositions are in
 > `RELEASE_BLOCKERS.md`, `PUBLIC_RELEASE_REPORT.md`, and
 > `PUBLIC_PUSH_CHECKLIST.md`.
 
