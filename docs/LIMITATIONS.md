@@ -75,8 +75,11 @@ The software provides no legal, patent, export-control, privacy, security,
 medical, or regulatory advice. The canonical source repository is public and
 the release-owner publication decisions are recorded as resolved or accepted.
 The research limitations above are not themselves blockers to that public
-source repository. Formal `0.1.0` tagging and release require exact verification
-of the eventual documentation-merge commit and rebuilt release artifacts,
-followed by separate tag and GitHub release authorization. As of this
-reconciliation, no `v0.1.0` tag or GitHub release had been created; this PR
-creates or authorizes neither.
+source repository. Documentation reconciliation PR #5 was merged normally as
+commit `3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+`3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
+files and did not create or authorize a tag or GitHub release. As of the July
+29, 2026 reconciliation snapshot, no `v0.1.0` tag or GitHub release had been
+created. Formal tagging and release require the exact commit selected for the
+version tag and artifacts rebuilt from it to pass the complete verification
+suite, followed by separate tag and GitHub release authorization.

@@ -7,9 +7,9 @@ Version: `0.1.0` - Initial Public Research Release
 
 This began as the human gate for the initial push and visibility change. Those
 steps are complete: the canonical source repository is public. It remains the
-human gate for the documentation merge, `v0.1.0` tag, GitHub release, package
-upload, deployment, and announcement. A checked box without review evidence is
-not approval for a later action.
+human gate for the `v0.1.0` tag, GitHub release, package upload, deployment, and
+announcement. A checked box without review evidence is not approval for a later
+action.
 
 The 2026-07-25 technical checks, 2026-07-27 private-reference reconciliation,
 and exact verification of release-candidate commit `7acd4c4` are summarized in
@@ -19,6 +19,10 @@ pre-reconciliation public baseline, verified on July 29, 2026, was
 `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
 `docs/PGM.md` is committed and public. The initial private push, public
 visibility change, and subsequent CI verification are complete.
+Documentation reconciliation PR #5 was merged normally as commit
+`3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+`3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
+files and did not create or authorize a tag or GitHub release.
 
 ## Intellectual Property And Legal
 
@@ -57,8 +61,9 @@ visibility change, and subsequent CI verification are complete.
 - [x] **Secret scan:** baseline-aware detect-secrets,
   credential-signature/path/artifact searches, public-history review, and
   GitHub secret scanning passed for the July 29 pre-reconciliation baseline; at
-  that verification point, open secret-scanning alerts were zero. Repeat them
-  for the eventual documentation-merge commit and rebuilt release artifacts.
+  that verification point, open secret-scanning alerts were zero. Repeat these
+  checks for the exact commit selected as the version-tag target and for
+  artifacts rebuilt from it.
 - [x] **Privacy review:** no private memory, conversation, OpRep, account,
   email list, job payload, recording, image, voice identifier, database,
   Chroma store, log, or unapproved personal identifier is present in files or
@@ -103,7 +108,8 @@ visibility change, and subsequent CI verification are complete.
   cleanup is best effort, and cloud transfers are disclosed before use.
 - [x] **Package artifacts:** source and wheel builds, wheel inspection, and
   installed-wheel health/license/evidence/static/template/engineering-pack
-  smoke checks pass. Rebuild and reverify the eventual release artifacts.
+  smoke checks passed for the recorded baselines. Rebuild and reverify artifacts
+  from the exact commit selected as the version-tag target.
 
 ## Repository And Publication
 
@@ -111,7 +117,7 @@ visibility change, and subsequent CI verification are complete.
   `https://github.com/mdlewis365/carter-synthetic-os` and exposes copyright,
   `AGPL-3.0-only`, and no-warranty notices.
 - [ ] **Final documentation/release diff:** an authorized reviewer inspects the
-  documentation PR, its eventual merge commit, executable bits, rebuilt
+  exact commit selected as the version-tag target, executable bits, rebuilt
   artifacts, and final pre-tag diff; no unrelated or private file enters the
   release.
 - [x] **Independent history:** the repository contains no private `.git`
@@ -119,9 +125,8 @@ visibility change, and subsequent CI verification are complete.
   configured canonical GitHub remote is intentional.
 - [x] **Release-owner gates:** B-01 through B-07 in `RELEASE_BLOCKERS.md` are
   resolved or explicitly accepted by Michael D. Lewis with written rationale.
-  B-08 is satisfied for the July 29 pre-reconciliation public baseline and must
-  be repeated for the eventual documentation-merge commit and rebuilt release
-  artifacts.
+  B-08 is satisfied for the recorded earlier baselines and applies anew to every
+  commit selected as a version-tag target and to artifacts rebuilt from it.
 - [x] **Repository visibility:** the canonical repository under
   `mdlewis365/carter-synthetic-os` is public and its default branch is `main`.
 - [x] **First public commit:** the reviewed source history is on public `main`;
@@ -148,6 +153,9 @@ visibility change, and subsequent CI verification are complete.
 | Public source verification | Automated and human-directed review | 2026-07-29 | Verified the pre-reconciliation public baseline at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`; PRs #3 and #4 had merged normally; CodeQL alerts #1 through #7 were fixed without dismissal; open CodeQL, secret-scanning, and Dependabot vulnerability alert counts were zero at that verification point. |
 
 Publication authorization: **NOT GRANTED by this checklist alone.** Exact
-verification of the eventual documentation-merge commit and rebuilt release
-artifacts, plus separate authorization for `v0.1.0` and the GitHub release,
-remain required.
+verification of the commit selected as the `v0.1.0` tag target and artifacts
+rebuilt from it, plus separate authorization for release metadata, the tag, and
+the GitHub release, remain required. Record commit identity, artifact hashes,
+workflow results, and security results externally in the final verification
+report and GitHub release metadata rather than self-referentially in the commit
+being verified.

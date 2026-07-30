@@ -11,7 +11,11 @@ All notable public changes will be recorded here. The project follows semantic v
   public baseline, verified on July 29, 2026, was
   `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`. At that point, version
   `0.1.0` was unreleased and no `v0.1.0` tag or GitHub release had been
-  created; this documentation reconciliation creates neither.
+  created.
+- Merged documentation reconciliation PR #5 normally as commit
+  `3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+  `3dc04c43cc76964f5ed061b97c52c3d71a718842`. It changed only 14 Markdown
+  files and did not create or authorize a tag or GitHub release.
 - Merged security remediation PRs #3 and #4 with normal merge commits. CodeQL
   automatically marked alerts #1 through #7 fixed without dismissal. At the
   July 29 baseline verification, open CodeQL, secret-scanning, and Dependabot
@@ -65,9 +69,10 @@ All notable public changes will be recorded here. The project follows semantic v
 - DIM and SAL are bounded new public interfaces rather than migrated active private modules.
 - Camera support is local preview only.
 - EAS requires independent professional review; SIS candidates require technical, patent, prior-art, safety, and experimental review.
-- Release-owner decisions B-01 through B-07 are resolved. Formal `v0.1.0`
-  tagging and release remain pending exact verification of the eventual
-  documentation-merge commit and rebuilt release artifacts.
+- Release-owner decisions B-01 through B-07 are resolved. Release policy
+  requires the exact commit selected for a version tag and artifacts rebuilt
+  from that commit to pass the complete verification suite before separate tag
+  and GitHub release authorization.
 
 [Unreleased]: https://github.com/mdlewis365/carter-synthetic-os/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/mdlewis365/carter-synthetic-os/releases/tag/v0.1.0

@@ -13,10 +13,13 @@ Reconciliation update date: 2026-07-29
 or accepted, and the canonical source repository is public.** The
 pre-reconciliation public baseline, verified on July 29, 2026, was
 `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, with 193 tracked files.
-B-08 technical verification is satisfied for that baseline and must be
-repeated for the eventual documentation-merge commit and rebuilt release
-artifacts. As of this reconciliation, no `v0.1.0` tag or GitHub release had
-been created; this document creates or authorizes neither.
+B-08 technical verification is satisfied for that baseline and applies anew to
+every commit selected as a version-tag target and to artifacts rebuilt from it.
+Documentation reconciliation PR #5 was merged normally as commit
+`3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
+`3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
+files. As of the July 29, 2026 reconciliation snapshot, no `v0.1.0` tag or
+GitHub release had been created. PR #5 created or authorized neither.
 
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
@@ -59,7 +62,7 @@ coverage. All 18 engineering-pack files were present and unchanged.
 | B-05 | Offline source and lifecycle review established that the three legacy screenshots exposed two genuine random session bearer tokens. The in-memory, process-local sessions expired after 24 hours; the screenshots entered the legacy repositories on June 25, 2026, so under the committed implementation the sessions expired by June 26, 2026 at the latest. Any server restart also invalidated them. | No role password was exposed, and no evidence of unauthorized use was found; misuse is not claimed to have been mathematically impossible. Present validity is reasonably excluded by the documented expiration and in-memory lifecycle. Screenshot replacement/removal remains repository hygiene, not a blocker for this candidate. | Owner gate resolved. |
 | B-06 | Tested, monitored security, privacy, and trademark/branding contacts were approved and placed in their respective policy files. | GitHub Private Vulnerability Reporting was verified enabled on July 29, 2026; the monitored security email remains the fallback. | Owner gate resolved. |
 | B-07 | Michael approved `docs/PGM.md`, the privacy and exclusion findings, and intentional publication of his name, business identity, and Git author email. He also accepted the disclosed coverage, independent-validation, disabled-ChromaDB, and optional-integration limitations. | Automated scans do not replace future review of changed files or artifacts. No private prompt or private operational material is approved for release. | Owner gate resolved. |
-| B-08 | The technical record for the release candidate and its documentation successors was completed through the pre-reconciliation public baseline `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, verified on July 29, 2026. | The eventual merge commit from the current documentation reconciliation and rebuilt release artifacts must receive exact post-merge tests, scans, build, wheel, pack, and PGM-boundary verification. Record the SHA, tree, artifact hashes, and results externally without modifying that commit. | Satisfied for the pre-reconciliation baseline; repeat required before tag/release if the documentation PR is merged. |
+| B-08 | The technical record was satisfied for the recorded release-candidate commits and the pre-reconciliation public baseline `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`, verified on July 29, 2026. | The gate applies anew to every commit selected as a version-tag target. That exact commit and artifacts rebuilt from it must receive tests, scans, build, wheel, pack, PGM-boundary, workflow, and security verification. Record commit identity and artifact hashes externally in the final verification report and GitHub release metadata without modifying the commit being verified. | Satisfied for the recorded earlier baselines; final satisfaction for a version is established by external exact-commit and artifact evidence. No future commit SHA or artifact hash is predicted here. |
 
 ## Capability-Specific Blocks And Validation Gaps
 
@@ -88,16 +91,15 @@ be described accurately unless their stated resolution is completed.
 
 ## Remaining Pre-Tag And Release Sequence
 
-1. Merge the documentation reconciliation only under separate authorization.
-2. From that exact merge commit, rerun evidence, non-network tests,
-   secret/history scans, dependency audit, lint, format, security, source and
-   wheel builds, installed-wheel smoke, engineering-pack verification, and the
-   public/private PGM boundary check.
-3. Rebuild release artifacts in a controlled environment and record the exact
-   commit, tree, parent, artifact hashes, and verification results externally.
-4. Confirm GitHub workflows and security scans on that exact public commit.
-5. Obtain separate explicit authorization before creating `v0.1.0` or a
-   GitHub release.
+1. Select the exact commit proposed as the `v0.1.0` tag target.
+2. Run the complete exact-commit verification suite.
+3. Rebuild and verify the source and wheel artifacts from that commit.
+4. Record the commit, tree, parents, artifact hashes, CI, CodeQL,
+   secret-scanning, and dependency results externally in the final verification
+   report and GitHub release metadata rather than embedding self-referential
+   results in the commit being verified.
+5. Obtain separate authorization for the release-metadata update, `v0.1.0` tag,
+   and GitHub release.
 
 The public source repository and its CI are operational. Formal `0.1.0`
 tagging and release remain pending the steps above.
