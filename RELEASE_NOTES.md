@@ -1,13 +1,12 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-only -->
 
-# Release Notes Draft: 0.1.0
+# Release Notes: 0.1.0
 
 ## Initial Public Research Release
 
-Carter Synthetic OS `0.1.0` is the planned first tagged release of the public
-reference implementation of Carter, the flagship implementation of Synthetic
-OS, in one monorepository. The source repository is already public, while
-`0.1.0` remains formally unreleased.
+Carter Synthetic OS `0.1.0` is the Initial Public Research Release of the
+public Carter/Synthetic OS reference implementation. Carter is the flagship
+implementation of Synthetic OS in this monorepository.
 EAS and SIS operate as functional systems within Carter, and CSC is the Carter
 Sensory Console.
 
@@ -20,6 +19,9 @@ The release demonstrates a governed compound AI pipeline: probabilistic model pl
 - EAS two-stage planning/advisory workflow with MCM, units/constraints, EDR, engineering packs, and review gating.
 - SIS structured invention modes, evaluator/feasibility interfaces, and governed hypothesis output.
 - CSC explicit media controls, session-isolated transcript handling, optional interpretation/transcription/TTS, and local-only camera preview.
+- Self-contained default UTC anchors and a clean Windows installed-wheel smoke
+  that exercises the complete public mock experience without `tzdata` or
+  system IANA timezone data.
 - Reproducible synthetic evidence, non-network tests, CI/security configuration, and substantive documentation.
 
 ## Important Boundaries

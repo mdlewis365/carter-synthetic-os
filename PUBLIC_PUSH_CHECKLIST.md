@@ -6,10 +6,10 @@
 Version: `0.1.0` - Initial Public Research Release
 
 This began as the human gate for the initial push and visibility change. Those
-steps are complete: the canonical source repository is public. It remains the
-human gate for the `v0.1.0` tag, GitHub release, package upload, deployment, and
-announcement. A checked box without review evidence is not approval for a later
-action.
+steps are complete: the canonical source repository is public. This tracked
+document preserves the pre-tag source snapshot and the human procedure for a
+version tag, GitHub release, package upload, deployment, or announcement. A
+checked box without review evidence is not approval for a later action.
 
 The 2026-07-25 technical checks, 2026-07-27 private-reference reconciliation,
 and exact verification of release-candidate commit `7acd4c4` are summarized in
@@ -23,6 +23,13 @@ Documentation reconciliation PR #5 was merged normally as commit
 `3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
 `3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
 files and did not create or authorize a tag or GitHub release.
+
+The pre-tag source snapshot verified on July 31, 2026, was
+`e080532dca47282e12711caa8fe92b27a8ff4afb`, with tree
+`2c10515e88ae094c38515e6e0d9b5ac717401f78` and 194 tracked files. Its 231
+offline tests, branch-aware coverage, Windows installed-wheel smoke, scans,
+builds, CodeQL analyses, and GitHub checks passed. This dated snapshot is
+evidence, not a prediction of the commit ultimately selected for the tag.
 
 ## Intellectual Property And Legal
 
@@ -133,8 +140,9 @@ files and did not create or authorize a tag or GitHub release.
   branch protection and checked-in CI/security workflows are active.
 - [x] **First push:** the authorized initial private push, later visibility
   change, and public-state verification were completed.
-- [ ] **Release tag:** only after the public repository and CI are verified, a
-  human creates and signs/annotates the approved `v0.1.0` tag and release.
+- [ ] **Release-tag procedure:** after the exact tag target and rebuilt
+  artifacts are verified and separately authorized, a human creates the
+  approved `v0.1.0` tag and GitHub release.
 - [x] **Older repositories:** replacement/removal of the legacy credential-bearing
   screenshots is recorded as a separate repository-hygiene task. Archival or
   redirection of the documentation-only
@@ -152,10 +160,9 @@ files and did not create or authorize a tag or GitHub release.
 | Engineering-domain decision | Michael D. Lewis | 2026-07-28 | Approved the 18-pack provenance record and accepted the disclosed lack of independent professional validation. |
 | Public source verification | Automated and human-directed review | 2026-07-29 | Verified the pre-reconciliation public baseline at `396deb6d5f2b86bde46c6d6ac4e18f448f4ed941`; PRs #3 and #4 had merged normally; CodeQL alerts #1 through #7 were fixed without dismissal; open CodeQL, secret-scanning, and Dependabot vulnerability alert counts were zero at that verification point. |
 
-Publication authorization: **NOT GRANTED by this checklist alone.** Exact
-verification of the commit selected as the `v0.1.0` tag target and artifacts
-rebuilt from it, plus separate authorization for release metadata, the tag, and
-the GitHub release, remain required. Record commit identity, artifact hashes,
-workflow results, and security results externally in the final verification
-report and GitHub release metadata rather than self-referentially in the commit
-being verified.
+Publication authorization is **not granted by this tracked checklist alone.**
+For a release, verify the exact `v0.1.0` tag target and artifacts rebuilt from
+it, then obtain the applicable authorization. Completion of exact-commit
+verification, tag creation, artifact upload, and GitHub release publication is
+recorded externally in the Git tag, final verification report, and GitHub
+release metadata rather than self-referentially in the commit being verified.
