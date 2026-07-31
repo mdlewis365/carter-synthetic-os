@@ -21,6 +21,13 @@ Documentation reconciliation PR #5 was merged normally as commit
 files. As of the July 29, 2026 reconciliation snapshot, no `v0.1.0` tag or
 GitHub release had been created. PR #5 created or authorized neither.
 
+The pre-tag source snapshot verified on July 31, 2026, was
+`e080532dca47282e12711caa8fe92b27a8ff4afb`, with tree
+`2c10515e88ae094c38515e6e0d9b5ac717401f78` and 194 tracked files. Its
+complete local, artifact, installed-wheel, GitHub workflow, and security
+verification passed. B-08 nevertheless applies to the exact commit ultimately
+selected as the version-tag target and to artifacts rebuilt from that commit.
+
 This document distinguishes publication gates from optional capabilities that
 are deliberately disabled or have not received external validation. It does not
 claim legal, security, scientific, or professional-engineering approval.
@@ -89,7 +96,7 @@ be described accurately unless their stated resolution is completed.
 - Documenting a limitation does not authorize distribution of material whose
   ownership, privacy, or license status is unresolved.
 
-## Remaining Pre-Tag And Release Sequence
+## Version-Tag And Release Procedure
 
 1. Select the exact commit proposed as the `v0.1.0` tag target.
 2. Run the complete exact-commit verification suite.
@@ -98,8 +105,11 @@ be described accurately unless their stated resolution is completed.
    secret-scanning, and dependency results externally in the final verification
    report and GitHub release metadata rather than embedding self-referential
    results in the commit being verified.
-5. Obtain separate authorization for the release-metadata update, `v0.1.0` tag,
-   and GitHub release.
+5. Obtain the applicable authorization for the release-metadata update,
+   `v0.1.0` tag, artifact upload, and GitHub release.
 
-The public source repository and its CI are operational. Formal `0.1.0`
-tagging and release remain pending the steps above.
+The public source repository and its CI are operational. Completion of
+exact-commit verification, tag creation, artifact upload, and GitHub release
+publication is recorded externally in the Git tag, final verification report,
+artifact metadata, and GitHub release rather than backfilled into this pre-tag
+source record.

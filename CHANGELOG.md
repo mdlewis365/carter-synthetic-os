@@ -6,6 +6,12 @@ All notable public changes will be recorded here. The project follows semantic v
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-07-31
+
+**Initial Public Research Release**
+
+### Changed
+
 - Made the default UTC temporal anchor self-contained with Python's built-in
   UTC timezone and added an isolated Windows installed-wheel smoke check that
   runs the complete public mock experience without `tzdata` or system IANA
@@ -46,10 +52,6 @@ All notable public changes will be recorded here. The project follows semantic v
   `computed_certified` label to `computed_criteria_passed`.
 - Added tests for metadata minimization, secure-cookie propagation, and the
   corrected EAS gate status.
-
-## [0.1.0] - Unreleased
-
-**Initial Public Research Release**
 
 ### Added
 

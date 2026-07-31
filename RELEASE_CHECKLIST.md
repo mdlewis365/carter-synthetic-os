@@ -3,9 +3,9 @@
 # Release Preparation Checklist
 
 This checklist began as local preparation for `0.1.0` and now records the
-verified public-source state. `PUBLIC_PUSH_CHECKLIST.md` contains the remaining
-human authorization gates for the formal tag and GitHub release. Checking an
-item here does not authorize a merge, tag, or release.
+verified public-source state. `PUBLIC_PUSH_CHECKLIST.md` defines the human
+authorization procedure for a formal tag and GitHub release. Checking an item
+here does not authorize a merge, tag, or release.
 
 Automated working-tree status was updated on 2026-07-25, the committed private
 reference was reconciled and the full public offline suite rerun on 2026-07-27,
@@ -16,8 +16,15 @@ verification on July 29, 2026. Documentation reconciliation PR #5 was merged
 normally as commit `3e294c7905831dbdf3d1a4e174251f32c341b460`, with tree
 `3dc04c43cc76964f5ed061b97c52c3d71a718842`; it changed only 14 Markdown
 files and did not create or authorize a tag or GitHub release. The exact commit
-selected for a version tag and artifacts rebuilt from it remain subject to the
+selected for a version tag and artifacts rebuilt from it are subject to the
 complete verification suite before tag and release authorization.
+
+The pre-tag source snapshot verified on July 31, 2026, was
+`e080532dca47282e12711caa8fe92b27a8ff4afb`, with tree
+`2c10515e88ae094c38515e6e0d9b5ac717401f78` and 194 tracked files. Its 231
+offline tests, Windows installed-wheel smoke, scans, builds, CodeQL analyses,
+and GitHub checks passed. This dated evidence does not designate the commit
+ultimately selected for the tag.
 
 ## Repository
 
@@ -78,3 +85,8 @@ complete verification suite before tag and release authorization.
   had been created; PR #5 created or authorized neither.
 - [x] Repository visibility is public and the default branch is `main`.
 - [x] The release owner reviewed the audit reports and `PUBLIC_PUSH_CHECKLIST.md`.
+
+Completion of exact-commit verification, tagging, artifact upload, and GitHub
+release publication is recorded externally in the Git tag, final verification
+report, artifact metadata, and GitHub release rather than backfilled into this
+pre-tag checklist.

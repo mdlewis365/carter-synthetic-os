@@ -21,6 +21,10 @@ Documentation reconciliation PR #5 was merged normally as commit
 `3dc04c43cc76964f5ed061b97c52c3d71a718842`. It changed only 14 Markdown
 files.
 
+Pre-tag source snapshot verified 2026-07-31:
+`e080532dca47282e12711caa8fe92b27a8ff4afb`, with tree
+`2c10515e88ae094c38515e6e0d9b5ac717401f78` and 194 tracked files.
+
 Publication status: **the canonical source repository is public and
 release-owner decisions B-01 through B-07 are resolved or accepted. Version
 `0.1.0` had not been tagged or released as of the July 29, 2026 reconciliation
@@ -193,6 +197,15 @@ counts without erasing them:
 | MCM coverage | 20% |
 | Web-boundary coverage | 83% |
 
+The July 31, 2026 pre-tag source snapshot at `e080532d` passed 231 offline
+tests with 35% overall branch-aware coverage, 20% MCM coverage, 83%
+web-boundary coverage, and 89% temporal-anchor coverage. Its self-contained UTC
+path and clean Windows installed-wheel smoke passed without `tzdata` or system
+IANA timezone data. Ruff, Bandit, baseline-aware detect-secrets, strict
+dependency auditing, evidence reproduction, builds, installed-wheel smokes,
+all 12 GitHub checks, and zero-result CodeQL SARIF verification also passed.
+This dated result does not designate a future tag target.
+
 Security remediation PRs #3 and #4 were merged normally. CodeQL automatically
 marked alerts #1 through #7 fixed; none was dismissed. Full Python SARIF for
 that baseline contained zero results. At that verification point, open CodeQL,
@@ -364,7 +377,7 @@ historical snapshot he accepted; the July 29 baseline verification recorded
 The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
 `RELEASE_BLOCKERS.md`.
 
-## Remaining Release Sequence
+## Version-Tag And Release Procedure
 
 1. Select the exact commit proposed as the `v0.1.0` tag target.
 2. Run the complete exact-commit verification suite.
@@ -373,10 +386,12 @@ The maintained lists are `KNOWN_LIMITATIONS.md`, `docs/LIMITATIONS.md`, and
    secret-scanning, and dependency results externally in the final verification
    report and GitHub release metadata rather than embedding self-referential
    results in the commit being verified.
-5. Obtain separate authorization for the release-metadata update, `v0.1.0` tag,
-   and GitHub release.
+5. Obtain the applicable authorization for the release-metadata update,
+   `v0.1.0` tag, artifact upload, and GitHub release.
 
 The canonical source repository, public visibility, initial push, and baseline
 CI verification are complete. As of the July 29, 2026 reconciliation snapshot,
 no `v0.1.0` tag or GitHub release had been created. PR #5 created or authorized
-neither.
+neither. Completion of the procedure above is recorded externally in the Git
+tag, final verification report, artifact metadata, and GitHub release rather
+than backfilled into this pre-tag source snapshot.
