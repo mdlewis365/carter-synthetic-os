@@ -5,6 +5,10 @@
 - This is an initial public research release, not a production-qualified multi-user service.
 - The deterministic mock provider proves pipeline execution only; it is not a language model or benchmark.
 - Ollama and cloud models are separately installed/configured and may vary in behavior, resource use, license, availability, and cost.
+- The default runtime UTC temporal-anchor path is self-contained and does not
+  require an IANA timezone database. Direct callers requesting non-UTC IANA
+  timezone names require system IANA data or an operator-installed `tzdata`
+  package; unavailable names fail explicitly rather than falling back to UTC.
 - DIM and SAL are bounded new public interfaces with limited release history.
 - Public SQLite persistence is opt-in and not production validated. Chroma adapter source is present, but its dependency is blocked by `CVE-2026-45829` and is not installed by any release extra.
 - Governance validates stated rules/statuses, not the truth of arbitrary model prose.

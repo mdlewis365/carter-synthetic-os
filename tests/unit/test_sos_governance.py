@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta, timezone
 
 import pytest
 
@@ -158,3 +158,72 @@ def test_default_registry_is_declarative() -> None:
     assert registry.get("provider.mock").deterministic is True
     assert registry.get("ams.sqlite").persistence == "opt-in"
     assert registry.get("provider.ollama").network == "loopback"
+
+
+def test_utc_temporal_anchor_does_not_require_zoneinfo(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from sos.orchestration import anchors as anchors_module
+
+    def fail_lookup(name: str):
+        raise AssertionError(f"ZoneInfo must not be called for {name}")
+
+    monkeypatch.setattr(anchors_module, "ZoneInfo", fail_lookup)
+    anchor = temporal_anchor(
+        now=datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC),
+        timezone_name="UTC",
+    )
+
+    assert anchor.captured_at_utc == "2026-01-02T03:04:05Z"
+    assert anchor.local_time == "2026-01-02T03:04:05+00:00"
+    assert anchor.timezone_name == "UTC"
+    assert anchor.render() == (
+        "Time anchor: 2026-01-02T03:04:05+00:00 (UTC); UTC 2026-01-02T03:04:05Z."
+    )
+
+
+def test_non_utc_temporal_anchor_preserves_unknown_timezone_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from zoneinfo import ZoneInfoNotFoundError
+
+    from sos.orchestration import anchors as anchors_module
+
+    def unavailable(name: str):
+        raise ZoneInfoNotFoundError(name)
+
+    monkeypatch.setattr(anchors_module, "ZoneInfo", unavailable)
+
+    with pytest.raises(ValueError, match=r"^unknown timezone: Missing/Zone$"):
+        temporal_anchor(
+            now=datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC),
+            timezone_name="Missing/Zone",
+        )
+
+
+def test_non_utc_temporal_anchor_still_uses_valid_named_zone(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from sos.orchestration import anchors as anchors_module
+
+    lookups: list[str] = []
+
+    def valid_zone(name: str):
+        lookups.append(name)
+        return timezone(timedelta(hours=-5))
+
+    monkeypatch.setattr(anchors_module, "ZoneInfo", valid_zone)
+    anchor = temporal_anchor(
+        now=datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC),
+        timezone_name="Test/Valid",
+    )
+
+    assert lookups == ["Test/Valid"]
+    assert anchor.captured_at_utc == "2026-01-02T03:04:05Z"
+    assert anchor.local_time == "2026-01-01T22:04:05-05:00"
+    assert anchor.timezone_name == "Test/Valid"
+
+
+def test_temporal_anchor_still_rejects_naive_datetime() -> None:
+    with pytest.raises(ValueError, match=r"^now must include timezone information$"):
+        temporal_anchor(now=datetime(2026, 1, 2, 3, 4, 5), timezone_name="UTC")

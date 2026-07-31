@@ -81,3 +81,35 @@ jobs:
           name: python-distributions
           path: dist/
           if-no-files-found: error
+
+  windows-installed-wheel:
+    name: Windows installed-wheel smoke
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Build wheel
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel --outdir dist
+      - name: Run isolated installed-wheel smoke without IANA data
+        shell: pwsh
+        run: |
+          Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
+          $env:PYTHONTZPATH = ""
+          python -m venv .wheel-smoke-venv
+          $python = Join-Path $PWD ".wheel-smoke-venv\Scripts\python.exe"
+          & $python -m pip install --upgrade pip
+          $wheel = Get-ChildItem "dist\*.whl"
+          if ($wheel.Count -ne 1) {
+            throw "Expected exactly one wheel, found $($wheel.Count)."
+          }
+          & $python -m pip install $wheel.FullName
+          & $python -m pip check
+          & $python scripts\verify_installed_wheel.py --checkout-root $PWD

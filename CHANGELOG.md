@@ -6,6 +6,10 @@ All notable public changes will be recorded here. The project follows semantic v
 
 ## [Unreleased]
 
+- Made the default UTC temporal anchor self-contained with Python's built-in
+  UTC timezone and added an isolated Windows installed-wheel smoke check that
+  runs the complete public mock experience without `tzdata` or system IANA
+  timezone data.
 - Published the canonical source repository at
   `https://github.com/mdlewis365/carter-synthetic-os`. The pre-reconciliation
   public baseline, verified on July 29, 2026, was

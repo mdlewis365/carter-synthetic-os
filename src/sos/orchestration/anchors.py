@@ -42,10 +42,13 @@ def temporal_anchor(*, now: datetime | None = None, timezone_name: str = "UTC") 
     moment = now or datetime.now(UTC)
     if moment.tzinfo is None:
         raise ValueError("now must include timezone information")
-    try:
-        local_zone = ZoneInfo(timezone_name)
-    except ZoneInfoNotFoundError as exc:
-        raise ValueError(f"unknown timezone: {timezone_name}") from exc
+    if timezone_name == "UTC":
+        local_zone = UTC
+    else:
+        try:
+            local_zone = ZoneInfo(timezone_name)
+        except ZoneInfoNotFoundError as exc:
+            raise ValueError(f"unknown timezone: {timezone_name}") from exc
     utc_moment = moment.astimezone(UTC)
     local_moment = moment.astimezone(local_zone)
     return TemporalAnchor(

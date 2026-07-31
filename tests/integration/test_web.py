@@ -600,3 +600,32 @@ def test_known_api_validation_error_remains_stable(client) -> None:
 
     assert response.status_code == 400
     assert response.get_json() == {"error": "prompt_is_required"}
+
+
+def test_mock_chat_uses_self_contained_utc_without_iana_data(
+    client,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from zoneinfo import ZoneInfoNotFoundError
+
+    from sos.orchestration import anchors as anchors_module
+
+    lookups: list[str] = []
+
+    def unavailable(name: str):
+        lookups.append(name)
+        raise ZoneInfoNotFoundError(name)
+
+    monkeypatch.setattr(anchors_module, "ZoneInfo", unavailable)
+    headers, _ = authorize(client)
+    response = client.post(
+        "/api/chat",
+        json={"prompt": "Run the clean Windows UTC regression."},
+        headers=headers,
+    )
+
+    assert response.status_code == 200
+    result = response.get_json()
+    assert result["provider"]["name"] == "mock"
+    assert result["memory"]["persistent"] is False
+    assert lookups == []
