@@ -22,7 +22,8 @@ complete verification suite before tag and release authorization.
 ## Repository
 
 - [x] The independent canonical repository is public, with `main` as its
-  default branch and 193 tracked files.
+  default branch. The maintained `v0.1.0` candidate tree including the PR #7
+  Windows/UTC correction contains 194 tracked files.
 - [x] No private `.git` directory or private history is present.
 - [x] Private source and older documentation repositories remain unchanged.
 - [x] Version is `0.1.0` and release name is **Initial Public Research Release**.
