@@ -73,11 +73,12 @@ claim.
 
 ## Migration And File Scope
 
-The verified public tree contains 193 tracked files. `docs/PGM.md` is committed
-and public, not proposed or untracked. The tree includes 93 files under `src`,
-16 public test modules, 23 example/evidence files, 16 subsystem/operations
-documents, six setup/run/test scripts, and eight GitHub
-community/automation files.
+The `v0.1.0` release-candidate tree including the PR #7 Windows/UTC correction
+contains 194 tracked files. `docs/PGM.md` is committed and public, not proposed
+or untracked. The tree includes 93 files under `src`, 16 public test modules,
+23 example/evidence files, 16 subsystem/operations documents, seven
+setup/run/test scripts (including `scripts/verify_installed_wheel.py`), and
+eight GitHub community/automation files.
 
 Cleared first-party implementation migrated or adapted into the monorepository
 includes the large directly derived or adapted deterministic MCM kernel,

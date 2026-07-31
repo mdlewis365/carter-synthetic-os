@@ -41,6 +41,28 @@ python -m pytest -m "not local_model and not cloud_provider and not slow"
 
 Do not run real provider integration tests merely to validate a pull request. They require deliberate opt-in, approved credentials/test data, and cost controls.
 
+## Clean Windows Installed-Wheel Smoke
+
+The `Windows installed-wheel smoke` GitHub Actions job builds the wheel on
+`windows-latest`, installs it non-editably into a new virtual environment
+without system site-packages, clears inherited `PYTHONPATH`, and sets
+`PYTHONTZPATH` to an empty value. The reusable
+`scripts/verify_installed_wheel.py` harness then confirms that:
+
+- Carter and its public packages import from the isolated environment's
+  `site-packages`, not the checkout;
+- neither `tzdata` nor an available `ZoneInfo("UTC")` lookup masks the default
+  UTC path;
+- package version and `AGPL-3.0-only` metadata are present; and
+- health, session/CSRF, Carter chat, EAS, SIS, CSC, packaged evidence,
+  templates/static files, license text, and all 18 engineering-pack files are
+  reached and pass.
+
+The harness compares its completed steps with a fixed manifest, so a failure
+after Carter chat cannot be reported as a partial success. Release verification
+also runs the same harness against the wheel with all declared runtime extras
+installed.
+
 ## Coverage Areas
 
 Public tests cover configuration and secret-free startup, request normalization, schema validation, memory contracts, governance, MCM, EAS pack selection and decision records, SIS mode/workflow behavior, CSC session isolation and text classification, authorization, SSE ownership/behavior, provider failures, and mock end-to-end execution.
